@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Your Festival Plan: a fan-made planner for EDC Orlando 2026</title>
+<meta name="description" content="Fan-made lineup, afterparty and travel planner for EDC Orlando 2026. Not affiliated with Insomniac or EDC.">
+<meta name="theme-color" content="#120a2e">
+<link rel="manifest" href="manifest.json">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Fest Plan">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<script>if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{});});}</script>
+<script>
+  // Anonymous usage stats (same PostHog project as the GlowBop app/site; every event carries app:'edc-orlando'
+  // as a super property so it's easy to filter out of GlowBop's own metrics). Only the named edc_* events from
+  // app.js are sent (Oct 26: autocapture and PostHog's own $pageview / $pageleave are off, since they doubled the
+  // named events and the free plan is 1M events a month). Heatmaps stay on. No names, no search text, no shared
+  // code, no cookies, no session replay.
+  // Nothing is sent from localhost, from the Claude app's test browser, from automated browsers, from a phone that
+  // opened #notrack (#track undoes it) or from a linked phone (only Graham's and Rebecca's are linked).
+  // Events then land in window.edcEvents instead, for testing.
+  !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+  (function(){
+    const dev=/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+    const standalone=!!(window.matchMedia&&window.matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
+    const testBrowser=/\bClaude\//.test(navigator.userAgent)||navigator.webdriver===true;
+    let optedOut=false;
+    try{
+      if(location.hash==="#notrack"){localStorage.setItem("edc-notrack","1");window.edcTrackMsg="This phone won't be counted in the usage stats.";}
+      if(location.hash==="#track"){localStorage.removeItem("edc-notrack");window.edcTrackMsg="This phone is counted in the usage stats again.";}
+      optedOut=localStorage.getItem("edc-notrack")==="1"||!!localStorage.getItem("edc-group-code");
+    }catch(e){}
+    if(window.edcTrackMsg) try{history.replaceState(null,"",location.pathname+location.search)}catch(e){}
+    const off=dev||testBrowser||optedOut;
+    window.edcTracking=!off;
+    window.edcEvents=[]; window.edcContext={app:"edc-orlando",standalone};
+    if(!off) posthog.init('phc_myUuNqFeyhyrqPepkxKEWLnc8trVeurMsgwC9sWGA876',{api_host:'https://us.i.posthog.com',persistence:'localStorage',
+      autocapture:false,capture_pageview:false,capture_pageleave:false,enable_heatmaps:true,disable_session_recording:true});
+    // context that rides along on every event from here on (day, view, compact, linked).
+    // The PostHog stub only gets its methods from init(), so skip it whenever tracking is off.
+    if(!off) posthog.register(window.edcContext);
+    window.trackContext=function(props){Object.assign(window.edcContext,props);if(!off) try{posthog.register(props);}catch(e){}};
+    window.track=function(name,props,beacon){const p=Object.assign({},window.edcContext,props||{});
+      if(off){window.edcEvents.push([name,p]);return;}
+      try{posthog.capture(name,p,beacon?{transport:"sendBeacon"}:undefined);}catch(e){}};
+    track("edc_page_view",{standalone,online:navigator.onLine});
+    window.addEventListener("error",e=>track("edc_js_error",{message:String(e.message||"").slice(0,120),source:String(e.filename||"").split("/").pop(),line:e.lineno}));
+    window.addEventListener("appinstalled",()=>track("edc_app_installed"));
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Figtree:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to the lineup</a>
+
+<div class="intro" id="intro" role="dialog" aria-modal="true" aria-label="Quick start" hidden>
+  <div class="intro-card" tabindex="-1">
+    <h2>Quick start</h2>
+    <p class="intro-lead">Made with peace, love, unity and respect. Have the best weekend.</p>
+    <div class="intro-row"><span class="intro-ico" aria-hidden="true"><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><p>Tap <b>Going</b>, <b>Maybe</b> or <b>Skip</b> on any act.</p></div>
+    <div class="intro-row"><span class="intro-ico" aria-hidden="true"><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg></span><p>Your picks and <b>My Plan</b> save on this phone, even with no signal.</p></div>
+    <div class="intro-row" id="introA2hs" hidden><span class="intro-ico" aria-hidden="true"><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2" width="11" height="20" rx="2.5"/><path d="M9.5 18h2"/><path d="M19 7v6M16 10h6"/></svg></span><p><b>Add it to your home screen</b> so it opens full screen, like an app. <span id="introA2hsSteps"></span></p></div>
+    <div class="tipbox" hidden><p class="tip-h"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg> Love it? Leave a tip.</p><div class="donate-row" data-where="opening_screen"></div></div>
+    <button class="btn intro-go" id="introGo">Let's go</button>
+  </div>
+</div>
+<div class="intro" id="linkDlg" role="dialog" aria-modal="true" aria-labelledby="linkH" hidden>
+  <form class="intro-card ph-no-capture" id="linkForm">
+    <h2 id="linkH">Link phones</h2>
+    <p class="link-p" id="linkP">Enter the shared code on each phone, and once more in the home-screen app.</p>
+    <label class="link-lbl" for="linkCode">Shared code</label>
+    <input id="linkCode" name="code" class="link-in" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" required>
+    <p class="link-err" id="linkErr" role="alert"></p>
+    <div class="btns"><button class="btn intro-go" id="linkGo" type="submit">Link this phone</button><button class="btn alt" id="linkOff" type="button" hidden>Unlink this phone</button><button class="btn alt" id="linkX" type="button">Cancel</button></div>
+  </form>
+</div>
+<div class="a2hs" id="a2hs" role="region" aria-label="Add to home screen" hidden>
+  <span class="a2hs-ico" aria-hidden="true"><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2" width="11" height="20" rx="2.5"/><path d="M9.5 18h2"/><path d="M19 7v6M16 10h6"/></svg></span>
+  <p><b>Add to your home screen</b><span>Opens like an app, works offline.</span></p>
+  <button class="btn a2hs-how" id="a2hsHow" type="button">How</button>
+  <button class="a2hs-x" id="a2hsX" type="button" aria-label="Hide until next time"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+</div>
+<div class="intro" id="a2hsDlg" role="dialog" aria-modal="true" aria-labelledby="a2hsH" hidden>
+  <div class="intro-card" tabindex="-1">
+    <h2 id="a2hsH">Add to your home screen</h2>
+    <ol class="a2hs-steps" id="a2hsSteps"></ol>
+    <p class="a2hs-note">Best before you start picking: the home-screen app keeps its own picks, separate from the browser.</p>
+    <button class="btn intro-go" id="a2hsGo" type="button">Got it</button>
+  </div>
+</div>
+<nav class="tabs" aria-label="Sections"><a href="#lineup" data-v="lineup" aria-current="page"><span><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="2" y="14" width="5" height="7" rx="2"/><rect x="17" y="14" width="5" height="7" rx="2"/></svg></span>Lineup</a><a href="#plan" data-v="plan"><span><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg></span>My Plan</a><a href="#travel" data-v="travel"><span><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M3 11h18M7 17v2M17 17v2"/><circle cx="7.5" cy="14" r=".8" fill="currentColor" stroke="none"/><circle cx="16.5" cy="14" r=".8" fill="currentColor" stroke="none"/></svg></span>Getting there</a><a href="#map" data-v="map"><span><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3 3 5v16l6-2 6 2 6-2V3l-6 2-6-2Z"/><path d="M9 3v16M15 5v16"/></svg></span>Map</a><button id="introHelp" class="intro-help" aria-label="How it works"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><circle cx="12" cy="7.5" r=".9" fill="currentColor" stroke="none"/></svg></button></nav>
+<div class="wrap">
+<main id="main">
+<div class="view" id="v-lineup">
+<header class="lineup-top">
+  <div class="titlerow">
+  <button class="brandmark rp-run" id="brandmark" type="button" aria-label="Replay the logo animation"><svg viewBox="0 0 512 512" aria-hidden="true" focusable="false">
+  <defs>
+    <clipPath id="rp-scr"><rect x="118" y="168" width="276" height="150"/></clipPath>
+    <clipPath id="rp-sun"><circle cx="256" cy="318" r="112"/></clipPath>
+    <clipPath id="rp-floor"><rect x="0" y="352" width="512" height="160"/></clipPath>
+  </defs>
+  <rect width="512" height="512" fill="#160c3a"/>
+  <path d="M60 148 L256 92 L452 148 Z" fill="#241670" stroke="#6a55c8" stroke-width="5" stroke-linejoin="round"/>
+  <line x1="120" y1="131" x2="392" y2="131" stroke="#3fe0ff" stroke-width="3" opacity=".7"/>
+  <g clip-path="url(#rp-scr)"><rect x="118" y="168" width="276" height="150" fill="#1d1250"/><g class="rp-screen"><g clip-path="url(#rp-sun)">
+    <rect x="140" y="204" width="232" height="40" fill="#ffcc66"/><rect x="140" y="244" width="232" height="38" fill="#ff7a59"/><rect x="140" y="282" width="232" height="36" fill="#ff4fb4"/>
+    <rect x="140" y="256" width="232" height="6" fill="#1d1250"/><rect x="140" y="288" width="232" height="9" fill="#1d1250"/><rect x="140" y="306" width="232" height="8" fill="#1d1250"/>
+  </g></g></g>
+  <g class="rp-spots" fill="#fff" opacity=".07"><path d="M168 170 L148 250 L188 250 Z"/><path d="M226 170 L206 236 L246 236 Z"/><path d="M286 170 L266 236 L306 236 Z"/><path d="M344 170 L324 250 L364 250 Z"/></g>
+  <g fill="none" stroke="#6a55c8" stroke-width="5" stroke-linejoin="round">
+    <rect x="96" y="148" width="320" height="18" fill="#2a1d78"/>
+    <path d="M96 166 L112 148 L128 166 L144 148 L160 166 L176 148 L192 166 L208 148 L224 166 L240 148 L256 166 L272 148 L288 166 L304 148 L320 166 L336 148 L352 166 L368 148 L384 166 L400 148 L416 166"/>
+    <rect x="96" y="166" width="18" height="152" fill="#2a1d78"/><rect x="398" y="166" width="18" height="152" fill="#2a1d78"/>
+    <path d="M96 182 L114 200 L96 218 L114 236 L96 254 L114 272 L96 290 L114 308"/><path d="M416 182 L398 200 L416 218 L398 236 L416 254 L398 272 L416 290 L398 308"/>
+  </g>
+  <g fill="#1a1140" stroke="#8a78e6" stroke-width="2.5"><rect x="160" y="166" width="16" height="10" rx="2"/><rect x="218" y="166" width="16" height="10" rx="2"/><rect x="278" y="166" width="16" height="10" rx="2"/><rect x="336" y="166" width="16" height="10" rx="2"/></g>
+  <g fill="#120a2e" stroke="#6a55c8" stroke-width="3">
+    <rect x="56" y="176" width="30" height="24" rx="4"/><rect x="58" y="202" width="28" height="22" rx="4"/><rect x="60" y="226" width="26" height="20" rx="4"/><rect x="62" y="248" width="24" height="18" rx="4"/>
+    <rect x="426" y="176" width="30" height="24" rx="4"/><rect x="426" y="202" width="28" height="22" rx="4"/><rect x="426" y="226" width="26" height="20" rx="4"/><rect x="426" y="248" width="24" height="18" rx="4"/>
+  </g>
+  <g stroke="#6a55c8" stroke-width="3"><line x1="71" y1="160" x2="71" y2="176"/><line x1="441" y1="160" x2="441" y2="176"/></g>
+  <g stroke-linecap="round">
+    <g class="rp-em rp-l"><g class="rp-em rp-l rp-grow">
+      <line x1="150" y1="318" x2="352" y2="44" stroke="#ff7a59" stroke-width="26" opacity=".2"/><line x1="150" y1="318" x2="352" y2="44" stroke="#ff7a59" stroke-width="7"/><line x1="150" y1="318" x2="352" y2="44" stroke="#fff3ee" stroke-width="2.5"/>
+      <line x1="150" y1="318" x2="436" y2="112" stroke="#ff7a59" stroke-width="20" opacity=".16"/><line x1="150" y1="318" x2="436" y2="112" stroke="#ff7a59" stroke-width="5"/>
+    </g></g>
+    <g class="rp-em rp-c"><g class="rp-em rp-c rp-grow">
+      <line x1="256" y1="300" x2="214" y2="30" stroke="#a874ff" stroke-width="22" opacity=".2"/><line x1="256" y1="300" x2="214" y2="30" stroke="#a874ff" stroke-width="6"/><line x1="256" y1="300" x2="214" y2="30" stroke="#f3ecff" stroke-width="2"/>
+      <line x1="256" y1="300" x2="298" y2="30" stroke="#a874ff" stroke-width="22" opacity=".2"/><line x1="256" y1="300" x2="298" y2="30" stroke="#a874ff" stroke-width="6"/><line x1="256" y1="300" x2="298" y2="30" stroke="#f3ecff" stroke-width="2"/>
+    </g></g>
+    <g class="rp-em rp-r"><g class="rp-em rp-r rp-grow">
+      <line x1="362" y1="318" x2="160" y2="44" stroke="#3fe0ff" stroke-width="26" opacity=".2"/><line x1="362" y1="318" x2="160" y2="44" stroke="#3fe0ff" stroke-width="7"/><line x1="362" y1="318" x2="160" y2="44" stroke="#eafcff" stroke-width="2.5"/>
+      <line x1="362" y1="318" x2="76" y2="112" stroke="#3fe0ff" stroke-width="20" opacity=".16"/><line x1="362" y1="318" x2="76" y2="112" stroke="#3fe0ff" stroke-width="5"/>
+    </g></g>
+  </g>
+  <path d="M72 318 H440 L470 350 H42 Z" fill="#2a1d78"/>
+  <path d="M222 300 H290 L296 318 H216 Z" fill="#1a1140" stroke="#8a78e6" stroke-width="3" stroke-linejoin="round"/>
+  <line x1="230" y1="309" x2="282" y2="309" stroke="#ff4fb4" stroke-width="3" stroke-linecap="round"/>
+  <line x1="44" y1="350" x2="468" y2="350" stroke="#3fe0ff" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="150" cy="318" r="9" fill="#ff7a59"/><circle cx="256" cy="300" r="8" fill="#a874ff"/><circle cx="362" cy="318" r="9" fill="#3fe0ff"/>
+  <g opacity=".22" fill="#c9b8ff"><ellipse class="rp-fog1" cx="150" cy="342" rx="120" ry="18"/><ellipse class="rp-fog2" cx="360" cy="344" rx="130" ry="16"/></g>
+  <g clip-path="url(#rp-floor)" stroke="#3fe0ff" stroke-linecap="round">
+    <line x1="60" y1="388" x2="452" y2="388" stroke-width="5" opacity=".6"/><line x1="90" y1="432" x2="422" y2="432" stroke-width="4" opacity=".4"/><line x1="120" y1="478" x2="392" y2="478" stroke-width="3" opacity=".25"/>
+    <line x1="256" y1="352" x2="112" y2="512" stroke-width="4" opacity=".4"/><line x1="256" y1="352" x2="256" y2="512" stroke-width="4" opacity=".4"/><line x1="256" y1="352" x2="400" y2="512" stroke-width="4" opacity=".4"/>
+    <line x1="256" y1="352" x2="0" y2="470" stroke-width="3" opacity=".3"/><line x1="256" y1="352" x2="512" y2="470" stroke-width="3" opacity=".3"/>
+  </g>
+</svg></button>
+  <div class="titletext">
+  <h1 translate="no">Your <span>Festival</span> Plan</h1>
+  <p class="tagline">Fan-made planner for EDC Orlando 2026. Not affiliated with Insomniac.</p>
+  </div>
+  </div>
+  <div class="seg days" id="days" role="group" aria-label="Day"><button data-d="fri" aria-pressed="false">Friday<small>Nov 6</small></button><button data-d="sat" aria-pressed="true">Saturday<small>Nov 7</small></button><button data-d="sun" aria-pressed="false">Sunday<small>Nov 8</small></button></div>
+  <div class="mix">
+    <h2 id="mixh">Saturday's sound</h2>
+    <div class="bar" id="bar" aria-hidden="true"></div>
+    <div class="legend" id="legend"></div>
+  </div>
+  <div class="gmap gmap-top" id="topMap">
+    <div class="maph-row"><h2 class="maph" id="topMapH">Tap a stage</h2><button class="maph-clear" id="topMapClear" type="button" hidden>Show all stages</button></div>
+    <div class="svgwrap"></div>
+  </div>
+  <div class="picksrow"><a class="planbtn" href="#plan" data-v="plan"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg> My Plan</a><div class="tally" id="tally" role="group" aria-label="Your picks"></div><button id="linkBtn" class="chip linkbtn" hidden><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg> <span id="linkTxt">Link phones</span></button></div>
+  <div class="sync" id="sync" hidden></div>
+</header>
+
+<div class="ctrl" id="ctrl">
+<div class="seg times3" id="times" role="group" aria-label="Time of day"><button data-t="all" aria-pressed="true"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18h18M5 18a7 7 0 0 1 14 0"/><path d="M12 7v4M8 6l1.5 2M16 6l-1.5 2"/></svg> All day<small>1 PM to 12</small></button><button data-t="aft" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg> Afternoon<small>before 5 PM</small></button><button data-t="eve" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg> Evening<small>5 PM on</small></button><button data-t="party" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="11" r="7"/><path d="M5 11h14M12 4v14M7.5 6.5l9 9M16.5 6.5l-9 9"/><path d="M12 18v4"/></svg> After&shy;parties<small>late night</small></button></div>
+<div class="ctrlrow" id="ctrlrow">
+<button class="ftoggle" id="ftoggle" aria-expanded="false" aria-controls="actfilters"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2" fill="currentColor" stroke="none"/><circle cx="16" cy="12" r="2" fill="currentColor" stroke="none"/><circle cx="10" cy="18" r="2" fill="currentColor" stroke="none"/></svg> Filters <span class="fsum" id="fsum"></span><span class="chev" aria-hidden="true">▾</span></button>
+<button class="vtoggle" id="vtoggle" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="4" cy="6" r="1" fill="currentColor"/><circle cx="4" cy="12" r="1" fill="currentColor"/><circle cx="4" cy="18" r="1" fill="currentColor"/></svg> Compact</button>
+</div>
+<div id="actfilters" class="fpanel">
+<p class="rowlbl"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg> Stage</p>
+<div class="stg-row" id="stagerow" role="group" aria-label="Stage"></div>
+<p class="rowlbl"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2" fill="currentColor" stroke="none"/><circle cx="16" cy="12" r="2" fill="currentColor" stroke="none"/><circle cx="10" cy="18" r="2" fill="currentColor" stroke="none"/></svg> Genre &amp; picks</p>
+<div class="filters" id="filters">
+  <select id="genreSel" class="dd" aria-label="Genre"></select>
+  <input id="q" name="q" class="ph-no-capture" type="search" placeholder="Search artists…" aria-label="Search artists" autocomplete="off">
+</div>
+</div>
+</div>
+<p class="estnote" id="estnote">Times and stages marked ~ are best guesses until official set times drop (about Oct 30).</p>
+<div class="count" id="count" role="status" aria-live="polite"></div>
+<div class="grid" id="grid"></div>
+<div class="tipbox tip-end" hidden><p class="tip-h"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg> Made with love. Leave a tip?</p><div class="donate-row" data-where="lineup_end"></div></div>
+<section class="dayinfo" aria-label="About this day">
+  <div class="facts">
+      <span class="fact">Gates <b>1 PM</b> · Ends <b>12 AM</b></span>
+      <span class="fact"><b id="nacts">36</b> acts · <b>5</b> stages</span>
+    </div>
+  <p class="lede">Every act, every stage, one-tap YouTube &amp; Spotify. <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12l3 6-9 12L3 9Z"/><path d="M3 9h18M9 3l3 6 3-6M12 9v12"/></svg> marks discovery picks. Tap Going, Maybe or Skip; your picks save on this phone.</p>
+  <div class="notice"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg> Set times &amp; stages aren't out yet (expected Fri Oct 30). <a class="maplink" href="#map" onclick="show('map');try{history.replaceState(null,'','#map')}catch(_){}"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3 3 5v16l6-2 6 2 6-2V3l-6 2-6-2Z"/><path d="M9 3v16M15 5v16"/></svg> See the grounds map →</a></div>
+</section>
+
+</div>
+
+<div class="view" id="v-plan" hidden><section class="sec plan">
+<h1 class="vh"><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg> My Plan</h1>
+<div class="seg days" id="planDays" role="group" aria-label="Day"><button data-d="fri" aria-pressed="false">Friday<small>Nov 6</small></button><button data-d="sat" aria-pressed="true">Saturday<small>Nov 7</small></button><button data-d="sun" aria-pressed="false">Sunday<small>Nov 8</small></button></div>
+<div class="plan-bar"><p class="plan-sum" id="planSum" role="status" aria-live="polite"></p><label class="plan-maybe"><input type="checkbox" id="planMaybe" checked> Show Maybes</label></div>
+<ol class="plan-list" id="planList"></ol>
+</section></div>
+
+<div class="view" id="v-travel" hidden><section class="sec">
+<h1 class="vh"><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M3 11h18M7 17v2M17 17v2"/><circle cx="7.5" cy="14" r=".8" fill="currentColor" stroke="none"/><circle cx="16.5" cy="14" r=".8" fill="currentColor" stroke="none"/></svg> Getting there</h1>
+<p>Official EDC shuttles with every pickup stop, plus Uber and Lyft. A shuttle pass works only on the line you bought, at any stop on that line.</p>
+<h2 class="hs">Shuttle times</h2>
+<div class="times">
+<div class="time"><b>12 PM to 8 PM</b>Shuttles leave every stop continuously</div>
+<div class="time"><b>9 PM to close</b>Returns run until 1 hour after Kinetic Field ends</div>
+<div class="time"><b>About 15 min walk</b>From the shuttle drop-off to the main entrance</div>
+</div>
+<h2 class="hs">Shuttle lines &amp; pickup stops</h2>
+<div class="lines">
+<div class="line ours" style="--lc:#3f8cff"><div class="ln">Blue Line <em>Our line</em></div><div class="stop">Embassy Suites by Hilton Orlando International Drive ICON Park</div><div class="addr">8250 Jamaican Ct, Orlando, FL 32819</div><div class="btns"><a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=8250%20Jamaican%20Ct%2C%20Orlando%2C%20FL%2032819" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg> Directions to this stop</a></div><details><summary>Nearby hotels (2)</summary><ul><li>Avanti International Resort, 8738 International Dr (0.4 mi)</li><li>Hampton Inn Orlando Convention Center, 8900 Universal Blvd (0.4 mi)</li></ul></details></div>
+<div class="line" style="--lc:#ff8a2a"><div class="ln">Orange Line</div><div class="stop">Fairfield Inn &amp; Suites Orlando Near Universal</div><div class="addr">5614 Vineland Rd, Orlando, FL 32819</div><div class="btns"><a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=5614%20Vineland%20Rd%2C%20Orlando%2C%20FL%2032819" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg> Directions to this stop</a></div><details><summary>Nearby hotels (3)</summary><ul><li>Holiday Inn Express &amp; Suites Nearest Universal, 5605 Major Blvd (0.2 mi)</li><li>Comfort Suites Near Universal, 5617 Major Blvd (0.3 mi)</li><li>Clarion Inn &amp; Suites Across From Universal, 5829 Grand National Dr (0.5 mi)</li></ul></details></div>
+<div class="line" style="--lc:#4fe08a"><div class="ln">Green Line</div><div class="stop">Four Points by Sheraton Orlando International Drive</div><div class="addr">5905 International Dr, Orlando, FL 32819</div><div class="btns"><a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=5905%20International%20Dr%2C%20Orlando%2C%20FL%2032819" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg> Directions to this stop</a></div><details><summary>Nearby hotels (5)</summary><ul><li>Home2 Suites Orlando Near Universal, 5910 American Way</li><li>Wyndham Garden Orlando Universal / I-Drive, 5855 American Way</li><li>Hilton Garden Inn Orlando I-Drive North, 5877 American Way</li><li>Homewood Suites Orlando Nearest Universal, 5893 American Way</li><li>Orlando International Drive North Hotel, 5859 American Way</li></ul></details></div>
+<div class="line" style="--lc:#ffd23f"><div class="ln">Yellow Line</div><div class="stop">Comfort Inn &amp; Suites Near Universal Orlando Resort</div><div class="addr">7495 Canada Ave, Orlando, FL 32819</div><div class="btns"><a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=7495%20Canada%20Ave%2C%20Orlando%2C%20FL%2032819" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg> Directions to this stop</a></div><details><summary>Nearby hotels (1)</summary><ul><li>CoCo Key Hotel and Water Resort, 7400 International Dr (0.5 mi)</li></ul></details></div>
+<div class="line" style="--lc:#d9e4ff"><div class="ln">Silver Line</div><div class="stop">Courtyard Orlando Lake Buena Vista at Vista Centre</div><div class="addr">8501 Palm Pkwy, Orlando, FL 32836</div><div class="btns"><a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=8501%20Palm%20Pkwy%2C%20Orlando%2C%20FL%2032836" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg> Directions to this stop</a></div><details><summary>Nearby hotels (2)</summary><ul><li>Crowne Plaza Orlando Lake Buena Vista, 8686 Palm Pkwy (0.1 mi)</li><li>Candlewood Suites Lake Buena Vista, 12341 Winter Garden Vineland Rd (0.4 mi)</li></ul></details></div>
+<div class="line" style="--lc:#ff4fb4"><div class="ln">Hotel EDC Shuttle</div><div class="stop">Margaritaville Resort Orlando</div><div class="addr">8000 Fins Up Circle, Kissimmee, FL 34747</div><div class="btns"><a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=8000%20Fins%20Up%20Circle%2C%20Kissimmee%2C%20FL%2034747" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg> Directions to this stop</a></div><p style='font-size:13.5px;color:var(--soft);margin:0'>For Hotel EDC guests and afterparty runs.</p></div>
+</div>
+<h2 class="hs">Uber &amp; Lyft</h2>
+<p>The 2026 rideshare zones aren't posted yet. In 2025 the Lyft rideshare zone and the official shuttle exit were on the south side of the grounds by W Anderson St, and the main entrance was on the north side off W Church St (see the Map tab).</p>
+<div class="btns" style="max-width:640px">
+<a class="btn uber" href="https://m.uber.com/ul/?action=setPickup&amp;pickup=my_location&amp;dropoff%5Bformatted_address%5D=287%20S%20Tampa%20Ave%2C%20Orlando%2C%20FL%2032805&amp;dropoff%5Blatitude%5D=28.5391&amp;dropoff%5Blongitude%5D=-81.4047&amp;dropoff%5Bnickname%5D=EDC%20Orlando" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 16V11l2-5h12l2 5v5"/><path d="M4 16h16M7 16v2M17 16v2"/><circle cx="7.5" cy="14" r=".8" fill="currentColor" stroke="none"/><circle cx="16.5" cy="14" r=".8" fill="currentColor" stroke="none"/></svg> Uber to Tinker Field</a>
+<a class="btn lyft" href="https://ride.lyft.com/ridetype?destination=28.5391%2C-81.4047" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 16V11l2-5h12l2 5v5"/><path d="M4 16h16M7 16v2M17 16v2"/><circle cx="7.5" cy="14" r=".8" fill="currentColor" stroke="none"/><circle cx="16.5" cy="14" r=".8" fill="currentColor" stroke="none"/></svg> Lyft to Tinker Field</a>
+<a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=287%20S%20Tampa%20Ave%2C%20Orlando%2C%20FL%2032805" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg> Google Maps to venue</a>
+</div>
+<p class="addr" style="margin-top:8px">Venue: 287 S Tampa Ave, Orlando, FL 32805</p>
+<div class="tip"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.4.3.5.8.5 1.1v1h6v-1c0-.3.1-.8.5-1.1A6 6 0 0 0 12 3Z"/></svg> Leaving at midnight means surge pricing and big crowds. Drop a meetup pin a few blocks from the gates before you go in, or ride the Blue Line back.</div>
+<h2 class="hs">Parking</h2>
+<div class="times">
+<div class="time"><b>Premier Lot 1: sold out</b>NE corner of W Church St &amp; Rio Grande Ave, entrance off W Central Blvd. Opens 10 AM.</div>
+<div class="time"><b>General parking</b>Extremely limited. Cars left after 2 AM get towed (Johnson's Wrecker: 407-293-2540).</div>
+</div>
+<div class="btns" style="max-width:640px;margin-top:10px">
+<a class="btn alt" href="https://orlando.edc.com/travel/shuttles/" target="_blank" rel="noopener">Official shuttle page</a>
+<a class="btn alt" href="https://orlando.edc.com/travel/parking/" target="_blank" rel="noopener">Official parking page</a>
+</div>
+</section></div>
+
+<div class="view" id="v-map" hidden><section class="sec">
+<h1 class="vh"><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3 3 5v16l6-2 6 2 6-2V3l-6 2-6-2Z"/><path d="M9 3v16M15 5v16"/></svg> Grounds map</h1>
+<p>The 2026 map isn't out yet; it usually comes with set times. The drawing below follows last year's Tinker Field layout; tap the button for the original 2025 map.</p>
+<div class="btns" style="max-width:640px">
+<a class="btn" href="https://edmidentity.com/wp-content/uploads/2025/10/573605773_18365913373086386_7771633280838532760_n-819x1024.jpg" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3 3 5v16l6-2 6 2 6-2V3l-6 2-6-2Z"/><path d="M9 3v16M15 5v16"/></svg> Open the 2025 grounds map</a>
+<a class="btn alt" href="https://maps.app.goo.gl/jfpz4iM5n8wNEw4v8" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg> Tinker Field in Google Maps</a>
+</div>
+<div class="gmap" id="gmap2"><h2><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3 3 5v16l6-2 6 2 6-2V3l-6 2-6-2Z"/><path d="M9 3v16M15 5v16"/></svg> Where the stages are</h2><p class="cap">Drawn from the 2025 Tinker Field map. The 2026 layout may shift a bit. Tap a stage.</p><div class="svgwrap"></div><div class="ginfo" aria-live="polite">Tap a stage dot to see what plays there.</div><div class="gkey"><span><i style="background:var(--pink)"></i>Stage</span><span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 21V4a1 1 0 0 1 1-1h7l4 4v14"/><path d="M6 21h14M14 3v18"/><circle cx="11" cy="13" r=".8" fill="currentColor" stroke="none"/></svg> Entrance</span><span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M3 11h18M7 17v2M17 17v2"/><circle cx="7.5" cy="14" r=".8" fill="currentColor" stroke="none"/><circle cx="16.5" cy="14" r=".8" fill="currentColor" stroke="none"/></svg> Shuttle exit</span><span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 16V11l2-5h12l2 5v5"/><path d="M4 16h16M7 16v2M17 16v2"/><circle cx="7.5" cy="14" r=".8" fill="currentColor" stroke="none"/><circle cx="16.5" cy="14" r=".8" fill="currentColor" stroke="none"/></svg> Rideshare (Lyft)</span><span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="6" r="3"/><path d="M7 21l2-9h6l2 9M9 12V9h6v3"/></svg> Restrooms</span><span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3s7 7.5 7 12a7 7 0 1 1-14 0c0-4.5 7-12 7-12Z"/></svg> Water</span><span><svg style="color:#ff3b5c" class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg> First aid</span></div></div>
+  <div class="stages">
+    <h2>The 5 stages</h2>
+    <div class="sgrid">
+      <div class="stage" style="--s:var(--pink)"><b>kineticFIELD</b><span>Main stage, the giant headliner sets</span></div>
+      <div class="stage" style="--s:var(--violet)"><b>circuitGROUNDS</b><span>Big melodic and festival anthems</span></div>
+      <div class="stage" style="--s:var(--peri)"><b>neonGARDEN</b><span>Deep techno and house</span></div>
+      <div class="stage" style="--s:var(--cyan)"><b>stereoBLOOM</b><span>House, bass and trance (Insomniac Records &amp; Dreamstate)</span></div>
+      <div class="stage" style="--s:var(--gold)"><b>CASA BACARDÍ</b><span>Daily DJ sets with a cocktail bar</span></div>
+    </div>
+  </div>
+</section></div>
+</main>
+
+<footer>
+  <div class="tipbox" hidden><p class="tip-h"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg> Love the app? Leave a tip.</p><div class="donate-row" data-where="footer"></div></div>
+  Fan-made planner, not affiliated with Insomniac or EDC. Lineup from the official <a class="flink" href="https://orlando.edc.com/lineup/" target="_blank" rel="noopener">EDC Orlando lineup page</a> (By Day tab). Order follows poster billing, biggest first. Genres marked "best guess" are lesser-known acts with little public info; give them a listen to judge. Music links open a search for that artist. Anonymous usage stats (which tabs, artists and buttons get tapped, and picks) help improve the app; never names, your shared code or anything you type.
+</footer>
+</div>
+
+<script src="config.js"></script>
+<script src="vendor/supabase.js"></script>
+<script type="module" src="app.js"></script>
+</body>
+</html>

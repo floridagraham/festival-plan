@@ -1,0 +1,1352 @@
+{
+  "source": "https://orlando.edc.com/lineup/ (By Day tab), pulled 2026-10-25",
+  "genreGroups": {
+    "house": {
+      "label": "House & Tech House",
+      "color": "var(--cyan)",
+      "hex": "#3fe0ff"
+    },
+    "bass": {
+      "label": "Bass & Dubstep",
+      "color": "var(--pink)",
+      "hex": "#ff4fb4"
+    },
+    "melodic": {
+      "label": "Melodic & Big Room",
+      "color": "var(--violet)",
+      "hex": "#a874ff"
+    },
+    "techno": {
+      "label": "Techno",
+      "color": "var(--orange)",
+      "hex": "#ff7a3d"
+    },
+    "dnb": {
+      "label": "Drum & Bass",
+      "color": "var(--amber)",
+      "hex": "#ffb627"
+    },
+    "tbc": {
+      "label": "TBC",
+      "color": "var(--lime)",
+      "hex": "#7dff9b"
+    }
+  },
+  "days": {
+    "fri": {
+      "date": "2026-11-06",
+      "acts": [
+        {
+          "name": "David Guetta",
+          "slug": "david-guetta",
+          "genreGroup": "melodic",
+          "genre": "Big room / dance pop",
+          "vibe": "Global hitmaker; a wall-to-wall singalong of his biggest dance hits.",
+          "searchTerms": [
+            "David Guetta"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Afrojack",
+          "slug": "afrojack",
+          "genreGroup": "melodic",
+          "genre": "Big room / electro house",
+          "vibe": "Dutch festival heavyweight with huge, punchy drops.",
+          "searchTerms": [
+            "Afrojack"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Alesso",
+          "slug": "alesso",
+          "genreGroup": "melodic",
+          "genre": "Progressive house",
+          "vibe": "Euphoric anthems like \"Heroes\". Golden-hour set.",
+          "searchTerms": [
+            "Alesso"
+          ],
+          "flags": [
+            "sun"
+          ]
+        },
+        {
+          "name": "Whethan",
+          "slug": "whethan",
+          "genreGroup": "melodic",
+          "genre": "Future bass / electro pop",
+          "vibe": "Bright, poppy bass with indie-dance crossover.",
+          "searchTerms": [
+            "Whethan"
+          ],
+          "flags": []
+        },
+        {
+          "name": "KREAM",
+          "slug": "kream",
+          "genreGroup": "house",
+          "genre": "Melodic house / tech house",
+          "vibe": "Norwegian brothers with driving, melodic club tracks.",
+          "searchTerms": [
+            "KREAM"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Mau P",
+          "slug": "mau-p",
+          "genreGroup": "house",
+          "genre": "Tech house",
+          "vibe": "Viral tech house (\"Drugs From Amsterdam\"), pure peak-time energy.",
+          "searchTerms": [
+            "Mau P"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Prospa B2B Josh Baker",
+          "slug": "prospa-b2b-josh-baker",
+          "genreGroup": "house",
+          "genre": "House / UK rave",
+          "vibe": "UK rave-inspired house trading tracks with Josh Baker's tech house.",
+          "searchTerms": [
+            "Prospa",
+            "Josh Baker"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Adventure Club",
+          "slug": "adventure-club",
+          "genreGroup": "bass",
+          "genre": "Melodic dubstep",
+          "vibe": "Emotional melodic bass with big drops. Golden-hour set.",
+          "searchTerms": [
+            "Adventure Club"
+          ],
+          "flags": [
+            "sun"
+          ]
+        },
+        {
+          "name": "Chris Lorenzo",
+          "slug": "chris-lorenzo",
+          "genreGroup": "house",
+          "genre": "Bass house",
+          "vibe": "Bouncy, gritty UK bass house.",
+          "searchTerms": [
+            "Chris Lorenzo"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Wooli",
+          "slug": "wooli",
+          "genreGroup": "bass",
+          "genre": "Dubstep",
+          "vibe": "Massive, cinematic dubstep drops.",
+          "searchTerms": [
+            "Wooli"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Bou B2B Kanine",
+          "slug": "bou-b2b-kanine",
+          "genreGroup": "dnb",
+          "genre": "Drum & bass",
+          "vibe": "Two UK drum & bass heavyweights back to back.",
+          "searchTerms": [
+            "Bou",
+            "Kanine"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Levity",
+          "slug": "levity",
+          "genreGroup": "bass",
+          "genre": "Dubstep / bass",
+          "vibe": "Rising trio with playful, heavy bass.",
+          "searchTerms": [
+            "Levity"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Josh Baker",
+          "slug": "josh-baker",
+          "genreGroup": "house",
+          "genre": "Tech house",
+          "vibe": "Groovy, rolling UK tech house.",
+          "searchTerms": [
+            "Josh Baker"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Interplanetary Criminal",
+          "slug": "interplanetary-criminal",
+          "genreGroup": "house",
+          "genre": "UK garage / house",
+          "vibe": "Bouncy UK garage and house, a breakout name.",
+          "searchTerms": [
+            "Interplanetary Criminal"
+          ],
+          "flags": []
+        },
+        {
+          "name": "HAYLA",
+          "slug": "hayla",
+          "genreGroup": "melodic",
+          "genre": "Vocal dance / melodic house",
+          "vibe": "Big-voiced singer-producer with emotional dance tracks.",
+          "searchTerms": [
+            "HAYLA"
+          ],
+          "flags": []
+        },
+        {
+          "name": "MPH",
+          "slug": "mph",
+          "genreGroup": "house",
+          "genre": "UK garage / speed garage",
+          "vibe": "Bassy, skippy UK garage grooves.",
+          "searchTerms": [
+            "MPH"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Omar+",
+          "slug": "omar",
+          "genreGroup": "house",
+          "genre": "House / UK garage",
+          "vibe": "Feel-good house and garage.",
+          "searchTerms": [
+            "Omar+"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Kompany",
+          "slug": "kompany",
+          "genreGroup": "bass",
+          "genre": "Dubstep",
+          "vibe": "Heavy, aggressive dubstep.",
+          "searchTerms": [
+            "Kompany"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Bullet Tooth B2B Sidney Charles",
+          "slug": "bullet-tooth-b2b-sidney-charles",
+          "genreGroup": "house",
+          "genre": "Tech house",
+          "vibe": "Groove-heavy tech house back to back.",
+          "searchTerms": [
+            "Bullet Tooth",
+            "Sidney Charles"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Level Up",
+          "slug": "level-up",
+          "genreGroup": "bass",
+          "genre": "Dubstep / riddim",
+          "vibe": "Hard-hitting bass from a fan favorite.",
+          "searchTerms": [
+            "Level Up dubstep"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Pegassi",
+          "slug": "pegassi",
+          "genreGroup": "techno",
+          "genre": "Techno",
+          "vibe": "Hard, driving techno.",
+          "searchTerms": [
+            "Pegassi"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Joshwa",
+          "slug": "joshwa",
+          "genreGroup": "house",
+          "genre": "Tech house",
+          "vibe": "Bouncy UK tech house.",
+          "searchTerms": [
+            "Joshwa"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Brunello",
+          "slug": "brunello",
+          "genreGroup": "house",
+          "genre": "House",
+          "vibe": "Laid-back house grooves. Golden-hour set.",
+          "searchTerms": [
+            "Brunello"
+          ],
+          "flags": [
+            "sun",
+            "gem"
+          ]
+        },
+        {
+          "name": "MALUGI",
+          "slug": "malugi",
+          "genreGroup": "house",
+          "genre": "House",
+          "vibe": "Groovy house. Golden-hour set.",
+          "searchTerms": [
+            "MALUGI"
+          ],
+          "flags": [
+            "sun",
+            "gem",
+            "guess"
+          ]
+        },
+        {
+          "name": "Azzecca",
+          "slug": "azzecca",
+          "genreGroup": "house",
+          "genre": "Tech house",
+          "vibe": "Up-and-coming tech house name.",
+          "searchTerms": [
+            "Azzecca"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Benda B2B Vastive",
+          "slug": "benda-b2b-vastive",
+          "genreGroup": "bass",
+          "genre": "Dubstep",
+          "vibe": "Two bass producers back to back.",
+          "searchTerms": [
+            "Benda",
+            "Vastive"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Big Florida",
+          "slug": "big-florida",
+          "genreGroup": "bass",
+          "genre": "Riddim / dubstep",
+          "vibe": "Very heavy bass from a Florida name.",
+          "searchTerms": [
+            "Big Florida"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "IDEMI",
+          "slug": "idemi",
+          "genreGroup": "house",
+          "genre": "Tech house",
+          "vibe": "Newer tech house name. Good discovery pick.",
+          "searchTerms": [
+            "IDEMI"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Zack Martino",
+          "slug": "zack-martino",
+          "genreGroup": "melodic",
+          "genre": "Progressive / big room",
+          "vibe": "Melodic festival bangers.",
+          "searchTerms": [
+            "Zack Martino"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "RAJE",
+          "slug": "raje",
+          "genreGroup": "tbc",
+          "genre": "Genre not listed yet",
+          "vibe": "Little public info. Pure discovery pick.",
+          "searchTerms": [
+            "RAJE DJ"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "AAT",
+          "slug": "aat",
+          "genreGroup": "house",
+          "genre": "House",
+          "vibe": "Smaller-stage house act. Sample before you go.",
+          "searchTerms": [
+            "AAT"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Sloth",
+          "slug": "sloth",
+          "genreGroup": "bass",
+          "genre": "Riddim",
+          "vibe": "Grimy riddim for the bass heads.",
+          "searchTerms": [
+            "Sloth riddim"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Inbal",
+          "slug": "inbal",
+          "genreGroup": "tbc",
+          "genre": "Genre not listed yet",
+          "vibe": "Little public info. Pure discovery pick.",
+          "searchTerms": [
+            "Inbal DJ"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "JOA",
+          "slug": "joa",
+          "genreGroup": "tbc",
+          "genre": "Genre not listed yet",
+          "vibe": "Little public info. Pure discovery pick.",
+          "searchTerms": [
+            "JOA DJ"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Matthias",
+          "slug": "matthias",
+          "genreGroup": "tbc",
+          "genre": "Genre not listed yet",
+          "vibe": "Little public info. Pure discovery pick.",
+          "searchTerms": [
+            "Matthias DJ"
+          ],
+          "flags": [
+            "gem"
+          ]
+        }
+      ]
+    },
+    "sat": {
+      "date": "2026-11-07",
+      "acts": [
+        {
+          "name": "Alan Walker",
+          "slug": "alan-walker",
+          "genreGroup": "melodic",
+          "genre": "Melodic EDM / progressive house",
+          "vibe": "Huge emotional sing-along anthems like \"Faded\". Golden-hour set.",
+          "searchTerms": [
+            "Alan Walker"
+          ],
+          "flags": [
+            "sun"
+          ]
+        },
+        {
+          "name": "Steve Aoki",
+          "slug": "steve-aoki",
+          "genreGroup": "melodic",
+          "genre": "Big room / electro house",
+          "vibe": "Maximum-energy party set, crowd surfing and cake throwing.",
+          "searchTerms": [
+            "Steve Aoki"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Kaskade",
+          "slug": "kaskade",
+          "genreGroup": "melodic",
+          "genre": "Progressive / deep house",
+          "vibe": "Euphoric vocal house, a reliable feel-good peak of the night.",
+          "searchTerms": [
+            "Kaskade"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Disco Lines",
+          "slug": "disco-lines",
+          "genreGroup": "house",
+          "genre": "Disco house",
+          "vibe": "Bouncy edits of pop and throwback hits, very sing-along.",
+          "searchTerms": [
+            "Disco Lines"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Alison Wonderland",
+          "slug": "alison-wonderland",
+          "genreGroup": "bass",
+          "genre": "Future bass / trap",
+          "vibe": "Emotional melodies that crash into heavy drops.",
+          "searchTerms": [
+            "Alison Wonderland"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Nico Moreno",
+          "slug": "nico-moreno",
+          "genreGroup": "techno",
+          "genre": "Hard techno",
+          "vibe": "Fast, pounding warehouse techno with no letup.",
+          "searchTerms": [
+            "Nico Moreno"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Aaron Hibell",
+          "slug": "aaron-hibell",
+          "genreGroup": "melodic",
+          "genre": "Melodic house & techno",
+          "vibe": "Cinematic, orchestral builds with deep grooves.",
+          "searchTerms": [
+            "Aaron Hibell"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Franky Rizardo",
+          "slug": "franky-rizardo",
+          "genreGroup": "house",
+          "genre": "House / tech house",
+          "vibe": "Rolling Dutch house grooves, polished and danceable.",
+          "searchTerms": [
+            "Franky Rizardo"
+          ],
+          "flags": []
+        },
+        {
+          "name": "ACRAZE B2B CID",
+          "slug": "acraze-b2b-cid",
+          "genreGroup": "house",
+          "genre": "Tech house",
+          "vibe": "Two tech house hitmakers trading tracks (ACRAZE made \"Do It To It\").",
+          "searchTerms": [
+            "ACRAZE",
+            "CID DJ"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Skull Machine",
+          "slug": "skull-machine",
+          "genreGroup": "bass",
+          "genre": "Heavy dubstep / metal bass",
+          "vibe": "Black Tiger Sex Machine x Kai Wachi: helmets, lasers and very heavy bass.",
+          "searchTerms": [
+            "Black Tiger Sex Machine Kai Wachi Skull Machine"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Ray Volpe",
+          "slug": "ray-volpe",
+          "genreGroup": "bass",
+          "genre": "Dubstep / riddim",
+          "vibe": "Goofy, wild, and gut-punching drops. A bass-stage favorite.",
+          "searchTerms": [
+            "Ray Volpe"
+          ],
+          "flags": []
+        },
+        {
+          "name": "AYYBO",
+          "slug": "ayybo",
+          "genreGroup": "house",
+          "genre": "Tech house",
+          "vibe": "Bouncy, playful tech house built for a big crowd.",
+          "searchTerms": [
+            "AYYBO"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Dennis Cruz",
+          "slug": "dennis-cruz",
+          "genreGroup": "house",
+          "genre": "Tech house",
+          "vibe": "Latin-flavored percussion and deep, rolling grooves.",
+          "searchTerms": [
+            "Dennis Cruz"
+          ],
+          "flags": []
+        },
+        {
+          "name": "ALLEYCVT",
+          "slug": "alleycvt",
+          "genreGroup": "bass",
+          "genre": "Dubstep / experimental bass",
+          "vibe": "Fast-rising bass producer with weird, inventive sound design.",
+          "searchTerms": [
+            "ALLEYCVT"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Twinsick",
+          "slug": "twinsick",
+          "genreGroup": "house",
+          "genre": "House / bass house",
+          "vibe": "Duo that plays club nights across the US. Sample before you go.",
+          "searchTerms": [
+            "Twinsick"
+          ],
+          "flags": [
+            "gem",
+            "guess"
+          ]
+        },
+        {
+          "name": "Max Dean B2B Luke Dean",
+          "slug": "max-dean-b2b-luke-dean",
+          "genreGroup": "house",
+          "genre": "House",
+          "vibe": "UK brothers trading underground house cuts.",
+          "searchTerms": [
+            "Max Dean",
+            "Luke Dean"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Jkyl & Hyde",
+          "slug": "jkyl-hyde",
+          "genreGroup": "bass",
+          "genre": "Dubstep",
+          "vibe": "Dark, heavy dubstep from a long-running duo.",
+          "searchTerms": [
+            "Jkyl & Hyde"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Devault",
+          "slug": "devault",
+          "genreGroup": "melodic",
+          "genre": "Melodic electronic / future house",
+          "vibe": "Lush, uplifting melodies. Golden-hour set.",
+          "searchTerms": [
+            "Devault"
+          ],
+          "flags": [
+            "sun"
+          ]
+        },
+        {
+          "name": "me n ü",
+          "slug": "me-n-u",
+          "genreGroup": "house",
+          "genre": "House",
+          "vibe": "Newer house act. Good pick for discovering something fresh.",
+          "searchTerms": [
+            "me n ü"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Rossi.",
+          "slug": "rossi",
+          "genreGroup": "house",
+          "genre": "House / minimal tech",
+          "vibe": "Groovy UK underground house. Golden-hour set.",
+          "searchTerms": [
+            "Rossi. DJ"
+          ],
+          "flags": [
+            "sun"
+          ]
+        },
+        {
+          "name": "Subsonic",
+          "slug": "subsonic",
+          "genreGroup": "dnb",
+          "genre": "Drum & bass",
+          "vibe": "Fast, rolling drum & bass for the high-BPM crowd.",
+          "searchTerms": [
+            "Subsonic drum and bass"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "AVELLO",
+          "slug": "avello",
+          "genreGroup": "bass",
+          "genre": "Melodic bass",
+          "vibe": "Melodic drops with emotional builds, Illenium-style vibe.",
+          "searchTerms": [
+            "AVELLO"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "LAYZ",
+          "slug": "layz",
+          "genreGroup": "bass",
+          "genre": "Dubstep / riddim",
+          "vibe": "Gritty, headbanger bass from Australia.",
+          "searchTerms": [
+            "LAYZ"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Discip",
+          "slug": "discip",
+          "genreGroup": "house",
+          "genre": "Tech house",
+          "vibe": "Up-and-coming tech house producer.",
+          "searchTerms": [
+            "Discip"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Roddy Lima",
+          "slug": "roddy-lima",
+          "genreGroup": "house",
+          "genre": "Tech house",
+          "vibe": "Groove-heavy tech house with bassy hooks.",
+          "searchTerms": [
+            "Roddy Lima"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Miguelle & Tons",
+          "slug": "miguelle-tons",
+          "genreGroup": "house",
+          "genre": "House / tech house",
+          "vibe": "Duo with Ibiza bookings. Sample before you go.",
+          "searchTerms": [
+            "Miguelle & Tons"
+          ],
+          "flags": [
+            "gem",
+            "guess"
+          ]
+        },
+        {
+          "name": "Gabss",
+          "slug": "gabss",
+          "genreGroup": "house",
+          "genre": "Tech house",
+          "vibe": "Newer tech house name. Good discovery pick.",
+          "searchTerms": [
+            "Gabss"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "ChaseWest",
+          "slug": "chasewest",
+          "genreGroup": "house",
+          "genre": "Tech house",
+          "vibe": "Bass-forward tech house with festival energy.",
+          "searchTerms": [
+            "ChaseWest"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Fallon",
+          "slug": "fallon",
+          "genreGroup": "house",
+          "genre": "House",
+          "vibe": "Smaller-stage house DJ. Sample before you go.",
+          "searchTerms": [
+            "Fallon DJ"
+          ],
+          "flags": [
+            "gem",
+            "guess"
+          ]
+        },
+        {
+          "name": "KinAhau",
+          "slug": "kinahau",
+          "genreGroup": "house",
+          "genre": "Tech house",
+          "vibe": "Rising tech house producer.",
+          "searchTerms": [
+            "KinAhau"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Greg 99",
+          "slug": "greg-99",
+          "genreGroup": "house",
+          "genre": "Tech house",
+          "vibe": "Newer tech house name. Good discovery pick.",
+          "searchTerms": [
+            "Greg 99"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Alves",
+          "slug": "alves",
+          "genreGroup": "house",
+          "genre": "Tech house",
+          "vibe": "Newer tech house name. Good discovery pick.",
+          "searchTerms": [
+            "Alves DJ"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Monoky",
+          "slug": "monoky",
+          "genreGroup": "house",
+          "genre": "Tech house",
+          "vibe": "Newer tech house name. Good discovery pick.",
+          "searchTerms": [
+            "Monoky"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Mai Iachetti",
+          "slug": "mai-iachetti",
+          "genreGroup": "house",
+          "genre": "House / tech house",
+          "vibe": "Smaller-stage DJ with club bookings. Sample before you go.",
+          "searchTerms": [
+            "Mai Iachetti"
+          ],
+          "flags": [
+            "gem",
+            "guess"
+          ]
+        },
+        {
+          "name": "Fury with MC Dino",
+          "slug": "fury-with-mc-dino",
+          "genreGroup": "dnb",
+          "genre": "Drum & bass + MC",
+          "vibe": "Drum & bass DJ with a live hype MC.",
+          "searchTerms": [
+            "Fury MC Dino"
+          ],
+          "flags": []
+        },
+        {
+          "name": "MADVKTM",
+          "slug": "madvktm",
+          "genreGroup": "tbc",
+          "genre": "Genre not listed yet",
+          "vibe": "Very little public info. Pure discovery pick.",
+          "searchTerms": [
+            "MADVKTM"
+          ],
+          "flags": [
+            "gem"
+          ]
+        }
+      ]
+    },
+    "sun": {
+      "date": "2026-11-08",
+      "acts": [
+        {
+          "name": "Martin Garrix",
+          "slug": "martin-garrix",
+          "genreGroup": "melodic",
+          "genre": "Big room / progressive house",
+          "vibe": "One of the biggest names in EDM, huge anthems and fireworks energy.",
+          "searchTerms": [
+            "Martin Garrix"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Alok",
+          "slug": "alok",
+          "genreGroup": "house",
+          "genre": "Brazilian bass / house",
+          "vibe": "Brazilian superstar with bouncy, bassy house.",
+          "searchTerms": [
+            "Alok"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Hardwell",
+          "slug": "hardwell",
+          "genreGroup": "melodic",
+          "genre": "Big room / hard techno",
+          "vibe": "Big room legend who now plays it harder and faster.",
+          "searchTerms": [
+            "Hardwell"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Deorro B2B DJ Diesel",
+          "slug": "deorro-b2b-dj-diesel",
+          "genreGroup": "bass",
+          "genre": "Melbourne bounce / dubstep",
+          "vibe": "Deorro's bounce meets Shaquille O'Neal's bass sets. Pure chaos.",
+          "searchTerms": [
+            "Deorro",
+            "DJ Diesel"
+          ],
+          "flags": []
+        },
+        {
+          "name": "MEDUZA",
+          "slug": "meduza",
+          "genreGroup": "house",
+          "genre": "Melodic house",
+          "vibe": "Italian trio behind \"Piece Of Your Heart\", smooth and driving.",
+          "searchTerms": [
+            "MEDUZA"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Holy Priest",
+          "slug": "holy-priest",
+          "genreGroup": "techno",
+          "genre": "Hard techno",
+          "vibe": "Fast, dark, hard-hitting techno.",
+          "searchTerms": [
+            "Holy Priest"
+          ],
+          "flags": []
+        },
+        {
+          "name": "SLANDER",
+          "slug": "slander",
+          "genreGroup": "bass",
+          "genre": "Melodic dubstep",
+          "vibe": "Emotional singalongs into heavy drops. Golden-hour set.",
+          "searchTerms": [
+            "SLANDER"
+          ],
+          "flags": [
+            "sun"
+          ]
+        },
+        {
+          "name": "San Holo (Wholesome Riddim)",
+          "slug": "san-holo-wholesome-riddim",
+          "genreGroup": "bass",
+          "genre": "Riddim",
+          "vibe": "San Holo's playful riddim alter ego.",
+          "searchTerms": [
+            "San Holo Wholesome Riddim"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Ian Asher",
+          "slug": "ian-asher",
+          "genreGroup": "house",
+          "genre": "House",
+          "vibe": "Bouncy, feel-good house.",
+          "searchTerms": [
+            "Ian Asher"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Boys Noize B2B Brutalismus 3000",
+          "slug": "boys-noize-b2b-brutalismus-3000",
+          "genreGroup": "techno",
+          "genre": "Techno / electro",
+          "vibe": "Berlin electro legend with a punk-techno duo. Wild.",
+          "searchTerms": [
+            "Boys Noize",
+            "Brutalismus 3000"
+          ],
+          "flags": []
+        },
+        {
+          "name": "TroyBoi",
+          "slug": "troyboi",
+          "genreGroup": "bass",
+          "genre": "Trap / bass",
+          "vibe": "Slick, hard-hitting trap with global flavor.",
+          "searchTerms": [
+            "TroyBoi"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Maddix",
+          "slug": "maddix",
+          "genreGroup": "techno",
+          "genre": "Hard techno",
+          "vibe": "Dutch hard techno at full speed.",
+          "searchTerms": [
+            "Maddix"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Marlon Hoffstadt",
+          "slug": "marlon-hoffstadt",
+          "genreGroup": "house",
+          "genre": "House",
+          "vibe": "Cheeky, high-energy house (\"Daddy\"). Golden-hour set.",
+          "searchTerms": [
+            "Marlon Hoffstadt"
+          ],
+          "flags": [
+            "sun"
+          ]
+        },
+        {
+          "name": "I Hate Models",
+          "slug": "i-hate-models",
+          "genreGroup": "techno",
+          "genre": "Industrial techno",
+          "vibe": "Dark, emotional, industrial techno.",
+          "searchTerms": [
+            "I Hate Models"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Klangkuenstler",
+          "slug": "klangkuenstler",
+          "genreGroup": "techno",
+          "genre": "Hard techno",
+          "vibe": "German hard techno, relentless.",
+          "searchTerms": [
+            "Klangkuenstler"
+          ],
+          "flags": []
+        },
+        {
+          "name": "ATLiens",
+          "slug": "atliens",
+          "genreGroup": "bass",
+          "genre": "Riddim / bass",
+          "vibe": "Masked duo with weird, heavy bass.",
+          "searchTerms": [
+            "ATLiens"
+          ],
+          "flags": []
+        },
+        {
+          "name": "KI/KI",
+          "slug": "ki-ki",
+          "genreGroup": "techno",
+          "genre": "Techno",
+          "vibe": "Euphoric, fast techno from Amsterdam.",
+          "searchTerms": [
+            "KI/KI"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Of The Trees",
+          "slug": "of-the-trees",
+          "genreGroup": "bass",
+          "genre": "Psychedelic bass",
+          "vibe": "Deep, trippy bass music. Golden-hour set.",
+          "searchTerms": [
+            "Of The Trees"
+          ],
+          "flags": [
+            "sun"
+          ]
+        },
+        {
+          "name": "Boogie T",
+          "slug": "boogie-t",
+          "genreGroup": "bass",
+          "genre": "Dubstep",
+          "vibe": "Funky, goofy, heavy dubstep.",
+          "searchTerms": [
+            "Boogie T"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Kaivon",
+          "slug": "kaivon",
+          "genreGroup": "bass",
+          "genre": "Melodic bass",
+          "vibe": "Emotional melodic bass.",
+          "searchTerms": [
+            "Kaivon"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Know Good",
+          "slug": "know-good",
+          "genreGroup": "bass",
+          "genre": "Bass",
+          "vibe": "Experimental bass, wobbly and deep.",
+          "searchTerms": [
+            "Know Good"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Taiki Nulight",
+          "slug": "taiki-nulight",
+          "genreGroup": "house",
+          "genre": "Bass house / UK garage",
+          "vibe": "UK bass house with garage swing.",
+          "searchTerms": [
+            "Taiki Nulight"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Jessica Audiffred",
+          "slug": "jessica-audiffred",
+          "genreGroup": "bass",
+          "genre": "Dubstep",
+          "vibe": "Heavy dubstep from one of bass music's rising women.",
+          "searchTerms": [
+            "Jessica Audiffred"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Adrián Mills",
+          "slug": "adria-n-mills",
+          "genreGroup": "tbc",
+          "genre": "Genre not listed yet",
+          "vibe": "Little public info. Pure discovery pick.",
+          "searchTerms": [
+            "Adrián Mills"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "A Little Sound",
+          "slug": "a-little-sound",
+          "genreGroup": "dnb",
+          "genre": "Drum & bass",
+          "vibe": "Fast, rolling drum & bass.",
+          "searchTerms": [
+            "A Little Sound"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "AR/CO",
+          "slug": "ar-co",
+          "genreGroup": "house",
+          "genre": "House / UK garage",
+          "vibe": "Duo with soulful vocals over house and garage.",
+          "searchTerms": [
+            "AR/CO"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "SIPPY",
+          "slug": "sippy",
+          "genreGroup": "bass",
+          "genre": "Dubstep",
+          "vibe": "Dark, heavy dubstep.",
+          "searchTerms": [
+            "SIPPY"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Ravenscoon",
+          "slug": "ravenscoon",
+          "genreGroup": "bass",
+          "genre": "Bass",
+          "vibe": "Wonky, experimental bass.",
+          "searchTerms": [
+            "Ravenscoon"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "phrva",
+          "slug": "phrva",
+          "genreGroup": "bass",
+          "genre": "Bass",
+          "vibe": "Newer bass name. Good discovery pick.",
+          "searchTerms": [
+            "phrva"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Chef Boyarbeatz",
+          "slug": "chef-boyarbeatz",
+          "genreGroup": "bass",
+          "genre": "Dubstep",
+          "vibe": "Goofy, heavy dubstep.",
+          "searchTerms": [
+            "Chef Boyarbeatz"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "ESSE",
+          "slug": "esse",
+          "genreGroup": "house",
+          "genre": "Tech house",
+          "vibe": "Newer tech house name. Good discovery pick.",
+          "searchTerms": [
+            "ESSE DJ"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "SHDW",
+          "slug": "shdw",
+          "genreGroup": "techno",
+          "genre": "Techno",
+          "vibe": "Dark techno.",
+          "searchTerms": [
+            "SHDW techno"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "M81!",
+          "slug": "m81",
+          "genreGroup": "bass",
+          "genre": "Melodic bass",
+          "vibe": "Newer melodic bass name.",
+          "searchTerms": [
+            "M81!"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "CØNTRA",
+          "slug": "c-ntra",
+          "genreGroup": "tbc",
+          "genre": "Genre not listed yet",
+          "vibe": "Little public info. Pure discovery pick.",
+          "searchTerms": [
+            "CØNTRA"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Discovery Project",
+          "slug": "discovery-project",
+          "genreGroup": "house",
+          "genre": "Emerging artist showcase",
+          "vibe": "Insomniac's slot for brand-new talent. Who knows who you'll find.",
+          "searchTerms": [
+            "Insomniac Discovery Project"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Ultrathem",
+          "slug": "ultrathem",
+          "genreGroup": "tbc",
+          "genre": "Genre not listed yet",
+          "vibe": "Little public info. Pure discovery pick.",
+          "searchTerms": [
+            "Ultrathem"
+          ],
+          "flags": [
+            "gem"
+          ]
+        }
+      ]
+    }
+  }
+}

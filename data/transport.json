@@ -1,0 +1,43 @@
+{
+  "source": "https://orlando.edc.com/travel/shuttles/ and https://orlando.edc.com/travel/parking/ (pulled 2026-10-25)",
+  "venue": {
+    "name": "Tinker Field",
+    "address": "287 S Tampa Ave, Orlando, FL 32805",
+    "lat": 28.5391,
+    "lng": -81.4047,
+    "googleMaps": "https://maps.app.goo.gl/jfpz4iM5n8wNEw4v8",
+    "hours": "1 PM to 12 AM daily",
+    "age": "18+ (21+ for alcohol, VIP, SkyDeck)"
+  },
+  "ourLine": "Blue",
+  "shuttleTimes": {
+    "toFestival": "Continuous 12 PM to 8 PM from every stop",
+    "return": "9 PM until 60 minutes after Kinetic Field ends",
+    "walkFromDropoff": "About 15 minutes to the main entrance",
+    "rule": "Pass valid only on the line purchased, any stop on that line"
+  },
+  "shuttleLines": [
+    {"line": "Blue", "stop": "Embassy Suites by Hilton Orlando International Drive ICON Park", "address": "8250 Jamaican Ct, Orlando, FL 32819", "nearby": ["Avanti International Resort, 8738 International Dr (0.4 mi)", "Hampton Inn Orlando Convention Center, 8900 Universal Blvd (0.4 mi)"]},
+    {"line": "Orange", "stop": "Fairfield Inn & Suites Orlando Near Universal", "address": "5614 Vineland Rd, Orlando, FL 32819", "nearby": ["Holiday Inn Express & Suites Nearest Universal, 5605 Major Blvd (0.2 mi)", "Comfort Suites Near Universal, 5617 Major Blvd (0.3 mi)", "Clarion Inn & Suites Across From Universal, 5829 Grand National Dr (0.5 mi)"]},
+    {"line": "Green", "stop": "Four Points by Sheraton Orlando International Drive", "address": "5905 International Dr, Orlando, FL 32819", "nearby": ["Home2 Suites Orlando Near Universal, 5910 American Way", "Wyndham Garden Orlando Universal / I-Drive, 5855 American Way", "Hilton Garden Inn Orlando I-Drive North, 5877 American Way", "Homewood Suites Orlando Nearest Universal, 5893 American Way", "Orlando International Drive North Hotel, 5859 American Way"]},
+    {"line": "Yellow", "stop": "Comfort Inn & Suites Near Universal Orlando Resort", "address": "7495 Canada Ave, Orlando, FL 32819", "nearby": ["CoCo Key Hotel and Water Resort, 7400 International Dr (0.5 mi)"]},
+    {"line": "Silver", "stop": "Courtyard Orlando Lake Buena Vista at Vista Centre", "address": "8501 Palm Pkwy, Orlando, FL 32836", "nearby": ["Crowne Plaza Orlando Lake Buena Vista, 8686 Palm Pkwy (0.1 mi)", "Candlewood Suites Lake Buena Vista, 12341 Winter Garden Vineland Rd (0.4 mi)"]},
+    {"line": "Hotel EDC Shuttle", "stop": "Margaritaville Resort Orlando", "address": "8000 Fins Up Circle, Kissimmee, FL 34747", "nearby": []}
+  ],
+  "shuttlePrices": {"3-Day Tier 1": "$123.59", "3-Day Tier 2": "$133.59", "1-Day Tier 1": "$52.88", "1-Day Tier 2": "$57.88"},
+  "onSite2025Map": {
+    "mainEntrance": "North side, off W Church St, through Rainbow Bazaar",
+    "shuttleExit": "South side by W Anderson St (2025 map labeled it for use after 11:30 PM)",
+    "rideshare": "Lyft zone, south side by W Anderson St, next to shuttle exit and SkyDeck entry",
+    "note": "2026 rideshare and shuttle loading spots not yet published"
+  },
+  "parking": {
+    "premierLot1": "SOLD OUT. NE corner of W Church St & Rio Grande Ave, entrance off W Central Blvd. Opens 10 AM.",
+    "general": "Extremely limited. Vehicles left past 2 AM towed (Johnson's Wrecker 407-293-2540)."
+  },
+  "deepLinks": {
+    "uber": "https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff%5Bformatted_address%5D=287%20S%20Tampa%20Ave%2C%20Orlando%2C%20FL%2032805&dropoff%5Blatitude%5D=28.5391&dropoff%5Blongitude%5D=-81.4047",
+    "lyft": "https://ride.lyft.com/ridetype?destination=28.5391%2C-81.4047",
+    "googleDirections": "https://www.google.com/maps/dir/?api=1&destination=<url-encoded address>"
+  }
+}

@@ -1,0 +1,686 @@
+{
+  "note": "BEST GUESSES ONLY. Stage by genre and billing; times = even slots 1 PM to midnight per stage, smallest acts first, sunset sets nearest 5:35 PM. Replace with official set times when released (expected ~Oct 30).",
+  "stageGuesses": {
+    "fri": {
+      "kinetic": [
+        "David Guetta",
+        "Afrojack",
+        "Alesso",
+        "Whethan",
+        "HAYLA",
+        "Zack Martino",
+        "KREAM"
+      ],
+      "circuit": [
+        "Wooli",
+        "Levity",
+        "Adventure Club",
+        "Kompany",
+        "Level Up",
+        "Big Florida",
+        "Sloth",
+        "Benda B2B Vastive"
+      ],
+      "neon": [
+        "Interplanetary Criminal",
+        "Pegassi",
+        "Bou B2B Kanine",
+        "MPH",
+        "Omar+",
+        "Inbal",
+        "JOA"
+      ],
+      "stereo": [
+        "Mau P",
+        "Prospa B2B Josh Baker",
+        "Chris Lorenzo",
+        "Josh Baker",
+        "Bullet Tooth B2B Sidney Charles",
+        "Joshwa",
+        "Matthias"
+      ],
+      "bacardi": [
+        "Brunello",
+        "MALUGI",
+        "Azzecca",
+        "IDEMI",
+        "RAJE",
+        "AAT"
+      ]
+    },
+    "sat": {
+      "kinetic": [
+        "Alan Walker",
+        "Steve Aoki",
+        "Kaskade",
+        "Alison Wonderland",
+        "ACRAZE B2B CID",
+        "Devault",
+        "AVELLO"
+      ],
+      "circuit": [
+        "Skull Machine",
+        "Ray Volpe",
+        "ALLEYCVT",
+        "Jkyl & Hyde",
+        "LAYZ",
+        "Subsonic",
+        "Fury with MC Dino"
+      ],
+      "neon": [
+        "Nico Moreno",
+        "Aaron Hibell",
+        "Dennis Cruz",
+        "Max Dean B2B Luke Dean",
+        "Rossi.",
+        "Mai Iachetti",
+        "MADVKTM"
+      ],
+      "stereo": [
+        "Disco Lines",
+        "Franky Rizardo",
+        "AYYBO",
+        "Twinsick",
+        "me n ü",
+        "Roddy Lima",
+        "ChaseWest",
+        "Miguelle & Tons"
+      ],
+      "bacardi": [
+        "Discip",
+        "Gabss",
+        "Fallon",
+        "KinAhau",
+        "Greg 99",
+        "Alves",
+        "Monoky"
+      ]
+    },
+    "sun": {
+      "kinetic": [
+        "Martin Garrix",
+        "Alok",
+        "Hardwell",
+        "MEDUZA",
+        "Deorro B2B DJ Diesel",
+        "SLANDER",
+        "Kaivon"
+      ],
+      "circuit": [
+        "San Holo (Wholesome Riddim)",
+        "TroyBoi",
+        "ATLiens",
+        "Of The Trees",
+        "Boogie T",
+        "SIPPY",
+        "Jessica Audiffred",
+        "Chef Boyarbeatz"
+      ],
+      "neon": [
+        "Holy Priest",
+        "Boys Noize B2B Brutalismus 3000",
+        "I Hate Models",
+        "Klangkuenstler",
+        "Maddix",
+        "KI/KI",
+        "SHDW"
+      ],
+      "stereo": [
+        "Ian Asher",
+        "Marlon Hoffstadt",
+        "Taiki Nulight",
+        "A Little Sound",
+        "AR/CO",
+        "Know Good",
+        "Ravenscoon"
+      ],
+      "bacardi": [
+        "Adrián Mills",
+        "phrva",
+        "ESSE",
+        "M81!",
+        "CØNTRA",
+        "Discovery Project",
+        "Ultrathem"
+      ]
+    }
+  },
+  "estimatedSlots": {
+    "fri:zack-martino": {
+      "start": "13:00",
+      "end": "14:34",
+      "stage": "kinetic"
+    },
+    "fri:hayla": {
+      "start": "14:34",
+      "end": "16:09",
+      "stage": "kinetic"
+    },
+    "fri:alesso": {
+      "start": "16:09",
+      "end": "17:43",
+      "stage": "kinetic"
+    },
+    "fri:kream": {
+      "start": "17:43",
+      "end": "19:17",
+      "stage": "kinetic"
+    },
+    "fri:whethan": {
+      "start": "19:17",
+      "end": "20:51",
+      "stage": "kinetic"
+    },
+    "fri:afrojack": {
+      "start": "20:51",
+      "end": "22:26",
+      "stage": "kinetic"
+    },
+    "fri:david-guetta": {
+      "start": "22:26",
+      "end": "24:00",
+      "stage": "kinetic"
+    },
+    "fri:sloth": {
+      "start": "13:00",
+      "end": "14:23",
+      "stage": "circuit"
+    },
+    "fri:big-florida": {
+      "start": "14:23",
+      "end": "15:45",
+      "stage": "circuit"
+    },
+    "fri:benda-b2b-vastive": {
+      "start": "15:45",
+      "end": "17:08",
+      "stage": "circuit"
+    },
+    "fri:adventure-club": {
+      "start": "17:08",
+      "end": "18:30",
+      "stage": "circuit"
+    },
+    "fri:level-up": {
+      "start": "18:30",
+      "end": "19:53",
+      "stage": "circuit"
+    },
+    "fri:kompany": {
+      "start": "19:53",
+      "end": "21:15",
+      "stage": "circuit"
+    },
+    "fri:levity": {
+      "start": "21:15",
+      "end": "22:38",
+      "stage": "circuit"
+    },
+    "fri:wooli": {
+      "start": "22:38",
+      "end": "24:00",
+      "stage": "circuit"
+    },
+    "fri:joa": {
+      "start": "13:00",
+      "end": "14:34",
+      "stage": "neon"
+    },
+    "fri:inbal": {
+      "start": "14:34",
+      "end": "16:09",
+      "stage": "neon"
+    },
+    "fri:pegassi": {
+      "start": "16:09",
+      "end": "17:43",
+      "stage": "neon"
+    },
+    "fri:omar": {
+      "start": "17:43",
+      "end": "19:17",
+      "stage": "neon"
+    },
+    "fri:mph": {
+      "start": "19:17",
+      "end": "20:51",
+      "stage": "neon"
+    },
+    "fri:interplanetary-criminal": {
+      "start": "20:51",
+      "end": "22:26",
+      "stage": "neon"
+    },
+    "fri:bou-b2b-kanine": {
+      "start": "22:26",
+      "end": "24:00",
+      "stage": "neon"
+    },
+    "fri:matthias": {
+      "start": "13:00",
+      "end": "14:34",
+      "stage": "stereo"
+    },
+    "fri:joshwa": {
+      "start": "14:34",
+      "end": "16:09",
+      "stage": "stereo"
+    },
+    "fri:bullet-tooth-b2b-sidney-charles": {
+      "start": "16:09",
+      "end": "17:43",
+      "stage": "stereo"
+    },
+    "fri:josh-baker": {
+      "start": "17:43",
+      "end": "19:17",
+      "stage": "stereo"
+    },
+    "fri:chris-lorenzo": {
+      "start": "19:17",
+      "end": "20:51",
+      "stage": "stereo"
+    },
+    "fri:prospa-b2b-josh-baker": {
+      "start": "20:51",
+      "end": "22:26",
+      "stage": "stereo"
+    },
+    "fri:mau-p": {
+      "start": "22:26",
+      "end": "24:00",
+      "stage": "stereo"
+    },
+    "fri:aat": {
+      "start": "13:00",
+      "end": "14:50",
+      "stage": "bacardi"
+    },
+    "fri:brunello": {
+      "start": "14:50",
+      "end": "16:40",
+      "stage": "bacardi"
+    },
+    "fri:malugi": {
+      "start": "16:40",
+      "end": "18:30",
+      "stage": "bacardi"
+    },
+    "fri:raje": {
+      "start": "18:30",
+      "end": "20:20",
+      "stage": "bacardi"
+    },
+    "fri:idemi": {
+      "start": "20:20",
+      "end": "22:10",
+      "stage": "bacardi"
+    },
+    "fri:azzecca": {
+      "start": "22:10",
+      "end": "24:00",
+      "stage": "bacardi"
+    },
+    "sat:avello": {
+      "start": "13:00",
+      "end": "14:34",
+      "stage": "kinetic"
+    },
+    "sat:acraze-b2b-cid": {
+      "start": "14:34",
+      "end": "16:09",
+      "stage": "kinetic"
+    },
+    "sat:devault": {
+      "start": "16:09",
+      "end": "17:43",
+      "stage": "kinetic"
+    },
+    "sat:alan-walker": {
+      "start": "17:43",
+      "end": "19:17",
+      "stage": "kinetic"
+    },
+    "sat:alison-wonderland": {
+      "start": "19:17",
+      "end": "20:51",
+      "stage": "kinetic"
+    },
+    "sat:kaskade": {
+      "start": "20:51",
+      "end": "22:26",
+      "stage": "kinetic"
+    },
+    "sat:steve-aoki": {
+      "start": "22:26",
+      "end": "24:00",
+      "stage": "kinetic"
+    },
+    "sat:fury-with-mc-dino": {
+      "start": "13:00",
+      "end": "14:34",
+      "stage": "circuit"
+    },
+    "sat:layz": {
+      "start": "14:34",
+      "end": "16:09",
+      "stage": "circuit"
+    },
+    "sat:subsonic": {
+      "start": "16:09",
+      "end": "17:43",
+      "stage": "circuit"
+    },
+    "sat:jkyl-hyde": {
+      "start": "17:43",
+      "end": "19:17",
+      "stage": "circuit"
+    },
+    "sat:alleycvt": {
+      "start": "19:17",
+      "end": "20:51",
+      "stage": "circuit"
+    },
+    "sat:ray-volpe": {
+      "start": "20:51",
+      "end": "22:26",
+      "stage": "circuit"
+    },
+    "sat:skull-machine": {
+      "start": "22:26",
+      "end": "24:00",
+      "stage": "circuit"
+    },
+    "sat:madvktm": {
+      "start": "13:00",
+      "end": "14:34",
+      "stage": "neon"
+    },
+    "sat:mai-iachetti": {
+      "start": "14:34",
+      "end": "16:09",
+      "stage": "neon"
+    },
+    "sat:rossi": {
+      "start": "16:09",
+      "end": "17:43",
+      "stage": "neon"
+    },
+    "sat:max-dean-b2b-luke-dean": {
+      "start": "17:43",
+      "end": "19:17",
+      "stage": "neon"
+    },
+    "sat:dennis-cruz": {
+      "start": "19:17",
+      "end": "20:51",
+      "stage": "neon"
+    },
+    "sat:aaron-hibell": {
+      "start": "20:51",
+      "end": "22:26",
+      "stage": "neon"
+    },
+    "sat:nico-moreno": {
+      "start": "22:26",
+      "end": "24:00",
+      "stage": "neon"
+    },
+    "sat:chasewest": {
+      "start": "13:00",
+      "end": "14:23",
+      "stage": "stereo"
+    },
+    "sat:miguelle-tons": {
+      "start": "14:23",
+      "end": "15:45",
+      "stage": "stereo"
+    },
+    "sat:roddy-lima": {
+      "start": "15:45",
+      "end": "17:08",
+      "stage": "stereo"
+    },
+    "sat:me-n-u": {
+      "start": "17:08",
+      "end": "18:30",
+      "stage": "stereo"
+    },
+    "sat:twinsick": {
+      "start": "18:30",
+      "end": "19:53",
+      "stage": "stereo"
+    },
+    "sat:ayybo": {
+      "start": "19:53",
+      "end": "21:15",
+      "stage": "stereo"
+    },
+    "sat:franky-rizardo": {
+      "start": "21:15",
+      "end": "22:38",
+      "stage": "stereo"
+    },
+    "sat:disco-lines": {
+      "start": "22:38",
+      "end": "24:00",
+      "stage": "stereo"
+    },
+    "sat:monoky": {
+      "start": "13:00",
+      "end": "14:34",
+      "stage": "bacardi"
+    },
+    "sat:alves": {
+      "start": "14:34",
+      "end": "16:09",
+      "stage": "bacardi"
+    },
+    "sat:greg-99": {
+      "start": "16:09",
+      "end": "17:43",
+      "stage": "bacardi"
+    },
+    "sat:kinahau": {
+      "start": "17:43",
+      "end": "19:17",
+      "stage": "bacardi"
+    },
+    "sat:fallon": {
+      "start": "19:17",
+      "end": "20:51",
+      "stage": "bacardi"
+    },
+    "sat:gabss": {
+      "start": "20:51",
+      "end": "22:26",
+      "stage": "bacardi"
+    },
+    "sat:discip": {
+      "start": "22:26",
+      "end": "24:00",
+      "stage": "bacardi"
+    },
+    "sun:kaivon": {
+      "start": "13:00",
+      "end": "14:34",
+      "stage": "kinetic"
+    },
+    "sun:meduza": {
+      "start": "14:34",
+      "end": "16:09",
+      "stage": "kinetic"
+    },
+    "sun:slander": {
+      "start": "16:09",
+      "end": "17:43",
+      "stage": "kinetic"
+    },
+    "sun:deorro-b2b-dj-diesel": {
+      "start": "17:43",
+      "end": "19:17",
+      "stage": "kinetic"
+    },
+    "sun:hardwell": {
+      "start": "19:17",
+      "end": "20:51",
+      "stage": "kinetic"
+    },
+    "sun:alok": {
+      "start": "20:51",
+      "end": "22:26",
+      "stage": "kinetic"
+    },
+    "sun:martin-garrix": {
+      "start": "22:26",
+      "end": "24:00",
+      "stage": "kinetic"
+    },
+    "sun:chef-boyarbeatz": {
+      "start": "13:00",
+      "end": "14:23",
+      "stage": "circuit"
+    },
+    "sun:sippy": {
+      "start": "14:23",
+      "end": "15:45",
+      "stage": "circuit"
+    },
+    "sun:jessica-audiffred": {
+      "start": "15:45",
+      "end": "17:08",
+      "stage": "circuit"
+    },
+    "sun:of-the-trees": {
+      "start": "17:08",
+      "end": "18:30",
+      "stage": "circuit"
+    },
+    "sun:boogie-t": {
+      "start": "18:30",
+      "end": "19:53",
+      "stage": "circuit"
+    },
+    "sun:atliens": {
+      "start": "19:53",
+      "end": "21:15",
+      "stage": "circuit"
+    },
+    "sun:troyboi": {
+      "start": "21:15",
+      "end": "22:38",
+      "stage": "circuit"
+    },
+    "sun:san-holo-wholesome-riddim": {
+      "start": "22:38",
+      "end": "24:00",
+      "stage": "circuit"
+    },
+    "sun:shdw": {
+      "start": "13:00",
+      "end": "14:34",
+      "stage": "neon"
+    },
+    "sun:ki-ki": {
+      "start": "14:34",
+      "end": "16:09",
+      "stage": "neon"
+    },
+    "sun:klangkuenstler": {
+      "start": "16:09",
+      "end": "17:43",
+      "stage": "neon"
+    },
+    "sun:i-hate-models": {
+      "start": "17:43",
+      "end": "19:17",
+      "stage": "neon"
+    },
+    "sun:maddix": {
+      "start": "19:17",
+      "end": "20:51",
+      "stage": "neon"
+    },
+    "sun:boys-noize-b2b-brutalismus-3000": {
+      "start": "20:51",
+      "end": "22:26",
+      "stage": "neon"
+    },
+    "sun:holy-priest": {
+      "start": "22:26",
+      "end": "24:00",
+      "stage": "neon"
+    },
+    "sun:ravenscoon": {
+      "start": "13:00",
+      "end": "14:34",
+      "stage": "stereo"
+    },
+    "sun:ar-co": {
+      "start": "14:34",
+      "end": "16:09",
+      "stage": "stereo"
+    },
+    "sun:marlon-hoffstadt": {
+      "start": "16:09",
+      "end": "17:43",
+      "stage": "stereo"
+    },
+    "sun:a-little-sound": {
+      "start": "17:43",
+      "end": "19:17",
+      "stage": "stereo"
+    },
+    "sun:taiki-nulight": {
+      "start": "19:17",
+      "end": "20:51",
+      "stage": "stereo"
+    },
+    "sun:know-good": {
+      "start": "20:51",
+      "end": "22:26",
+      "stage": "stereo"
+    },
+    "sun:ian-asher": {
+      "start": "22:26",
+      "end": "24:00",
+      "stage": "stereo"
+    },
+    "sun:ultrathem": {
+      "start": "13:00",
+      "end": "14:34",
+      "stage": "bacardi"
+    },
+    "sun:discovery-project": {
+      "start": "14:34",
+      "end": "16:09",
+      "stage": "bacardi"
+    },
+    "sun:c-ntra": {
+      "start": "16:09",
+      "end": "17:43",
+      "stage": "bacardi"
+    },
+    "sun:m81": {
+      "start": "17:43",
+      "end": "19:17",
+      "stage": "bacardi"
+    },
+    "sun:esse": {
+      "start": "19:17",
+      "end": "20:51",
+      "stage": "bacardi"
+    },
+    "sun:phrva": {
+      "start": "20:51",
+      "end": "22:26",
+      "stage": "bacardi"
+    },
+    "sun:adria-n-mills": {
+      "start": "22:26",
+      "end": "24:00",
+      "stage": "bacardi"
+    }
+  },
+  "official": {}
+}

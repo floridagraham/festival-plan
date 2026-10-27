@@ -1,0 +1,204 @@
+{
+  "researched": "2026-10-25",
+  "parties": {
+    "thu": [
+      {
+        "venue": "Hotel EDC · Margaritaville Resort Orlando",
+        "addr": "8000 Fins Up Circle, Kissimmee, FL 34747",
+        "age": "18+",
+        "tix": "https://edcorlando.frontgatetickets.com/event/wlox3zhgdzrvk2jl",
+        "id": "p-thu-hotel",
+        "name": "Hotel EDC Pre-Party",
+        "time": "10 PM to 4 AM",
+        "official": true,
+        "price": "GA $35 · VIP $57",
+        "acts": [
+          "SVDDEN DEATH",
+          "DRINKURWATER",
+          "The Masquerade",
+          "Vicky B",
+          "OZZTIN",
+          "Celo"
+        ]
+      },
+      {
+        "venue": "The Vanguard",
+        "addr": "578 N Orange Ave, Orlando, FL 32801",
+        "age": "18+",
+        "id": "p-thu-van",
+        "name": "EDCO Pre-Party ft. Afrojack",
+        "time": "9 PM to 2:30 AM",
+        "official": true,
+        "price": "Up to $69.99",
+        "tix": "https://www.eventbrite.com/e/edco-pre-party-ft-afrojack-tickets-2003366452990",
+        "acts": [
+          "Afrojack"
+        ]
+      },
+      {
+        "venue": "Anthem",
+        "addr": "100 N Orange Ave, Orlando, FL 32801",
+        "age": "21+",
+        "tix": "https://anthemorlando.com/edc-orlando-2026-afterparties-anthem/",
+        "id": "p-thu-ant",
+        "name": "Anthem EDM Weekend",
+        "time": "9 PM to 2:30 AM",
+        "official": false,
+        "price": "$10",
+        "acts": [
+          "DJ Dickerman",
+          "KZilla"
+        ]
+      }
+    ],
+    "fri": [
+      {
+        "venue": "Hotel EDC · Margaritaville Resort Orlando",
+        "addr": "8000 Fins Up Circle, Kissimmee, FL 34747",
+        "age": "18+",
+        "tix": "https://edcorlando.frontgatetickets.com/event/wlox3zhgdzrvk2jl",
+        "id": "p-fri-hotel",
+        "name": "Hotel EDC Afterparty",
+        "time": "11 PM to 6 AM",
+        "official": true,
+        "price": "GA $35 · VIP $57",
+        "acts": [
+          "ALLEYCVT",
+          "Costa",
+          "Jon Casey",
+          "Shosh"
+        ],
+        "more": true
+      },
+      {
+        "venue": "The Vanguard",
+        "addr": "578 N Orange Ave, Orlando, FL 32801",
+        "age": "18+",
+        "id": "p-fri-van",
+        "name": "EDCO After-Party ft. Mau P",
+        "time": "10 PM to 2:30 AM",
+        "official": true,
+        "price": "Up to $79.99",
+        "tix": "https://www.eventbrite.com/e/edco-after-party-ft-mau-p-tickets-2003368577344",
+        "acts": [
+          "Mau P"
+        ]
+      },
+      {
+        "venue": "Anthem",
+        "addr": "100 N Orange Ave, Orlando, FL 32801",
+        "age": "21+",
+        "tix": "https://anthemorlando.com/edc-orlando-2026-afterparties-anthem/",
+        "id": "p-fri-ant",
+        "name": "Anthem EDM Weekend",
+        "time": "9 PM to 2:30 AM",
+        "official": false,
+        "price": "$10 · 4-night pass $30",
+        "acts": [
+          "DJ Atabey",
+          "DJ Qwest"
+        ]
+      }
+    ],
+    "sat": [
+      {
+        "venue": "Hotel EDC · Margaritaville Resort Orlando",
+        "addr": "8000 Fins Up Circle, Kissimmee, FL 34747",
+        "age": "18+",
+        "tix": "https://edcorlando.frontgatetickets.com/event/wlox3zhgdzrvk2jl",
+        "id": "p-sat-hotel",
+        "name": "Hotel EDC Afterparty",
+        "time": "11 PM to 6 AM",
+        "official": true,
+        "price": "GA $35 · VIP $67",
+        "acts": [
+          "Kai Wachi",
+          "LAYZ",
+          "YDG"
+        ],
+        "more": true
+      },
+      {
+        "venue": "The Vanguard",
+        "addr": "578 N Orange Ave, Orlando, FL 32801",
+        "age": "18+",
+        "id": "p-sat-van",
+        "name": "EDCO After-Party ft. Franky Rizardo & Dennis Cruz",
+        "time": "10 PM to 2:30 AM",
+        "official": true,
+        "price": "Up to $59.99",
+        "tix": "https://www.eventbrite.com/e/edco-after-party-ft-franky-rizardo-dennis-cruz-tickets-2003371078826",
+        "acts": [
+          "Franky Rizardo",
+          "Dennis Cruz",
+          "KinAhau",
+          "Matthias"
+        ]
+      },
+      {
+        "venue": "Anthem",
+        "addr": "100 N Orange Ave, Orlando, FL 32801",
+        "age": "21+",
+        "tix": "https://anthemorlando.com/edc-orlando-2026-afterparties-anthem/",
+        "id": "p-sat-ant",
+        "name": "Anthem EDM Weekend",
+        "time": "9 PM to 2:30 AM",
+        "official": false,
+        "price": "$10 · 4-night pass $30",
+        "acts": [
+          "DJ J Warren",
+          "Franco Maior"
+        ]
+      }
+    ],
+    "sun": [
+      {
+        "venue": "Hotel EDC · Margaritaville Resort Orlando",
+        "addr": "8000 Fins Up Circle, Kissimmee, FL 34747",
+        "age": "18+",
+        "tix": "https://edcorlando.frontgatetickets.com/event/wlox3zhgdzrvk2jl",
+        "id": "p-sun-hotel",
+        "name": "Hotel EDC Closing Party",
+        "time": "11 PM to 6 AM",
+        "official": true,
+        "price": "GA $30 · VIP $47",
+        "acts": [
+          "Boys Noize",
+          "Damaged Goods",
+          "Flash Gea",
+          "Maddix",
+          "SHDW"
+        ]
+      },
+      {
+        "venue": "The Vanguard",
+        "addr": "578 N Orange Ave, Orlando, FL 32801",
+        "age": "18+",
+        "id": "p-sun-van",
+        "name": "EDCO After-Party ft. SLANDER",
+        "time": "10 PM to 2:30 AM",
+        "official": true,
+        "price": "Up to $69.99",
+        "tix": "https://www.eventbrite.com/e/edco-after-party-ft-slander-tickets-2003362628551",
+        "acts": [
+          "SLANDER"
+        ]
+      },
+      {
+        "venue": "Anthem",
+        "addr": "100 N Orange Ave, Orlando, FL 32801",
+        "age": "21+",
+        "tix": "https://anthemorlando.com/edc-orlando-2026-afterparties-anthem/",
+        "id": "p-sun-ant",
+        "name": "Anthem EDM Weekend",
+        "time": "9 PM to 2:30 AM",
+        "official": false,
+        "price": "$10 · 4-night pass $30",
+        "acts": [
+          "DJ GSP",
+          "Erik Armiliato"
+        ]
+      }
+    ]
+  }
+}
