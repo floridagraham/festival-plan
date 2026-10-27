@@ -98,12 +98,26 @@
 </div>
 <button class="love" id="loveBtn" type="button" hidden><span class="love-pill"><svg class="ic" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg>Show your love</span></button>
 <div class="intro" id="loveDlg" role="dialog" aria-modal="true" aria-labelledby="loveH" hidden>
-  <div class="intro-card" tabindex="-1">
-    <h2 id="loveH">Show your love</h2>
-    <p class="a2hs-note">Love the app? Leave a tip. It keeps the planner free for everyone.</p>
+  <div class="intro-card love-card" tabindex="-1">
+    <button class="love-art" id="loveArt" type="button" aria-label="Send hearts">
+      <span class="love-big"></span><span class="love-shine"></span>
+      <svg class="love-spark s1" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1c1 6 5 10 11 11-6 1-10 5-11 11-1-6-5-10-11-11 6-1 10-5 11-11Z"/></svg>
+      <svg class="love-spark s2" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1c1 6 5 10 11 11-6 1-10 5-11 11-1-6-5-10-11-11 6-1 10-5 11-11Z"/></svg>
+      <svg class="love-spark s3" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1c1 6 5 10 11 11-6 1-10 5-11 11-1-6-5-10-11-11 6-1 10-5 11-11Z"/></svg>
+    </button>
+    <h2 id="loveH" class="love-h">Show your <span>love</span></h2>
+    <div class="love-note" id="loveNote">
+      <p>Hey, I'm Graham. I built this app with love: for the music, for the festival, for the people and for the vibe.</p>
+      <p>All I want is to bring a smile to everyone who walks through those gates.</p>
+      <p>If it made your weekend a little brighter, send some love back.</p>
+      <p class="love-sig">With love, Graham</p>
+    </div>
     <div class="donate-row" data-where="love_button"></div>
+    <p class="love-small" id="loveSmall">Any amount helps, even the price of a festival water.</p>
+    <p class="love-ps partner-note" hidden>P.S. Insomniac team, if you're reading this: I'd love to build with you. <a class="partner-link" href="#" target="_blank" rel="noopener" aria-label="Let's talk: Graham's contact links (opens new tab)">Let's talk</a></p>
     <button class="btn alt love-x" id="loveX" type="button">Maybe later</button>
   </div>
+  <div class="love-burst" aria-hidden="true"></div>
 </div>
 <nav class="tabs" aria-label="Sections"><a href="#lineup" data-v="lineup" aria-current="page"><span><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="2" y="14" width="5" height="7" rx="2"/><rect x="17" y="14" width="5" height="7" rx="2"/></svg></span>Lineup</a><a href="#plan" data-v="plan"><span><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg></span>My Plan</a><a href="#travel" data-v="travel"><span><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M3 11h18M7 17v2M17 17v2"/><circle cx="7.5" cy="14" r=".8" fill="currentColor" stroke="none"/><circle cx="16.5" cy="14" r=".8" fill="currentColor" stroke="none"/></svg></span>Getting there</a><a href="#map" data-v="map"><span><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3 3 5v16l6-2 6 2 6-2V3l-6 2-6-2Z"/><path d="M9 3v16M15 5v16"/></svg></span>Map</a><button id="introHelp" class="intro-help" aria-label="How it works"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><circle cx="12" cy="7.5" r=".9" fill="currentColor" stroke="none"/></svg></button></nav>
 <div class="wrap">
@@ -281,6 +295,7 @@
 
 <footer>
   <div class="tipbox" hidden><p class="tip-h"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg> Love the app? Leave a tip.</p><div class="donate-row" data-where="footer"></div></div>
+  <p class="partner partner-note" hidden><b>Insomniac team:</b> this is a fan project, made with respect for everything you create. If you'd like to work together, or want anything changed, I'd love to hear from you. <a class="flink partner-link" href="#" target="_blank" rel="noopener" aria-label="Get in touch: Graham's contact links (opens new tab)">Get in touch</a></p>
   Fan-made planner, not affiliated with Insomniac or EDC. Lineup from the official <a class="flink" href="https://orlando.edc.com/lineup/" target="_blank" rel="noopener">EDC Orlando lineup page</a> (By Day tab). Order follows poster billing, biggest first. Genres marked "best guess" are lesser-known acts with little public info; give them a listen to judge. Music links open a search for that artist. Anonymous usage stats (which tabs, artists and buttons get tapped, and picks) help improve the app; never names, your shared code or anything you type.
 </footer>
 </div>

@@ -8,5 +8,8 @@ window.EDC_CONFIG = {
   donateLinks: [
     { label: "Venmo", url: "https://venmo.com/u/federated" },
     { label: "Cash App", url: "https://cash.app/$FloridaGraham" }
-  ]
+  ],
+  // Where Insomniac (or anyone) can reach Graham about working together, e.g. his Linktree.
+  // Empty = the "Insomniac team" notes on the Show your love card and in the footer stay hidden.
+  partnerLink: ""
 };

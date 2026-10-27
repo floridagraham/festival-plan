@@ -335,6 +335,12 @@ document.querySelectorAll(".gmap:not(.gmap-top)").forEach((box,i)=>{
   box.querySelectorAll(".stg").forEach(g=>{g.addEventListener("click",()=>pick(g.dataset.s));g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick(g.dataset.s);}});});
 });
 
+// "Insomniac team" notes (Graham, Oct 27: if Insomniac finds the app, invite them to work together); shown once partnerLink is set
+const partnerLink=(window.EDC_CONFIG||{}).partnerLink;
+if(partnerLink&&/^https:\/\//.test(partnerLink)){
+  document.querySelectorAll(".partner-link").forEach(a=>a.href=partnerLink);
+  document.querySelectorAll(".partner-note").forEach(p=>p.hidden=false);
+}
 // tip jar (footer and opening screen): one button per link in config.js, hidden when there are none
 const HEART_ICO=ico_('<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/>');
 const tipLinks=((window.EDC_CONFIG||{}).donateLinks||[]).filter(t=>t&&t.url&&t.label);
@@ -347,7 +353,40 @@ if(tipLinks.length){
   const loveSheet=sheet(loveDlg,{onDismiss:()=>closeLove()});
   const closeLove=()=>{ loveSheet.close(); loveBtn.focus(); };
   loveBtn.hidden=false; document.body.classList.add("has-love");
-  loveBtn.onclick=()=>{ loveSheet.open(); loveDlg.querySelector(".intro-card").focus(); track("edc_love_open"); };
+  // the card's fun: the big heart pops in on a spring and throws a burst of little hearts; tapping it throws more,
+  // and tapping a tip button turns the card into a thank-you
+  const loveArt=document.getElementById("loveArt"), loveBurstBox=loveDlg.querySelector(".love-burst");
+  const LOVE_COLS=["#ff4fb4","#a874ff","#3fe0ff","#7dff9b","#ffb627","#ff7a59"];
+  const LOVE_HEART='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg>';
+  function loveBurst(n){
+    if(reducedMotion()) return;
+    const a=loveArt.getBoundingClientRect();
+    for(let i=0;i<n;i++){
+      const h=document.createElement("span"), ang=Math.PI*(1.1+.8*Math.random()), dist=90+Math.random()*150;
+      h.className="love-fly"; h.innerHTML=LOVE_HEART;
+      h.style.cssText=`left:${a.left+a.width/2}px;top:${a.top+a.height/2}px;color:${LOVE_COLS[i%LOVE_COLS.length]};--x:${Math.cos(ang)*dist}px;--y:${Math.sin(ang)*dist-40}px;--r:${Math.random()*70-35}deg;--s:${.6+Math.random()*.7};animation-delay:${Math.random()*120}ms`;
+      h.addEventListener("animationend",()=>h.remove()); loveBurstBox.append(h);
+    }
+  }
+  function lovePop(){
+    if(reducedMotion()) return;
+    const p=spring(.55,s=>{loveArt.style.transform="scale("+s+")";},{preset:SPRING.bouncy,precision:.002});
+    p.to(1,{velocity:2,done:()=>{loveArt.style.transform="";}});
+  }
+  const loveH=document.getElementById("loveH"), loveP=document.getElementById("loveNote"), loveSmall=document.getElementById("loveSmall"), loveX=document.getElementById("loveX");
+  const LOVE_TEXT=[loveH.innerHTML,loveP.innerHTML,loveSmall.textContent,loveX.textContent];
+  loveArt.onclick=()=>{ lovePop(); loveBurst(12); track("edc_love_hearts"); };
+  loveDlg.addEventListener("click",e=>{
+    if(!e.target.closest(".donate-link")) return;
+    loveH.innerHTML="You're the <span>best</span>"; loveP.innerHTML="<p>Thank you. You just made my day, and you're part of why I built this.</p><p>Come find the good vibes on the dance floor. See you there.</p><p class=\"love-sig\">With love, Graham</p>";
+    loveSmall.textContent="Your tip opened in a new tab."; loveX.textContent="Back to the app";
+    lovePop(); loveBurst(20);
+  });
+  loveBtn.onclick=()=>{
+    [loveH.innerHTML,loveP.innerHTML,loveSmall.textContent,loveX.textContent]=LOVE_TEXT;
+    loveSheet.open(); loveDlg.querySelector(".intro-card").focus(); track("edc_love_open");
+    setTimeout(()=>{ lovePop(); loveBurst(14); },300);
+  };
   document.getElementById("loveX").onclick=closeLove;
   loveDlg.addEventListener("keydown",e=>{if(e.key==="Escape") closeLove();});
 }
