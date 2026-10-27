@@ -635,7 +635,7 @@ footer .partner b{color:var(--ink)}
 .tip-amts button:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
 .donate .tip-amt{font-weight:800}
 
-/* "Are you Insomniac?" pill (Oct 27): a quiet glass pill stacked just above the love heart, static (no float or color shift)
+/* "Are you Insomniac?" pill (Oct 27): a quiet glass pill stacked just under the love heart, static (no float or color shift)
    so the heart stays the eye-catcher. Shown only when config.js has partnerLink. */
 .ins{position:fixed;z-index:39;right:max(10px, calc(env(safe-area-inset-right,0px) + 6px));bottom:calc(10px + env(safe-area-inset-bottom,0px));
   display:flex;align-items:center;min-height:44px;padding:4px;border:0;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent}
@@ -645,9 +645,10 @@ footer .partner b{color:var(--ink)}
 .ins:focus-visible{outline:none}
 .ins:focus-visible .ins-pill{outline:2px solid var(--cyan);outline-offset:2px}
 .ins[hidden]{display:none!important}
-body.has-love .ins{bottom:calc(52px + env(safe-area-inset-bottom,0px))}
 body.has-a2hs .ins{bottom:calc(86px + env(safe-area-inset-bottom,0px))}
-body.has-a2hs.has-love .ins{bottom:calc(128px + env(safe-area-inset-bottom,0px))}
+/* Graham, Oct 27: the Insomniac pill sits under the heart, so the heart moves up one row */
+body.has-ins .love{bottom:calc(52px + env(safe-area-inset-bottom,0px))}
+body.has-ins.has-a2hs .love{bottom:calc(128px + env(safe-area-inset-bottom,0px))}
 body.has-ins{padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
 body.has-ins.has-a2hs{padding-bottom:calc(150px + env(safe-area-inset-bottom,0px))}
 body.has-ins.has-love{padding-bottom:calc(114px + env(safe-area-inset-bottom,0px))}

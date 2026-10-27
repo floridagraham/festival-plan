@@ -354,7 +354,7 @@ if(partnerLink){
     if(partnerLink.startsWith("mailto:")){ a.removeAttribute("target"); a.setAttribute("aria-label",a.id==="insGo"?"Contact Graham by email":a.textContent.trim()+": email Graham"); }
   });
   document.querySelectorAll(".partner-note").forEach(p=>p.hidden=false);
-  // "Are you Insomniac?" pill above the love heart (Graham, Oct 27): opens a short pitch with a Contact me button
+  // "Are you Insomniac?" pill under the love heart (Graham, Oct 27): opens a short pitch with a Contact me button
   const insBtn=document.getElementById("insBtn"), insDlg=document.getElementById("insDlg");
   const insSheet=sheet(insDlg,{onDismiss:()=>closeIns()});
   const closeIns=()=>{ insSheet.close(); insBtn.focus(); };
