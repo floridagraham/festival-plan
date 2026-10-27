@@ -14,7 +14,23 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" href="logo.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
-<script>if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{});});}</script>
+<script>
+/* Offline cache, plus updates on the first open (Graham, Oct 27): when a phone that already has the app opens it after
+   a publish, the new service worker takes over a few seconds later. If that happens within 12 seconds of opening and
+   before the first tap or key, reload once so the new version shows now instead of on the next open. Never on the
+   very first visit, never mid-use, and at most once a minute. */
+if("serviceWorker" in navigator){
+  const hadSW=!!navigator.serviceWorker.controller, t0=Date.now();
+  let touched=false; const mark=()=>{touched=true;};
+  addEventListener("pointerdown",mark,{capture:true,once:true}); addEventListener("keydown",mark,{capture:true,once:true});
+  navigator.serviceWorker.addEventListener("controllerchange",()=>{
+    if(!hadSW||touched||Date.now()-t0>12000) return;
+    try{ const last=+sessionStorage.getItem("edc-sw-reload")||0; if(Date.now()-last<60000) return; sessionStorage.setItem("edc-sw-reload",String(Date.now())); }catch(e){ return; }
+    location.reload();
+  });
+  addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{});});
+}
+</script>
 <script>
   // Anonymous usage stats (same PostHog project as the GlowBop app/site; every event carries app:'edc-orlando'
   // as a super property so it's easy to filter out of GlowBop's own metrics). Only the named edc_* events from
