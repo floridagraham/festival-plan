@@ -626,3 +626,11 @@ footer .partner b{color:var(--ink)}
 .love-note .hl-smile{color:#ffd166}
 .love-note .love-sig{background:linear-gradient(90deg,#ff4fb4,#a874ff,#3fe0ff,#7dff9b,#ffb627,#ff7a59,#ff4fb4);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent}
 @media (prefers-reduced-motion:no-preference){.love-note .love-sig{animation:name-roll 6s linear infinite}}
+
+/* tip amount chips on the Show your love card (Oct 27): pick $5 / $10 / $20 / Any, the tip buttons open with it filled in */
+.tip-amts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 10px}
+.tip-amts[hidden]{display:none}
+.tip-amts button{min-height:46px;border-radius:12px;border:1.5px solid #8a78e6;background:var(--night2);color:var(--ink);font:800 16px var(--body);cursor:pointer}
+.tip-amts button[aria-pressed="true"]{background:var(--grad);color:var(--night);border-color:transparent;box-shadow:0 6px 18px -8px var(--day-glow,rgba(255,79,180,.8))}
+.tip-amts button:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.donate .tip-amt{font-weight:800}

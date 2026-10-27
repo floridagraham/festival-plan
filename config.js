@@ -6,8 +6,9 @@ window.EDC_CONFIG = {
   supabaseAnonKey: "sb_publishable_adXOJbtS1ssTU4AAgCG7SA_4uokwiCC",
   // Tip links, one button each (Venmo, Cash App, Ko-fi, PayPal.me...). Empty list = no tip buttons.
   donateLinks: [
-    { label: "Venmo", url: "https://venmo.com/u/federated" },
-    { label: "Cash App", url: "https://cash.app/$FloridaGraham" }
+    // amountUrl (optional): the same link with a dollar amount filled in; {amount} is replaced by 5, 10 or 20
+    { label: "Venmo", url: "https://venmo.com/u/federated", amountUrl: "https://venmo.com/federated?txn=pay&amount={amount}&note=Your%20Festival%20Plan" },
+    { label: "Cash App", url: "https://cash.app/$FloridaGraham", amountUrl: "https://cash.app/$FloridaGraham/{amount}" }
   ],
   // Where Insomniac (or anyone) can reach Graham about working together, e.g. his Linktree.
   // Empty = the "Insomniac team" notes on the Show your love card and in the footer stay hidden.

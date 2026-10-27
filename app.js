@@ -375,6 +375,22 @@ if(tipLinks.length){
   }
   const loveH=document.getElementById("loveH"), loveP=document.getElementById("loveNote"), loveSmall=document.getElementById("loveSmall"), loveX=document.getElementById("loveX");
   const LOVE_TEXT=[loveH.innerHTML,loveP.innerHTML,loveSmall.textContent,loveX.textContent];
+  // tip amounts on the love card (Graham, Oct 27): $5 / $10 / $20 fill in each service's amountUrl; "Any" uses the plain link
+  const loveAmts=loveDlg.querySelector(".tip-amts");
+  function setLoveAmount(v){
+    loveAmts.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.amt===v)));
+    loveDlg.querySelectorAll(".donate-link").forEach(a=>{
+      const t=tipLinks.find(x=>x.label===a.dataset.service), fixed=v!=="any"&&t&&t.amountUrl;
+      if(!t) return;
+      a.href=fixed?t.amountUrl.replace("{amount}",v):t.url; a.dataset.amount=v;
+      a.innerHTML=`${HEART_ICO} ${esc(t.label)}${fixed?` <span class="tip-amt">$${v}</span>`:""}`;
+      a.setAttribute("aria-label",`Leave a ${fixed?"$"+v+" ":""}tip with ${t.label} (opens new tab)`);
+    });
+  }
+  if(tipLinks.some(t=>t.amountUrl)){
+    loveAmts.hidden=false; setLoveAmount("10");
+    loveAmts.addEventListener("click",e=>{ const b=e.target.closest("button[data-amt]"); if(!b) return; setLoveAmount(b.dataset.amt); track("edc_tip_amount",{amount:b.dataset.amt}); });
+  }
   loveArt.onclick=()=>{ lovePop(); loveBurst(12); track("edc_love_hearts"); };
   loveDlg.addEventListener("click",e=>{
     if(!e.target.closest(".donate-link")) return;
@@ -591,7 +607,7 @@ document.addEventListener("visibilitychange",()=>{if(document.visibilityState!==
 document.addEventListener("click",e=>{const a=e.target.closest("a[href^='http']"); if(!a||a.matches(".yt,.sp,[data-pk]")) return;
   let u; try{u=new URL(a.href);}catch(_){return;}
   const ctx=a.closest(".line")?.querySelector(".ln")?.firstChild?.textContent?.trim();
-  track(a.matches(".donate-link")?"edc_donate_click":"edc_outbound_click",{...(a.dataset.where?{where:a.dataset.where,service:a.dataset.service}:{}),host:u.host,path:u.pathname.slice(0,80),label:(a.getAttribute("aria-label")||a.textContent).trim().replace(/\s+/g," ").slice(0,80),...(ctx?{context:ctx}:{})});});
+  track(a.matches(".donate-link")?"edc_donate_click":"edc_outbound_click",{...(a.dataset.where?{where:a.dataset.where,service:a.dataset.service,...(a.dataset.amount?{amount:a.dataset.amount}:{})}:{}),host:u.host,path:u.pathname.slice(0,80),label:(a.getAttribute("aria-label")||a.textContent).trim().replace(/\s+/g," ").slice(0,80),...(ctx?{context:ctx}:{})});});
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible") connect().catch(()=>{});});
 syncStatus(); render();
 connect().catch(()=>syncStatus());
