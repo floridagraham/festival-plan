@@ -378,7 +378,7 @@ if(tipLinks.length){
   loveArt.onclick=()=>{ lovePop(); loveBurst(12); track("edc_love_hearts"); };
   loveDlg.addEventListener("click",e=>{
     if(!e.target.closest(".donate-link")) return;
-    loveH.innerHTML="You're the <span>best</span>"; loveP.innerHTML="<p>Thank you. You just made my day, and you're part of why I built this.</p><p>Come find the good vibes on the dance floor. See you there.</p><p class=\"love-sig\">With love, Graham</p>";
+    loveH.innerHTML="You're the <span>best</span>"; loveP.innerHTML="<p>Thank you. You just <b class=\"hl-smile\">made my day</b>, and you're part of why I built this.</p><p>Come find the good <b class=\"hl-vibe\">vibes</b> on the dance floor. See you there.</p><p class=\"love-sig\">With love, Graham</p>";
     loveSmall.textContent="Your tip opened in a new tab."; loveX.textContent="Back to the app";
     lovePop(); loveBurst(20);
   });

@@ -571,8 +571,8 @@ body.has-a2hs .love{bottom:calc(86px + env(safe-area-inset-bottom,0px))}
   font:800 24px var(--display);color:var(--night);background:linear-gradient(135deg,#ff4fb4,#a874ff 55%,#3fe0ff);
   box-shadow:0 0 0 2px var(--night),0 0 0 4px rgba(255,79,180,.7),0 0 22px -4px rgba(255,79,180,.8)}
 .love-avatar img{width:100%;height:100%;object-fit:cover;display:block}
-.love-hi p{margin:0;font:800 19px var(--display);color:var(--ink);line-height:1.2}
-.love-hi p span{background:linear-gradient(100deg,#ff4fb4,#a874ff 55%,#3fe0ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.love-hi .hi-name{margin:0;font:800 19px var(--display);color:var(--ink);line-height:1.2}
+.love-hi .hi-name span{background:linear-gradient(100deg,#ff4fb4,#a874ff 55%,#3fe0ff);-webkit-background-clip:text;background-clip:text;color:transparent}
 .love-note p{margin:0;font-size:15px;line-height:1.5;color:var(--ink)}
 .love-note .love-sig{justify-self:end;margin-top:2px;font-family:var(--display);font-weight:700;font-size:14px;
   background:linear-gradient(100deg,#ff4fb4,#a874ff 55%,#3fe0ff);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -601,3 +601,28 @@ body.has-a2hs .love{bottom:calc(86px + env(safe-area-inset-bottom,0px))}
 .love-ps a{color:var(--cyan);font-weight:700}
 footer .partner{margin:0 0 14px;padding:12px 14px;border-radius:14px;background:rgba(36,22,90,.55);border:1.5px solid var(--line);color:var(--ink);line-height:1.5}
 footer .partner b{color:var(--ink)}
+
+/* Quick start opens with the same "Hi, I'm Graham" row (Oct 27): avatar, name, then the welcome line under the name */
+.intro-hi{margin:-4px 0 16px}
+.intro-hi .intro-lead{margin:4px 0 0;font-size:14.5px}
+
+/* Quick start (Oct 27): the pick words in their button colors; My Plan as a mini copy of its gradient button so it stands out */
+.intro .pk-yes{color:var(--lime)}
+.intro .pk-maybe{color:var(--amber)}
+.intro .pk-no{color:#ff7088}
+.intro .pk-plan{display:inline-block;padding:1px 9px;border-radius:999px;background:var(--grad);color:var(--night);font-weight:800;line-height:1.35;white-space:nowrap;box-shadow:0 4px 14px -6px var(--day-glow,rgba(255,79,180,.8))}
+
+/* "Graham" in both Hi rows: the festival colors roll through his name (Graham asked, Oct 27; still under Reduce Motion) */
+.love-hi .hi-name span{background:linear-gradient(90deg,#ff4fb4,#a874ff,#3fe0ff,#7dff9b,#ffb627,#ff7a59,#ff4fb4);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent}
+@media (prefers-reduced-motion:no-preference){.love-hi .hi-name span{animation:name-roll 6s linear infinite}}
+@keyframes name-roll{to{background-position:-300% 0}}
+
+/* Show your love note (Oct 27): the words that matter in festival colors */
+.love-note .hl-love{color:#ff6fc2}
+.love-note .hl-music{color:var(--cyan)}
+.love-note .hl-fest{color:#c29bff}
+.love-note .hl-people{color:var(--lime)}
+.love-note .hl-vibe{color:var(--amber)}
+.love-note .hl-smile{color:#ffd166}
+.love-note .love-sig{background:linear-gradient(90deg,#ff4fb4,#a874ff,#3fe0ff,#7dff9b,#ffb627,#ff7a59,#ff4fb4);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent}
+@media (prefers-reduced-motion:no-preference){.love-note .love-sig{animation:name-roll 6s linear infinite}}
