@@ -522,3 +522,26 @@ body.has-a2hs{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
 /* one-line confirmation after opening #notrack or #track */
 .toast{position:fixed;z-index:60;left:50%;transform:translateX(-50%);top:calc(64px + env(safe-area-inset-top,0px));margin:0;max-width:calc(100% - 32px);width:max-content;
   padding:10px 16px;border-radius:14px;background:rgba(29,17,69,.96);border:1.5px solid rgba(63,224,255,.55);color:var(--ink);font-weight:600;font-size:14px;box-shadow:0 12px 30px -12px rgba(0,0,0,.9)}
+
+/* floating "Show your love" heart, bottom right (Graham, Oct 27). Graham asked for the slow color shift and gentle float,
+   so like the stage logo it is an approved exception to the no-animated-indicators rule. Reduce Motion shows it still.
+   It sits above the add-to-home-screen bar when that bar is showing. */
+body.has-love{padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
+body.has-love.has-a2hs{padding-bottom:calc(150px + env(safe-area-inset-bottom,0px))}
+.love{position:fixed;z-index:39;right:max(10px, calc(env(safe-area-inset-right,0px) + 6px));bottom:calc(10px + env(safe-area-inset-bottom,0px));
+  display:flex;align-items:center;min-height:44px;padding:4px;border:0;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.love-pill{display:inline-flex;align-items:center;gap:5px;padding:6px 11px 6px 9px;border-radius:999px;font:800 12px var(--body);color:var(--night);
+  background:linear-gradient(100deg,#ff4fb4,#a874ff,#3fe0ff,#7dff9b,#ffb627,#ff7a59,#ff4fb4);background-size:600% 100%;
+  box-shadow:0 8px 20px -8px rgba(255,79,180,.85),0 0 0 1.5px rgba(246,241,255,.25) inset}
+.love:focus-visible{outline:none}
+.love:focus-visible .love-pill{outline:2px solid var(--cyan);outline-offset:2px}
+.love[hidden]{display:none!important}
+.love .ic{width:14px;height:14px}
+body.has-a2hs .love{bottom:calc(86px + env(safe-area-inset-bottom,0px))}
+.love-x{width:100%;margin-top:12px}
+#loveDlg .donate-row{display:flex;flex-wrap:wrap;gap:10px}
+@media (prefers-reduced-motion:no-preference){
+  .love-pill{animation:love-hue 14s ease-in-out infinite alternate,love-float 4.5s ease-in-out infinite}
+}
+@keyframes love-hue{to{background-position:100% 0}}
+@keyframes love-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}

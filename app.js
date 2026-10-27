@@ -342,6 +342,14 @@ if(tipLinks.length){
   const esc=s=>String(s).replace(/[&<>"]/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[ch]);
   document.querySelectorAll(".tipbox").forEach(b=>b.hidden=false);
   document.querySelectorAll(".donate-row").forEach(row=>{row.innerHTML=tipLinks.map(t=>`<a class="btn donate donate-link" data-where="${row.dataset.where}" data-service="${esc(t.label)}" href="${esc(t.url)}" target="_blank" rel="noopener" aria-label="Leave a tip with ${esc(t.label)} (opens new tab)">${HEART_ICO} ${esc(t.label)}</a>`).join("");row.hidden=false;});
+  // floating "Show your love" heart, bottom right (Graham, Oct 27): opens a sheet with the same tip buttons
+  const loveBtn=document.getElementById("loveBtn"), loveDlg=document.getElementById("loveDlg");
+  const loveSheet=sheet(loveDlg,{onDismiss:()=>closeLove()});
+  const closeLove=()=>{ loveSheet.close(); loveBtn.focus(); };
+  loveBtn.hidden=false; document.body.classList.add("has-love");
+  loveBtn.onclick=()=>{ loveSheet.open(); loveDlg.querySelector(".intro-card").focus(); track("edc_love_open"); };
+  document.getElementById("loveX").onclick=closeLove;
+  loveDlg.addEventListener("keydown",e=>{if(e.key==="Escape") closeLove();});
 }
 
 // map at the top of the lineup: tap a stage and its acts show right below, in time order.
@@ -454,7 +462,7 @@ function syncStatus(){
     :live?"Shared picks: changes show up live on both your phones."
     :"Offline: showing your last synced picks.";
   // Link phones is just for Graham and Rebecca: everyone else keeps picks on their own phone, so the button only
-  // shows once this phone is linked. A new phone of theirs links through the-rave-plan.netlify.app/#link.
+  // shows once this phone is linked. A new phone of theirs links through floridagraham.github.io/festival-plan/#link.
   linkBtn.hidden=!(sb&&code); document.getElementById("linkTxt").textContent="Linked phones";
   trackContext({linked:!!code,pending_picks:n});
 }
