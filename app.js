@@ -336,10 +336,33 @@ document.querySelectorAll(".gmap:not(.gmap-top)").forEach((box,i)=>{
 });
 
 // "Insomniac team" notes (Graham, Oct 27: if Insomniac finds the app, invite them to work together); shown once partnerLink is set
-const partnerLink=(window.EDC_CONFIG||{}).partnerLink;
-if(partnerLink&&/^https:\/\//.test(partnerLink)){
-  document.querySelectorAll(".partner-link").forEach(a=>a.href=partnerLink);
+// contactEmail (Oct 27): a public address for notes; it also stands in for partnerLink as a mailto
+const contactEmail=String((window.EDC_CONFIG||{}).contactEmail||"").trim(), hasEmail=/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(contactEmail);
+const mailTo=(subj,body)=>`mailto:${contactEmail}?subject=${encodeURIComponent(subj)}${body?"&body="+encodeURIComponent(body):""}`;
+if(hasEmail){
+  // "Send me a note" on the Show your love card (Graham, Oct 27): feedback by email
+  const noteBtn=document.getElementById("noteBtn");
+  noteBtn.href=mailTo("Your Festival Plan feedback","What I like about this app:\n\n"); noteBtn.setAttribute("aria-label","Send Graham a note by email"); noteBtn.hidden=false;
+  document.getElementById("noteAsk").hidden=false;
+  noteBtn.addEventListener("click",()=>track("edc_note_click"));
+}
+const cfgPartner=(window.EDC_CONFIG||{}).partnerLink;
+const partnerLink=cfgPartner&&/^https:\/\//.test(cfgPartner)?cfgPartner:hasEmail?mailTo("Working together on Your Festival Plan"):"";
+if(partnerLink){
+  document.querySelectorAll(".partner-link").forEach(a=>{
+    a.href=partnerLink;
+    if(partnerLink.startsWith("mailto:")){ a.removeAttribute("target"); a.setAttribute("aria-label",a.id==="insGo"?"Contact Graham by email":a.textContent.trim()+": email Graham"); }
+  });
   document.querySelectorAll(".partner-note").forEach(p=>p.hidden=false);
+  // "Are you Insomniac?" pill above the love heart (Graham, Oct 27): opens a short pitch with a Contact me button
+  const insBtn=document.getElementById("insBtn"), insDlg=document.getElementById("insDlg");
+  const insSheet=sheet(insDlg,{onDismiss:()=>closeIns()});
+  const closeIns=()=>{ insSheet.close(); insBtn.focus(); };
+  insBtn.hidden=false; document.body.classList.add("has-ins");
+  insBtn.onclick=()=>{ insSheet.open(); insDlg.querySelector(".intro-card").focus(); track("edc_ins_open"); };
+  if(partnerLink.startsWith("mailto:")) document.getElementById("insGo").addEventListener("click",()=>track("edc_ins_contact"));
+  document.getElementById("insX").onclick=closeIns;
+  insDlg.addEventListener("keydown",e=>{if(e.key==="Escape") closeIns();});
 }
 // tip jar (footer and opening screen): one button per link in config.js, hidden when there are none
 const HEART_ICO=ico_('<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/>');

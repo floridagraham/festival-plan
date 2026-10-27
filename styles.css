@@ -623,7 +623,7 @@ footer .partner b{color:var(--ink)}
 .love-note .hl-fest{color:#c29bff}
 .love-note .hl-people{color:var(--lime)}
 .love-note .hl-vibe{color:var(--amber)}
-.love-note .hl-smile{color:#ffd166}
+.love-note .hl-smile,.love-or .hl-smile{color:#ffd166}
 .love-note .love-sig{background:linear-gradient(90deg,#ff4fb4,#a874ff,#3fe0ff,#7dff9b,#ffb627,#ff7a59,#ff4fb4);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent}
 @media (prefers-reduced-motion:no-preference){.love-note .love-sig{animation:name-roll 6s linear infinite}}
 
@@ -634,3 +634,26 @@ footer .partner b{color:var(--ink)}
 .tip-amts button[aria-pressed="true"]{background:var(--grad);color:var(--night);border-color:transparent;box-shadow:0 6px 18px -8px var(--day-glow,rgba(255,79,180,.8))}
 .tip-amts button:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
 .donate .tip-amt{font-weight:800}
+
+/* "Are you Insomniac?" pill (Oct 27): a quiet glass pill stacked just above the love heart, static (no float or color shift)
+   so the heart stays the eye-catcher. Shown only when config.js has partnerLink. */
+.ins{position:fixed;z-index:39;right:max(10px, calc(env(safe-area-inset-right,0px) + 6px));bottom:calc(10px + env(safe-area-inset-bottom,0px));
+  display:flex;align-items:center;min-height:44px;padding:4px;border:0;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.ins-pill{display:inline-flex;align-items:center;gap:5px;padding:5px 11px 5px 9px;border-radius:999px;font:800 12px var(--body);color:var(--ink);
+  background:rgba(29,17,69,.92);border:1.5px solid #8a78e6;box-shadow:0 8px 20px -10px rgba(63,224,255,.7)}
+.ins .ic{width:13px;height:13px;color:var(--cyan)}
+.ins:focus-visible{outline:none}
+.ins:focus-visible .ins-pill{outline:2px solid var(--cyan);outline-offset:2px}
+.ins[hidden]{display:none!important}
+body.has-love .ins{bottom:calc(52px + env(safe-area-inset-bottom,0px))}
+body.has-a2hs .ins{bottom:calc(86px + env(safe-area-inset-bottom,0px))}
+body.has-a2hs.has-love .ins{bottom:calc(128px + env(safe-area-inset-bottom,0px))}
+body.has-ins{padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
+body.has-ins.has-a2hs{padding-bottom:calc(150px + env(safe-area-inset-bottom,0px))}
+body.has-ins.has-love{padding-bottom:calc(114px + env(safe-area-inset-bottom,0px))}
+body.has-ins.has-love.has-a2hs{padding-bottom:calc(192px + env(safe-area-inset-bottom,0px))}
+.ins-go{display:flex;width:100%;flex:none;background:var(--grad);font-size:15px;font-weight:800;box-shadow:0 10px 26px -12px rgba(255,79,180,.85)}
+/* "Send me a note" on the love card (Oct 27): a quiet outline button under the tip buttons, shown when contactEmail is set */
+.love-mail{display:flex;width:100%;flex:none;margin-top:10px;gap:7px}
+.love-mail .ic{width:17px;height:17px;color:var(--cyan)}
+.love-or{margin:16px 0 0;padding-top:12px;border-top:1px solid rgba(168,116,255,.35);font-size:14px;line-height:1.45;color:var(--ink);text-wrap:balance}
