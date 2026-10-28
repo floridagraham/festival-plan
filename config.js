@@ -19,6 +19,13 @@ window.EDC_CONFIG = {
   // Used by "Let's talk", "Send me a note", the Insomniac contact, the "Built by" lines, "Other" in the
   // festival vote and the next-year list. Empty = all of those stay hidden.
   contactEmail: "hello@glowbop.com",
+  // "Send me a note" box (Oct 28): Graham's Google Form "Your Festival Plan notes" (owned by his Google account,
+  // emails him on every response, linked to the sheet "Your Festival Plan notes"). url is the form's formResponse
+  // address; note / name / email are its entry IDs. Empty url = the note button opens an email instead.
+  noteForm: {
+    url: "https://docs.google.com/forms/d/e/1FAIpQLSe4sp1M7L2iMiwMrXCLuvKJXSpeauXWYSYMkD8H-Zilq7HEAg/formResponse",
+    note: "entry.273069883", name: "entry.784140844", email: "entry.1468975052"
+  },
   // The app's public link, used when people share it.
   appUrl: "https://floridagraham.github.io/festival-plan/",
   // "Used by N festival-goers" in Quick start and the Made by Graham sheet. Put the real count from PostHog

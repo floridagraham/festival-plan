@@ -469,11 +469,59 @@ if(hasEmail){
   buildGo.href=mailTo(BUILD_SUBJ); buildGo.setAttribute("aria-label","Let's talk: email Graham about an app");
   buildGo.addEventListener("click",()=>track("edc_build_contact",{where:"made_by_sheet"}));
   document.getElementById("optBuild").hidden=false;
-  // "Send me a note" (Oct 27): feedback by email
-  const noteBtn=document.getElementById("noteBtn");
-  noteBtn.href=mailTo("Your Festival Plan feedback","What I like about this app:\n\n"); noteBtn.setAttribute("aria-label","Send Graham a note by email"); noteBtn.hidden=false;
-  document.getElementById("noteAsk").hidden=false;
-  noteBtn.addEventListener("click",()=>track("edc_note_click"));
+}
+// "Send me a note" (Oct 28): a note box in the sheet that posts to Graham's Google Form (noteForm in config.js) in the
+// background, so nobody needs a mail app and nothing looks like Google. Notes written with no signal wait in
+// localStorage and send by themselves when it comes back. Only yes/no facts are tracked, never the words.
+// Without a form it falls back to the Oct 27 email (contactEmail).
+const NF=CFG0.noteForm||{};
+const hasNoteForm=/^https:\/\/docs\.google\.com\/forms\/d\/e\/[\w-]+\/formResponse$/.test(NF.url||"")&&NF.note;
+const NOTE_Q="edc-note-queue";
+const noteQ={get(){try{return JSON.parse(localStorage.getItem(NOTE_Q)||"[]");}catch{return [];}},set(q){try{q.length?localStorage.setItem(NOTE_Q,JSON.stringify(q)):localStorage.removeItem(NOTE_Q);}catch{}}};
+// Google answers without CORS headers, so the reply can't be read; a rejected fetch (no network, 15 s timeout) means not sent
+const postNote=n=>{
+  const body=new URLSearchParams({[NF.note]:n.note}); if(NF.name&&n.name) body.set(NF.name,n.name); if(NF.email&&n.email) body.set(NF.email,n.email);
+  const ac=new AbortController(), t=setTimeout(()=>ac.abort(),15000);
+  return fetch(NF.url,{method:"POST",mode:"no-cors",body,signal:ac.signal}).finally(()=>clearTimeout(t));
+};
+let noteFlushing=false;
+async function flushNotes(){
+  if(!hasNoteForm||noteFlushing||!navigator.onLine) return;
+  const q=noteQ.get(); if(!q.length) return;
+  noteFlushing=true;
+  try{ while(q.length){ await postNote(q[0]); q.shift(); noteQ.set(q); track("edc_note_sent",{queued:true}); } }catch{} finally{ noteFlushing=false; }
+}
+{
+  const noteBtn=document.getElementById("noteBtn"), form=document.getElementById("noteForm"), done=document.getElementById("noteDone");
+  const text=document.getElementById("noteText"), nm=document.getElementById("noteName"), em=document.getElementById("noteEmail");
+  const err=document.getElementById("noteErr"), send=document.getElementById("noteSend"), sendT=document.getElementById("noteSendT");
+  if(hasNoteForm){
+    noteBtn.hidden=false; document.getElementById("noteAsk").hidden=false;
+    noteBtn.addEventListener("click",()=>{ noteBtn.hidden=true; noteBtn.setAttribute("aria-expanded","true"); form.hidden=false; text.focus(); track("edc_note_click"); });
+    form.addEventListener("input",()=>{ if(err.textContent) err.textContent=""; });
+    document.getElementById("noteAgain").addEventListener("click",()=>{ done.hidden=true; form.hidden=false; text.focus(); });
+    form.addEventListener("submit",async e=>{
+      e.preventDefault();
+      const n={note:text.value.trim(),name:nm.value.trim(),email:em.value.trim(),at:Date.now()};
+      if(!n.note){ err.textContent="Write a few words first."; text.focus(); return; }
+      if(n.email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(n.email)){ err.textContent="That email doesn't look right. You can leave it empty."; em.focus(); return; }
+      err.textContent=""; send.disabled=true; sendT.textContent="Sending...";
+      let sent=false;
+      if(navigator.onLine){ try{ await postNote(n); sent=true; }catch{} }
+      if(!sent){ const q=noteQ.get(); q.push(n); noteQ.set(q); }
+      track("edc_note_sent",{queued:!sent,name:!!n.name,email:!!n.email});
+      text.value=""; send.disabled=false; sendT.textContent="Send to Graham";
+      document.getElementById("noteDoneH").textContent=sent?"Got it, thank you!":"Saved, thank you!";
+      document.getElementById("noteDoneP").firstChild.textContent=sent?"I read every note. ":"No signal right now. It sends by itself when you're back online. ";
+      form.hidden=true; done.hidden=false; done.focus?.();
+    });
+    window.addEventListener("online",flushNotes);
+    document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible") flushNotes(); });
+    flushNotes();
+  }else if(hasEmail){
+    noteBtn.hidden=false; document.getElementById("noteAsk").hidden=false; noteBtn.setAttribute("aria-label","Send Graham a note by email");
+    noteBtn.addEventListener("click",()=>{ track("edc_note_click"); location.href=mailTo("Your Festival Plan feedback","What I like about this app:\n\n"); });
+  }
 }
 // "More about me" on the Made by Graham card (Oct 28): Graham's personal page, from config.js
 {

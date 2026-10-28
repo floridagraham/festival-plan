@@ -897,3 +897,24 @@ header.lineup-top .tagline{font-size:12px;line-height:1.35;margin:0}
 .mbg-me{display:inline-flex;align-items:center;gap:4px;min-height:44px;margin:-8px 0 -12px;color:var(--cyan);font:800 13.5px var(--body);text-decoration:none}
 .mbg-me:hover{text-decoration:underline}
 .mbg-me[hidden]{display:none}
+/* "Send me a note" box (Oct 28): the same glass panel, labels and fields as the rest of the app; posts to a Google Form behind the scenes */
+.note-form{display:grid;gap:0;padding:14px;border-radius:16px;text-align:left;background:var(--glass);border:1.5px solid var(--line-soft)}
+.note-form[hidden],.note-done[hidden]{display:none}
+.note-form .link-lbl{margin:10px 0 6px;color:var(--ink)}
+.note-form .link-lbl:first-child{margin-top:0}
+.note-opt{font-weight:600;color:var(--soft)}
+.note-in{min-height:108px;resize:vertical;line-height:1.45;padding:10px 14px}
+.note-form .link-in::placeholder{color:var(--soft);opacity:1}
+.note-form .link-err{margin:6px 0 4px}
+.note-form .link-err:empty{min-height:0;margin:4px 0 0}
+.note-form .mbg-go{margin-top:6px}
+.note-form .mbg-go:disabled{opacity:1;filter:saturate(.6);cursor:progress}
+.note-form .love-small{margin:8px 0 0;text-align:center}
+.note-done{display:flex;align-items:center;gap:12px;padding:14px;border-radius:16px;text-align:left;background:var(--glass);border:1.5px solid var(--line-soft)}
+.note-done .love-avatar{width:48px;height:48px}
+.note-done p{margin:0;font-size:14px;line-height:1.45;color:var(--ink)}
+.note-done .note-done-h{font:700 16px var(--display);margin-bottom:2px}
+.note-done .love-sig{font-family:var(--display);font-weight:700;color:var(--pink)}
+.note-again{min-height:44px;margin:2px 0 -10px;padding:0;background:none;border:0;color:var(--cyan);font:800 13.5px var(--body);cursor:pointer}
+.note-again:hover{text-decoration:underline}
+.love-mail[hidden]{display:none}

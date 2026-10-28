@@ -161,8 +161,24 @@ if("serviceWorker" in navigator){
     </section>
     <div class="mbg-row">
       <button class="btn alt share-app" type="button" data-share="made_by_sheet"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg> Share this app with your friends</button>
-      <p class="love-or" id="noteAsk" hidden>Or <b class="hl-smile">send me a note</b>. Tell me what you like about this app.</p>
-      <a class="btn alt love-mail" id="noteBtn" href="#" hidden><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg> Send me a note</a>
+      <p class="love-or" id="noteAsk" hidden>Or <b class="hl-smile">send me a note</b>. Tell me what you love, or what would make it better.</p>
+      <button class="btn alt love-mail" id="noteBtn" type="button" aria-expanded="false" aria-controls="noteForm" hidden><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg> Send me a note</button>
+      <!-- note box (Oct 28): posts to Graham's Google Form (noteForm in config.js) in the background, no mail app needed -->
+      <form class="note-form ph-no-capture" id="noteForm" novalidate hidden>
+        <label class="link-lbl" for="noteText">Your note</label>
+        <textarea id="noteText" class="link-in note-in" name="note" rows="4" maxlength="2000" placeholder="What do you love? What would make it better?"></textarea>
+        <label class="link-lbl" for="noteName">Name <span class="note-opt">(optional)</span></label>
+        <input id="noteName" class="link-in" name="name" type="text" autocomplete="given-name" maxlength="80">
+        <label class="link-lbl" for="noteEmail">Email <span class="note-opt">(optional, if you'd like a reply)</span></label>
+        <input id="noteEmail" class="link-in" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" maxlength="120">
+        <p class="link-err" id="noteErr" role="alert"></p>
+        <button class="btn intro-go mbg-go" id="noteSend" type="submit"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7Z"/></svg> <span id="noteSendT">Send to Graham</span></button>
+        <p class="love-small">Goes straight to Graham. Never shared.</p>
+      </form>
+      <div class="note-done" id="noteDone" role="status" tabindex="-1" hidden>
+        <span class="love-avatar"><img src="avatar.jpg" width="48" height="48" alt="" decoding="async"></span>
+        <div><p class="note-done-h" id="noteDoneH">Got it, thank you!</p><p id="noteDoneP">I read every note. <span class="love-sig">Graham</span></p><button class="note-again" id="noteAgain" type="button">Send another</button></div>
+      </div>
       <button class="btn alt mbg-help" id="mbgHelp" type="button">How the app works</button>
     </div>
     <div class="fest-vote" data-where="made_by_sheet"></div>
