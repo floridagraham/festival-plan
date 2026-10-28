@@ -42,6 +42,18 @@ const APP_URL=CFG0.appUrl||"https://floridagraham.github.io/festival-plan/";
 const BUILD_SUBJ="I want an app like Your Festival Plan";
 // "Built by" line at the foot of My Plan, Getting there and the afterparties (Oct 28)
 const builtBy=where=>hasEmail?`<p class="builtby">Built by <b>Graham Lucht</b>, app builder. I make things that people love. <a class="builtby-go" data-where="${where}" href="${mailTo(BUILD_SUBJ)}">Got an idea? Let's talk <span aria-hidden="true">&rarr;</span></a></p>`:"";
+// directions open the phone's own map app (Graham, Oct 28): Apple Maps on an iPhone, the standard geo: link on
+// Android (it opens whatever map app the phone uses), Google Maps on a computer. The page's own Google Maps
+// direction links are switched over the same way when the app starts.
+const MAP_OS=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1)?"ios":/Android/.test(navigator.userAgent)?"android":"web";
+function mapsHref(addr){
+  const q=encodeURIComponent(addr);
+  return MAP_OS==="ios"?"https://maps.apple.com/?daddr="+q:MAP_OS==="android"?"geo:0,0?q="+q:"https://www.google.com/maps/dir/?api=1&destination="+q;
+}
+document.querySelectorAll('a[href^="https://www.google.com/maps/dir/"]').forEach(a=>{
+  const d=new URL(a.href).searchParams.get("destination"); if(!d) return;
+  a.href=mapsHref(d); if(MAP_OS==="android") a.removeAttribute("target");
+});
 const escH=s=>String(s).replace(/[&<>"]/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[ch]);
 const SPARKLE_ICO=ico_('<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/>');
 const spUrl = t => "https://open.spotify.com/search/" + encodeURIComponent(t);
@@ -171,7 +183,7 @@ function render(){
 }
 
 // Afterparties (researched Oct 25, 2026). Official = Insomniac-run.
-const PGM=a=>"https://www.google.com/maps/dir/?api=1&destination="+encodeURIComponent(a);
+const PGM=mapsHref;
 const VENUE_COL={hotel:"#ff4fb4",van:"#a874ff",ant:"#3fe0ff"};
 const PARTIES={};
 for(const d in PARTY_DATA.parties) PARTIES[d]=PARTY_DATA.parties[d].map(p=>({...p,col:VENUE_COL[p.id.split("-").pop()]||"#c9b8ff"}));
@@ -183,7 +195,7 @@ function partyCard(pt){
   return `<article class="pcard${v?" is-"+v:""}" style="--pc:${pt.col}"><div class="pt"><div><h3>${pt.venue.split(" · ")[0]}</h3><div class="sub">${pt.name.replace(/ ft\..*$/,"").replace(pt.venue.split(" · ")[0]+" ","")}</div></div><span class="badge${pt.official?"":" unoff"}">${pt.official?"Official":"Not official"}</span></div>
   <div class="meta"><span>${CLOCK_ICO} <b>${pt.time}</b></span><span>${PIN_ICO} <b>${pt.venue}</b></span><span class="addr">${pt.addr}</span><span>${TICKET_ICO} ${pt.price} · ${pt.age}</span></div>
   <div class="lineup">${acts}</div>${vote}
-  <div class="btns"><a class="btn" data-pk="tickets" data-pid="${pt.id}" href="${pt.tix}" target="_blank" rel="noopener" aria-label="Tickets for ${pt.name} (opens new tab)">${TICKET_ICO} Tickets</a><a class="btn alt" data-pk="directions" data-pid="${pt.id}" href="${PGM(pt.addr)}" target="_blank" rel="noopener" aria-label="Directions to ${pt.venue.split(" · ")[0]} (opens new tab)">${PIN_ICO} Directions</a></div></article>`;
+  <div class="btns"><a class="btn" data-pk="tickets" data-pid="${pt.id}" href="${pt.tix}" target="_blank" rel="noopener" aria-label="Tickets for ${pt.name} (opens new tab)">${TICKET_ICO} Tickets</a><a class="btn alt" data-pk="directions" data-pid="${pt.id}" href="${PGM(pt.addr)}"${MAP_OS==="android"?"":' target="_blank" rel="noopener"'} aria-label="Directions to ${pt.venue.split(" · ")[0]} (opens new tab)">${PIN_ICO} Directions</a></div></article>`;
 }
 function renderParties(){
   const list=PARTIES[day]||[];
@@ -954,7 +966,7 @@ addEventListener("scroll",()=>{const h=document.documentElement.scrollHeight-inn
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState!=="hidden") return;
   track("edc_session_summary",{seconds:Math.round((Date.now()-session.start)/1000),votes:session.votes,listens:session.listens,expands:session.expands,max_scroll_pct:session.maxScroll},true);
   Object.assign(session,{start:Date.now(),votes:0,listens:0,expands:0,maxScroll:0});});
-document.addEventListener("click",e=>{const a=e.target.closest("a[href^='http']"); if(!a||a.matches(".yt,.sp,[data-pk]")) return;
+document.addEventListener("click",e=>{const a=e.target.closest("a[href^='http'],a[href^='geo:']"); if(!a||a.matches(".yt,.sp,[data-pk]")) return;
   let u; try{u=new URL(a.href);}catch(_){return;}
   const ctx=a.closest(".line")?.querySelector(".ln")?.firstChild?.textContent?.trim();
   track(a.matches(".donate-link")?"edc_donate_click":"edc_outbound_click",{...(a.dataset.where?{where:a.dataset.where,service:a.dataset.service,...(a.dataset.amount?{amount:a.dataset.amount}:{})}:{}),host:u.host,path:u.pathname.slice(0,80),label:(a.getAttribute("aria-label")||a.textContent).trim().replace(/\s+/g," ").slice(0,80),...(ctx?{context:ctx}:{})});});
