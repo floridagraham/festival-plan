@@ -918,3 +918,19 @@ header.lineup-top .tagline{font-size:12px;line-height:1.35;margin:0}
 .note-again{min-height:44px;margin:2px 0 -10px;padding:0;background:none;border:0;color:var(--cyan);font:800 13.5px var(--body);cursor:pointer}
 .note-again:hover{text-decoration:underline}
 .love-mail[hidden]{display:none}
+/* My Plan map (Oct 28): the grounds with no words, the day's Going and Maybe acts stacked by their stage */
+.plan-map{position:relative;margin:12px 0 2px;border-radius:18px;overflow:hidden;background:var(--night2);border:1.5px solid var(--line-soft)}
+.plan-map[hidden]{display:none}
+.plan-map svg{display:block;width:100%;height:auto}
+.pm-stack{position:absolute;display:grid;grid-template-columns:minmax(0,1fr);gap:3px;justify-items:start;width:max-content;max-width:42%}
+.pm-c{transform:translateX(-50%);justify-items:center}
+.pm-r{transform:translateX(-100%);justify-items:end}
+.pm-chip{display:flex;align-items:baseline;gap:5px;max-width:100%;min-width:0;padding:3px 8px;border-radius:999px;cursor:pointer;
+  font:700 11.5px/1.25 var(--body);white-space:nowrap;color:var(--night);background:var(--sc);border:1.5px solid var(--sc);box-shadow:0 2px 8px rgba(18,10,46,.6)}
+.pm-chip span{overflow:hidden;text-overflow:ellipsis;min-width:0}
+.pm-chip b{flex:none;font-weight:800}
+.pm-chip.is-maybe{color:var(--ink);background:rgba(18,10,46,.9);border-style:dashed}
+.pm-chip.is-maybe b{color:var(--amber)}
+.pm-chip.is-now{box-shadow:0 0 0 2px var(--ink),0 0 16px 2px var(--sc)}
+.pm-more{padding:1px 8px;border-radius:999px;font:800 11px var(--body);color:var(--ink);background:rgba(18,10,46,.85)}
+.plan-item.pi-flash{box-shadow:0 0 0 2px var(--cyan),0 0 18px var(--cyan)}

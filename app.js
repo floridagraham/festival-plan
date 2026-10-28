@@ -369,12 +369,15 @@ setDay(todayKey||(DAYS[saved]?saved:"sat"));
 
 // grounds map (schematic of the official 2026 layout, redrawn Oct 28)
 const STG=MAP_DATA.stages;
-function mapSVG(uid){
+function mapSVG(uid,opt={}){
+  // opt.bare (My Plan map, Oct 28): the same drawing with no words or service icons, stage dots only, and the
+  // stages in opt.on lit (the rest dimmed); the picks are laid over it as HTML chips by renderPlanMap()
+  const B=!!opt.bare, ON=opt.on||new Set(), VB=opt.vb||"0 0 545 420";
   // each stage dot sends out a soft pulse ring so the stages are easy to spot (Graham asked, Oct 28; still under Reduce Motion)
-  const st=STG.map((t,i)=>`<g class="stg" data-s="${t.id}" tabindex="0" role="button" aria-label="${t.name}, ${t.d.split(/[.,]/)[0]}"><circle cx="${t.x}" cy="${t.y}" r="36" fill="transparent" pointer-events="all"/><circle class="pulse" cx="${t.x}" cy="${t.y}" r="17" fill="none" stroke="${t.color}" stroke-width="3" style="animation-delay:${(i*.55).toFixed(2)}s" aria-hidden="true"/><circle class="ring" cx="${t.x}" cy="${t.y}" r="17" fill="${t.color}" fill-opacity=".25" stroke="${t.color}" stroke-width="2"/><circle cx="${t.x}" cy="${t.y}" r="9" fill="${t.color}"/><text x="${t.lx}" y="${t.ly}" text-anchor="${t.a||"middle"}" font-family="Unbounded, Arial Black, sans-serif" font-weight="700" font-size="13" fill="#f6f1ff" stroke="#120a2e" stroke-width="3" paint-order="stroke">${t.name}</text></g>`).join("");
-  const lbl=(x,y,t,o="")=>`<text x="${x}" y="${y}" ${o} font-family="Figtree, sans-serif" font-weight="700" font-size="11" fill="#c9b8ff">${t}</text>`;
-  const aid=(x,y)=>`<g aria-hidden="true"><circle cx="${x}" cy="${y}" r="11" fill="#ff3b5c" stroke="#fff" stroke-width="1.5"/><path d="M${x-5} ${y}h10M${x} ${y-5}v10" stroke="#fff" stroke-width="3" stroke-linecap="round"/></g>`;
-  const ico=(x,y,p,t)=>`<g><circle cx="${x}" cy="${y}" r="11" fill="#120a2e" stroke="#c9b8ff" stroke-width="1.2"/><g transform="translate(${x-7},${y-7}) scale(.58)" fill="none" stroke="#f6f1ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${p}</g>${t?`<text x="${x}" y="${y+24}" text-anchor="middle" font-family="Figtree, sans-serif" font-weight="700" font-size="10" fill="#f6f1ff">${t}</text>`:""}</g>`;
+  const st=B?STG.map(t=>`<g opacity="${ON.has(t.id)?1:.35}"><circle cx="${t.x}" cy="${t.y}" r="17" fill="${t.color}" fill-opacity=".25" stroke="${t.color}" stroke-width="2"/><circle cx="${t.x}" cy="${t.y}" r="9" fill="${t.color}"/></g>`).join(""):STG.map((t,i)=>`<g class="stg" data-s="${t.id}" tabindex="0" role="button" aria-label="${t.name}, ${t.d.split(/[.,]/)[0]}"><circle cx="${t.x}" cy="${t.y}" r="36" fill="transparent" pointer-events="all"/><circle class="pulse" cx="${t.x}" cy="${t.y}" r="17" fill="none" stroke="${t.color}" stroke-width="3" style="animation-delay:${(i*.55).toFixed(2)}s" aria-hidden="true"/><circle class="ring" cx="${t.x}" cy="${t.y}" r="17" fill="${t.color}" fill-opacity=".25" stroke="${t.color}" stroke-width="2"/><circle cx="${t.x}" cy="${t.y}" r="9" fill="${t.color}"/><text x="${t.lx}" y="${t.ly}" text-anchor="${t.a||"middle"}" font-family="Unbounded, Arial Black, sans-serif" font-weight="700" font-size="13" fill="#f6f1ff" stroke="#120a2e" stroke-width="3" paint-order="stroke">${t.name}</text></g>`).join("");
+  const lbl=(x,y,t,o="")=>B?"":`<text x="${x}" y="${y}" ${o} font-family="Figtree, sans-serif" font-weight="700" font-size="11" fill="#c9b8ff">${t}</text>`;
+  const aid=(x,y)=>B?"":`<g aria-hidden="true"><circle cx="${x}" cy="${y}" r="11" fill="#ff3b5c" stroke="#fff" stroke-width="1.5"/><path d="M${x-5} ${y}h10M${x} ${y-5}v10" stroke="#fff" stroke-width="3" stroke-linecap="round"/></g>`;
+  const ico=(x,y,p,t)=>B?"":`<g><circle cx="${x}" cy="${y}" r="11" fill="#120a2e" stroke="#c9b8ff" stroke-width="1.2"/><g transform="translate(${x-7},${y-7}) scale(.58)" fill="none" stroke="#f6f1ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${p}</g>${t?`<text x="${x}" y="${y+24}" text-anchor="middle" font-family="Figtree, sans-serif" font-weight="700" font-size="10" fill="#f6f1ff">${t}</text>`:""}</g>`;
   const P_CAR='<path d="M4 16V11l2-5h12l2 5v5"/><path d="M4 16h16M7 16v2M17 16v2"/><circle cx="7.5" cy="14" r=".8" fill="#f6f1ff" stroke="none"/><circle cx="16.5" cy="14" r=".8" fill="#f6f1ff" stroke="none"/>';
   const P_BUS='<rect x="3" y="5" width="18" height="12" rx="2"/><path d="M3 11h18M7 17v2M17 17v2"/><circle cx="7.5" cy="14" r=".8" fill="#f6f1ff" stroke="none"/><circle cx="16.5" cy="14" r=".8" fill="#f6f1ff" stroke="none"/>';
   const P_SPARKLE='<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/>';
@@ -389,10 +392,10 @@ function mapSVG(uid){
   const walk=(dd,col,w=10)=>`<path d="${dd}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/><path d="${dd}" fill="none" stroke="#f6f1ff" stroke-width="1.2" stroke-dasharray="3 5" stroke-linecap="round" opacity=".55"/>`;
   const tree=(x,y)=>`<circle cx="${x}" cy="${y}" r="6" fill="#3ec27a" opacity=".85"/><circle cx="${x-2}" cy="${y-2}" r="2.5" fill="#7dff9b" opacity=".7"/>`;
   const daisy=(x,y)=>`<g transform="translate(${x} ${y})">${[0,60,120,180,240,300].map(r=>`<ellipse rx="1.8" ry="4" cy="-3.6" fill="#f6f1ff" transform="rotate(${r})"/>`).join("")}<circle r="2" fill="#ffd166"/></g>`;
-  const taps=(x,y,n)=>`<g>${ico(x,y,P_DROP,"")}<circle cx="${x+11}" cy="${y-10}" r="8.5" fill="#3fe0ff" stroke="#120a2e" stroke-width="1.2"/><text x="${x+11}" y="${y-6.8}" text-anchor="middle" font-family="Figtree, sans-serif" font-weight="800" font-size="9" fill="#120a2e">${n}</text></g>`;
-  const food=(x,y)=>`<g><circle cx="${x}" cy="${y}" r="10" fill="#ff7a59" stroke="#120a2e" stroke-width="1.2"/><g transform="translate(${x-6.5},${y-6.5}) scale(.54)" fill="none" stroke="#120a2e" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">${P_FOOD}</g></g>`;
+  const taps=(x,y,n)=>B?"":`<g>${ico(x,y,P_DROP,"")}<circle cx="${x+11}" cy="${y-10}" r="8.5" fill="#3fe0ff" stroke="#120a2e" stroke-width="1.2"/><text x="${x+11}" y="${y-6.8}" text-anchor="middle" font-family="Figtree, sans-serif" font-weight="800" font-size="9" fill="#120a2e">${n}</text></g>`;
+  const food=(x,y)=>B?"":`<g><circle cx="${x}" cy="${y}" r="10" fill="#ff7a59" stroke="#120a2e" stroke-width="1.2"/><g transform="translate(${x-6.5},${y-6.5}) scale(.54)" fill="none" stroke="#120a2e" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">${P_FOOD}</g></g>`;
   const wheel=(x,y)=>`<g aria-hidden="true"><path d="M${x-8} ${y+19}L${x} ${y}L${x+8} ${y+19}" fill="none" stroke="#c9b8ff" stroke-width="2" stroke-linecap="round"/><circle cx="${x}" cy="${y}" r="12" fill="none" stroke="#ffb627" stroke-width="2"/>${[0,45,90,135].map(r=>`<path d="M${x-12} ${y}H${x+12}" stroke="#ffb627" stroke-width="1" opacity=".8" transform="rotate(${r} ${x} ${y})"/>`).join("")}${[0,60,120,180,240,300].map(r=>`<circle cx="${x+12*Math.cos(r*Math.PI/180)}" cy="${y+12*Math.sin(r*Math.PI/180)}" r="2.2" fill="#ff4fb4"/>`).join("")}<circle cx="${x}" cy="${y}" r="2" fill="#ffb627"/></g>`;
-  return `<svg viewBox="0 0 545 420" role="group" aria-label="Map of EDC Orlando grounds at Tinker Field, 2026 layout. Stages are buttons.">
+  return `<svg viewBox="${VB}" ${B?'aria-hidden="true" focusable="false"':'role="group" aria-label="Map of EDC Orlando grounds at Tinker Field, 2026 layout. Stages are buttons."'}>
   <defs><linearGradient id="gf${uid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a1d78"/><stop offset="1" stop-color="#1c3f73"/></linearGradient>
   <linearGradient id="rr${uid}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff4fb4"/><stop offset=".35" stop-color="#ffb627"/><stop offset=".7" stop-color="#7dff9b"/><stop offset="1" stop-color="#3fe0ff"/></linearGradient>
   <radialGradient id="lk${uid}" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#5fd0ff"/><stop offset="1" stop-color="#2a6fd6"/></radialGradient>
@@ -432,12 +435,12 @@ function mapSVG(uid){
   ${lbl(470,285,"S Nashville Ave",'transform="rotate(-90 470 285)" text-anchor="middle"')}
   ${lbl(80,384,"State Road 408",'transform="rotate(25 80 384)" text-anchor="middle"')}
   <path d="M442 66 L442 100" stroke="#ffb627" stroke-width="10" stroke-linecap="round"/><path d="M429 88 L442 104 L455 88" stroke="#ffb627" stroke-width="5" fill="none" stroke-linecap="round"/>
-  <text x="442" y="56" text-anchor="middle" font-family="Unbounded, Arial Black, sans-serif" font-weight="800" font-size="13" fill="#ffb627">ENTRANCE</text>
+  ${B?"":`<text x="442" y="56" text-anchor="middle" font-family="Unbounded, Arial Black, sans-serif" font-weight="800" font-size="13" fill="#ffb627">ENTRANCE</text>`}
   ${ico(296,314,P_CAR,"Lyft")}${ico(334,314,P_BUS,"Shuttle")}${ico(378,314,P_SPARKLE,"SkyDeck")}
   ${taps(50,232,40)}${taps(252,356,64)}${ico(156,82,P_DROP,"")}
   ${food(156,109)}${food(298,120)}${food(302,196)}${food(452,198)}
   ${["156,56","418,206","510,160","430,290"].map(c=>{const [x,y]=c.split(",").map(Number);return ico(x,y,P_REST,"");}).join("")}${aid(40,165)}${aid(466,120)}
-  <g transform="translate(515 395)"><circle r="14" fill="#120a2e" stroke="#ff4fb4" stroke-width="2"/><text y="5" text-anchor="middle" font-family="Unbounded, sans-serif" font-weight="800" font-size="13" fill="#f6f1ff">N</text></g>
+  ${B?"":`<g transform="translate(515 395)"><circle r="14" fill="#120a2e" stroke="#ff4fb4" stroke-width="2"/><text y="5" text-anchor="middle" font-family="Unbounded, sans-serif" font-weight="800" font-size="13" fill="#f6f1ff">N</text></g>`}
   ${st}</svg>`;
 }
 document.querySelectorAll(".gmap:not(.gmap-top)").forEach((box,i)=>{
@@ -703,12 +706,45 @@ function renderPlan(){
     const time=(x.w.real?"":"~")+fmt(st.start)+(st.end?" to "+fmt(st.end):"");
     const flags=(x.now?'<span class="pf now">Playing now</span>':"")+(x.next?'<span class="pf next">Up next</span>':"")+(x.clash&&x.clash.length?'<span class="pf clash">Clashes with '+x.clash.join(", ")+'</span>':"");
     return (move?'<li class="plan-move" aria-hidden="true">Head to '+STAGE_NAMES[st.stage]+'</li>':"")+
-      '<li class="plan-item is-'+x.v+(x.now?" is-now":"")+'" style="--sc:'+sc+'"><div class="pt-time">'+time+(x.w.real?"":'<span class="sr"> (estimated)</span>')+'</div>'+
+      '<li class="plan-item is-'+x.v+(x.now?" is-now":"")+'" id="pi-'+x.id+'" style="--sc:'+sc+'"><div class="pt-time">'+time+(x.w.real?"":'<span class="sr"> (estimated)</span>')+'</div>'+
       '<div class="pt-body"><h2 class="pt-name">'+x.a[0]+'</h2><div class="pt-stage"><i aria-hidden="true"></i>'+(STAGE_NAMES[st.stage]||"Stage to be announced")+'<span class="pt-pick">'+(x.v==="yes"?"Going":"Maybe")+'</span></div>'+(flags?'<div class="pt-flags">'+flags+'</div>':"")+'</div></li>';
   }).join("");
   const after=parties.length?'<li class="plan-after">After the festival</li>'+parties.map(p=>'<li class="plan-item party is-'+picks[p.id]+'" style="--sc:'+p.col+'"><div class="pt-time">'+p.time+'</div><div class="pt-body"><h2 class="pt-name">'+p.venue.split(" · ")[0]+'</h2><div class="pt-stage"><i aria-hidden="true"></i>'+p.name.replace(/ ft\..*$/,"")+'<span class="pt-pick">'+(picks[p.id]==="yes"?"Going":"Maybe")+'</span></div></div></li>').join(""):"";
   listEl.innerHTML=rows+after;
+  renderPlanMap(items);
 }
+// My Plan map (Oct 28, Graham: "in map format too ... no labels, just the ones you're going to and the maybes, and
+// their times"): the grounds with no words, each stage's picks stacked beside its dot as chips in time order
+// (Going filled in the stage color, Maybe outlined), "Now" glowing on festival days. Tapping a chip scrolls to
+// that act in the list. Hidden from screen readers: the list below says the same thing.
+// where each stage's stack sits: x/y in the 545x420 drawing, and which way it grows
+// the plan map crops the street margins and adds room under the grounds for CASA BACARDÍ's stack
+const PM_VB=[14,34,520,432];
+const PM_SPOT={circuit:{x:40,y:122,a:"l"},stereo:{x:30,y:276,a:"l",w:36},kinetic:{x:360,y:244,a:"c"},neon:{x:527,y:162,a:"r"},bacardi:{x:236,y:364,a:"l"}};
+const PM_MAX=2;
+// short forms to save room (Graham asked): "20:51" -> "8:51p", "22:00" -> "10p"; a B2B shows its first act + "+1"
+const pmTime=t=>{const [h,m]=t.split(":").map(Number);return (h%12||12)+(m?":"+String(m).padStart(2,"0"):"")+(h<12?"a":"p");};
+const pmName=n=>n.replace(/\s+(b2b|B2B|x|&)\s+.*$/,m=>" +"+(m.split(/\s+(?:b2b|B2B|x|&)\s+/).length-1));
+function renderPlanMap(items){
+  const box=document.getElementById("planMap"); if(!box) return;
+  const by={}; items.forEach(x=>{const s=x.w.st.stage; if(s&&PM_SPOT[s]) (by[s]=by[s]||[]).push(x);});
+  const on=new Set(Object.keys(by));
+  if(!on.size){ box.hidden=true; box.innerHTML=""; return; }
+  box.hidden=false;
+  const stacks=Object.entries(by).map(([s,list])=>{
+    // Going before Maybe, each in time order (items already are); the rest fold into "+N more"
+    list=[...list.filter(x=>x.v==="yes"),...list.filter(x=>x.v!=="yes")];
+    const p=PM_SPOT[s], more=list.length-PM_MAX;
+    const chips=list.slice(0,PM_MAX).map(x=>`<div class="pm-chip is-${x.v}${x.now?" is-now":""}" data-go="${x.id}"><b>${pmTime(x.w.st.start)}</b><span>${escH(pmName(x.a[0]))}</span></div>`).join("")+(more>0?`<div class="pm-more" data-go="${list[PM_MAX].id}">+${more}</div>`:"");
+    return `<div class="pm-stack pm-${p.a}" style="left:${((p.x-PM_VB[0])/PM_VB[2]*100).toFixed(2)}%;top:${((p.y-PM_VB[1])/PM_VB[3]*100).toFixed(2)}%;--sc:${STAGE_COL[s]}${p.w?";max-width:"+p.w+"%":""}">${chips}</div>`;
+  }).join("");
+  box.innerHTML=mapSVG("pm",{bare:true,on,vb:PM_VB.join(" ")})+stacks;
+}
+document.getElementById("planMap")?.addEventListener("click",e=>{
+  const c=e.target.closest("[data-go]"); if(!c) return;
+  const li=document.getElementById("pi-"+c.dataset.go); if(li){ li.scrollIntoView({behavior:reducedMotion()?"auto":"smooth",block:"center"}); li.classList.add("pi-flash"); setTimeout(()=>li.classList.remove("pi-flash"),1200); }
+  track("edc_plan_map_tap",{day});
+});
 document.getElementById("planMaybe").onchange=e=>{renderPlan();track("edc_plan_maybes",{shown:e.target.checked});};
 // keep "Playing now" and "Up next" current while the plan is open on a festival day
 setInterval(()=>{if(!document.getElementById("v-plan").hidden) renderPlan();},60000);
