@@ -878,3 +878,14 @@ header.lineup-top .tagline{font-size:12px;line-height:1.35;margin:0}
   .gmap .stg .pulse{animation:stage-pulse 2.8s ease-out infinite}
 }
 @keyframes stage-pulse{0%{transform:scale(1);opacity:.75}75%,100%{transform:scale(2.1);opacity:0}}
+/* Graham's avatar in the top menu sends out a soft glow from behind every few seconds, a quiet "hi, I'm up here"
+   (Graham, Oct 28). An approved exception to the no-animated-indicators rule; Reduce Motion shows it still. */
+.door-menu{isolation:isolate}
+.door-menu img{position:relative;z-index:1}
+.door-heart{z-index:2}
+.door-menu::before{content:"";position:absolute;inset:5px;border-radius:50%;z-index:0;pointer-events:none;opacity:0;
+  background:radial-gradient(circle,rgba(255,255,255,.9) 0,rgba(255,79,180,.95) 30%,rgba(168,116,255,.75) 55%,rgba(63,224,255,0) 72%)}
+@media (prefers-reduced-motion:no-preference){
+  .door-menu::before{animation:door-glow 7s ease-out 2s infinite}
+}
+@keyframes door-glow{0%{transform:scale(.9);opacity:0}8%{transform:scale(1.35);opacity:1}30%{transform:scale(2);opacity:0}100%{transform:scale(2);opacity:0}}
