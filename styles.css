@@ -918,19 +918,48 @@ header.lineup-top .tagline{font-size:12px;line-height:1.35;margin:0}
 .note-again{min-height:44px;margin:2px 0 -10px;padding:0;background:none;border:0;color:var(--cyan);font:800 13.5px var(--body);cursor:pointer}
 .note-again:hover{text-decoration:underline}
 .love-mail[hidden]{display:none}
-/* My Plan map (Oct 28): the grounds with no words, the day's Going and Maybe acts stacked by their stage */
-.plan-map{position:relative;margin:12px 0 2px;border-radius:18px;overflow:hidden;background:var(--night2);border:1.5px solid var(--line-soft)}
-.plan-map[hidden]{display:none}
-.plan-map svg{display:block;width:100%;height:auto}
-.pm-stack{position:absolute;display:grid;grid-template-columns:minmax(0,1fr);gap:3px;justify-items:start;width:max-content;max-width:42%}
-.pm-c{transform:translateX(-50%);justify-items:center}
-.pm-r{transform:translateX(-100%);justify-items:end}
-.pm-chip{display:flex;align-items:baseline;gap:5px;max-width:100%;min-width:0;padding:3px 8px;border-radius:999px;cursor:pointer;
-  font:700 11.5px/1.25 var(--body);white-space:nowrap;color:var(--night);background:var(--sc);border:1.5px solid var(--sc);box-shadow:0 2px 8px rgba(18,10,46,.6)}
-.pm-chip span{overflow:hidden;text-overflow:ellipsis;min-width:0}
-.pm-chip b{flex:none;font-weight:800}
-.pm-chip.is-maybe{color:var(--ink);background:rgba(18,10,46,.9);border-style:dashed}
-.pm-chip.is-maybe b{color:var(--amber)}
-.pm-chip.is-now{box-shadow:0 0 0 2px var(--ink),0 0 16px 2px var(--sc)}
-.pm-more{padding:1px 8px;border-radius:999px;font:800 11px var(--body);color:var(--ink);background:rgba(18,10,46,.85)}
+/* My Plan chips (Oct 28): the day as rows of small stage-colored chips, Going left, Maybe instead right */
+.plan-chips{display:grid;gap:6px;max-width:640px;margin:4px 0 8px}
+.plan-chips[hidden],.plan-list[hidden]{display:none}
+.pc-head{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 2px;font:800 11.5px var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--soft)}
+.pc-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start;padding:6px;border-radius:14px;background:var(--glass);border:1.5px solid var(--line-soft)}
+.pc-row.is-clash{border-color:var(--red)}
+.pc-go,.pc-alt{display:grid;gap:5px;justify-items:start;min-width:0}
+.pc-chip{display:flex;align-items:baseline;gap:5px;max-width:100%;min-width:0;min-height:36px;padding:6px 10px;border-radius:999px;cursor:pointer;
+  font:700 12.5px/1.25 var(--body);white-space:nowrap;color:var(--night);background:var(--sc);border:1.5px solid var(--sc)}
+.pc-chip span{overflow:hidden;text-overflow:ellipsis;min-width:0}
+.pc-chip b{flex:none;font-weight:800}
+.pc-chip.is-maybe{color:var(--ink);background:var(--night2);border-style:dashed}
+.pc-chip.is-maybe b{color:var(--amber)}
+.pc-chip.is-now{box-shadow:0 0 0 2px var(--ink),0 0 16px 2px var(--sc)}
+.pc-chip.is-next{box-shadow:0 0 0 2px var(--cyan)}
+.pc-chip.party{cursor:default}
+.pc-free{padding:8px 4px;font:700 12.5px var(--body);color:var(--soft)}
+.pc-clash{padding:2px 8px;border-radius:999px;font:800 11px var(--body);color:var(--night);background:var(--red)}
+.pc-after{margin-top:6px;padding:0 2px;font:800 11.5px var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--soft)}
 .plan-item.pi-flash{box-shadow:0 0 0 2px var(--cyan),0 0 18px var(--cyan)}
+/* My Plan day ribbon (Oct 28): the whole day across the screen, Going and Maybe rows in the stage colors */
+.plan-tl{display:grid;gap:4px;margin:6px 0 10px;padding:10px 12px 10px 8px;border-radius:16px;background:var(--glass);border:1.5px solid var(--line-soft);max-width:640px}
+.plan-tl[hidden]{display:none}
+.rb-row{display:grid;grid-template-columns:48px 1fr;align-items:center;gap:6px}
+.rb-lbl{font:800 11px var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--soft)}
+.rb-track{position:relative;height:22px}
+.rb-head .rb-track{height:16px}
+.rb-hr{position:absolute;top:0;transform:translateX(-50%);font:800 11px var(--body);color:var(--soft);white-space:nowrap}
+.rb-hr.is-five{color:var(--amber)}
+.rb-rows{position:relative;display:grid;gap:5px}
+.rb-guides{position:absolute;inset:-4px 0 -4px 54px;pointer-events:none}
+.rb-guides i{position:absolute;top:0;bottom:0;width:2px;margin-left:-1px;background:var(--amber);opacity:.65}
+.rb-guides b{position:absolute;top:-2px;bottom:-2px;width:2px;margin-left:-1px;background:var(--ink);font-size:0;z-index:2}
+.rb-bar{position:absolute;top:0;bottom:0;min-width:6px;border-radius:7px;background:var(--sc);border:1.5px solid var(--sc)}
+.rb-bar.is-maybe{background:color-mix(in srgb,var(--sc) 22%,transparent);border-style:dashed}
+.rb-bar.is-clash{box-shadow:0 0 0 2px var(--red)}
+.rb-bar.is-now{box-shadow:0 0 0 2px var(--ink),0 0 12px 2px var(--sc)}
+.rb-key{display:flex;flex-wrap:wrap;gap:4px 12px;margin:4px 0 0 54px;font:700 12px var(--body);color:var(--soft)}
+.rb-key span{display:inline-flex;align-items:center;gap:5px}
+.rb-key i{width:10px;height:10px;border-radius:3px;background:var(--sc)}
+.rb-title{margin:14px 2px 0;font:800 11.5px var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--soft)}
+.rb-title[hidden]{display:none}
+/* chips look 36px tall; the invisible margin makes each one a 44px tap target */
+.pc-chip{position:relative}
+.pc-chip::after{content:"";position:absolute;inset:-4px -2px}
