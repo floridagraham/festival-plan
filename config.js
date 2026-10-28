@@ -13,6 +13,8 @@ window.EDC_CONFIG = {
   // Where Insomniac (or anyone) can reach Graham about working together, e.g. his Linktree.
   // Empty = the Insomniac contact uses contactEmail instead.
   partnerLink: "",
+  // Graham's personal page (https). Shows "More about me" under his name on the Made by Graham card. Empty = hidden.
+  personalLink: "",
   // Graham's public contact address (never his personal Gmail: thousands of people will see it).
   // Used by "Let's talk", "Send me a note", the Insomniac contact, the "Built by" lines, "Other" in the
   // festival vote and the next-year list. Empty = all of those stay hidden.

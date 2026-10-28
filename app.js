@@ -475,6 +475,11 @@ if(hasEmail){
   document.getElementById("noteAsk").hidden=false;
   noteBtn.addEventListener("click",()=>track("edc_note_click"));
 }
+// "More about me" on the Made by Graham card (Oct 28): Graham's personal page, from config.js
+{
+  const me=CFG0.personalLink, a=document.getElementById("meLink");
+  if(me&&/^https:\/\//.test(me)){ a.href=me; a.setAttribute("aria-label","More about Graham (opens new tab)"); a.hidden=false; }
+}
 // Insomniac (Oct 27): the note in the sheet and the boxed line in the footer
 const cfgPartner=CFG0.partnerLink;
 const partnerLink=cfgPartner&&/^https:\/\//.test(cfgPartner)?cfgPartner:hasEmail?mailTo("Insomniac x Your Festival Plan"):"";
