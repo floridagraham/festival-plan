@@ -868,3 +868,6 @@ header.lineup-top .tagline{font-size:12px;line-height:1.35;margin:0}
 .menu-share .ic{width:19px;height:19px;color:var(--cyan)}
 .menu-share:hover{filter:brightness(1.15)}
 .menu-share:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+/* Map tab (Graham, Oct 28): our map first; the official-map and directions buttons sit at the bottom */
+.map-more{margin-top:20px;max-width:640px}
+.map-more p{margin:0 0 10px;color:var(--soft)}
