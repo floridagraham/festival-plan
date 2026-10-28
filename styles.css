@@ -317,7 +317,10 @@ body{padding-bottom:48px}
 .tabs a span{font-size:15px}
 .tabs a[aria-current="page"]{border-color:transparent}
 .filters{top:calc(env(safe-area-inset-top,0px) + 55px)}
-header{padding-block:18px 14px}
+/* iPhone home-screen app (Graham, Oct 27): the menu sticks below the status bar, so the page starts below it too;
+   otherwise the menu sits on top of "Your Festival" when the page opens */
+body{padding-top:env(safe-area-inset-top,0px)}
+header{padding-block:22px 14px}
 .brand{font-size:13px;padding:6px 13px}
 h1{font-size:clamp(26px,6.4vw,50px);margin:10px 0 6px}
 .seg.times3{grid-template-columns:repeat(4,1fr)}
