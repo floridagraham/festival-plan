@@ -11,10 +11,31 @@ window.EDC_CONFIG = {
     { label: "Cash App", url: "https://cash.app/$FloridaGraham", amountUrl: "https://cash.app/$FloridaGraham/{amount}" }
   ],
   // Where Insomniac (or anyone) can reach Graham about working together, e.g. his Linktree.
-  // Empty = the "Insomniac team" notes on the Show your love card and in the footer stay hidden.
+  // Empty = the Insomniac contact uses contactEmail instead.
   partnerLink: "",
   // Graham's public contact address (never his personal Gmail: thousands of people will see it).
-  // Shows "Send me a note" on the Show your love card, and is the "Are you Insomniac?" Contact me
-  // when partnerLink is empty. Empty = both stay hidden.
-  contactEmail: "hello@glowbop.com"
+  // Used by "Let's talk", "Send me a note", the Insomniac contact, the "Built by" lines, "Other" in the
+  // festival vote and the next-year list. Empty = all of those stay hidden.
+  contactEmail: "hello@glowbop.com",
+  // The app's public link, used when people share it.
+  appUrl: "https://floridagraham.github.io/festival-plan/",
+  // "Used by N festival-goers" in Quick start and the Made by Graham sheet. Put the real count from PostHog
+  // here (a plain number, e.g. 2437; it shows rounded down as "2,400+"). Empty = hidden.
+  usedByCount: "",
+  // "Want this for next year's festival? Get it first." Paste a Google Form link here (https) to collect
+  // emails there. Empty = the button opens an email to contactEmail with the subject "Next year list".
+  nextYearForm: "",
+  // "What's your next festival?" vote. Each tap is one tracked event (edc_vote_next_festival, festival: key).
+  nextFestivals: [
+    { key: "edc-las-vegas", name: "EDC Las Vegas" },
+    { key: "ultra", name: "Ultra" },
+    { key: "electric-forest", name: "Electric Forest" },
+    { key: "lost-lands", name: "Lost Lands" },
+    { key: "beyond-wonderland", name: "Beyond Wonderland" },
+    { key: "okeechobee", name: "Okeechobee" },
+    { key: "coachella", name: "Coachella" },
+    { key: "tomorrowland", name: "Tomorrowland" },
+    { key: "hard-summer", name: "Hard Summer" },
+    { key: "imagine", name: "Imagine" }
+  ]
 };

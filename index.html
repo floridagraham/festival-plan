@@ -79,13 +79,15 @@ if("serviceWorker" in navigator){
 
 <div class="intro" id="intro" role="dialog" aria-modal="true" aria-label="Quick start" hidden>
   <div class="intro-card" tabindex="-1">
-    <h2>Quick start</h2>
+    <h2 class="intro-what">Plan your festival weekend</h2>
+    <p class="intro-what-p">Pick acts, see clashes, get around. <b>Nov 6 to 8.</b></p>
+    <p class="usedby" hidden></p>
     <div class="love-hi intro-hi"><span class="love-avatar"><img src="avatar.jpg" width="64" height="64" alt="Cartoon of Graham at the festival, throwing a peace sign" decoding="async"></span><div><p class="hi-name">Hi, I'm <span>Graham</span></p><p class="intro-lead">Made with peace, love, unity and respect. Have the best weekend.</p></div></div>
     <div class="intro-row"><span class="intro-ico" aria-hidden="true"><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><p>Tap <b class="pk-yes">Going</b>, <b class="pk-maybe">Maybe</b> or <b class="pk-no">Skip</b> on any act.</p></div>
     <div class="intro-row"><span class="intro-ico" aria-hidden="true"><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg></span><p>Your picks and <b class="pk-plan">My Plan</b> save on this phone, even with no signal.</p></div>
-    <div class="intro-row" id="introA2hs" hidden><span class="intro-ico" aria-hidden="true"><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2" width="11" height="20" rx="2.5"/><path d="M9.5 18h2"/><path d="M19 7v6M16 10h6"/></svg></span><p><b>Add it to your home screen</b> so it opens full screen, like an app. <span id="introA2hsSteps"></span></p></div>
-    <div class="tipbox" hidden><p class="tip-h"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg> Love it? Leave a tip.</p><div class="donate-row" data-where="opening_screen"></div></div>
+    <div class="intro-row" id="introA2hs" hidden><span class="intro-ico" aria-hidden="true"><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2" width="11" height="20" rx="2.5"/><path d="M9.5 18h2"/><path d="M19 7v6M16 10h6"/></svg></span><p><b>Add it to your home screen:</b> it opens full screen like a real app and works offline, even with no signal at the festival. <span id="introA2hsSteps"></span> <span class="a2hs-warn">Do it before you pick. Picks in the browser don't carry over to the home-screen app.</span></p></div>
     <button class="btn intro-go" id="introGo">Let's go</button>
+    <div class="tipbox tip-small" hidden><p class="tip-h"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg> Love it? Leave a tip.</p><div class="donate-row" data-where="opening_screen"></div></div>
   </div>
 </div>
 <div class="intro" id="linkDlg" role="dialog" aria-modal="true" aria-labelledby="linkH" hidden>
@@ -100,7 +102,7 @@ if("serviceWorker" in navigator){
 </div>
 <div class="a2hs" id="a2hs" role="region" aria-label="Add to home screen" hidden>
   <span class="a2hs-ico" aria-hidden="true"><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2" width="11" height="20" rx="2.5"/><path d="M9.5 18h2"/><path d="M19 7v6M16 10h6"/></svg></span>
-  <p><b>Add to your home screen</b><span>Opens like an app, works offline.</span></p>
+  <p><b>Add it to your home screen</b><span>Works offline. Do it before you pick.</span></p>
   <button class="btn a2hs-how" id="a2hsHow" type="button">How</button>
   <button class="a2hs-x" id="a2hsX" type="button" aria-label="Hide until next time"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
 </div>
@@ -108,22 +110,23 @@ if("serviceWorker" in navigator){
   <div class="intro-card" tabindex="-1">
     <h2 id="a2hsH">Add to your home screen</h2>
     <ol class="a2hs-steps" id="a2hsSteps"></ol>
-    <p class="a2hs-note">Best before you start picking: the home-screen app keeps its own picks, separate from the browser.</p>
+    <p class="a2hs-note">It opens full screen like a real app and works offline, even with no signal at the festival. <b>Do it before you pick.</b> Picks in the browser don't carry over to the home-screen app.</p>
     <button class="btn intro-go" id="a2hsGo" type="button">Got it</button>
   </div>
 </div>
-<button class="love" id="loveBtn" type="button" hidden><span class="love-pill"><svg class="ic" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg>Show your love</span></button>
-<div class="intro" id="loveDlg" role="dialog" aria-modal="true" aria-labelledby="loveH" hidden>
-  <div class="intro-card love-card" tabindex="-1">
+<!-- "Made by Graham" (Oct 28): one door to the tip jar, "I build apps", the Insomniac note, sharing and the rest.
+     It replaced the floating "Show your love" and "Are you Insomniac?" pills, which covered content. -->
+<div class="intro" id="mbgDlg" role="dialog" aria-modal="true" aria-labelledby="loveH" hidden>
+  <div class="intro-card love-card mbg-card" tabindex="-1">
     <button class="love-art" id="loveArt" type="button" aria-label="Send hearts">
       <span class="love-big"></span><span class="love-shine"></span>
       <svg class="love-spark s1" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1c1 6 5 10 11 11-6 1-10 5-11 11-1-6-5-10-11-11 6-1 10-5 11-11Z"/></svg>
       <svg class="love-spark s2" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1c1 6 5 10 11 11-6 1-10 5-11 11-1-6-5-10-11-11 6-1 10-5 11-11Z"/></svg>
       <svg class="love-spark s3" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1c1 6 5 10 11 11-6 1-10 5-11 11-1-6-5-10-11-11 6-1 10-5 11-11Z"/></svg>
     </button>
-    <h2 id="loveH" class="love-h">Show your <span>love</span></h2>
+    <h2 id="loveH" class="love-h">Made by <span>Graham</span></h2>
     <div class="love-letter">
-      <div class="love-hi"><span class="love-avatar"><img src="avatar.jpg" width="64" height="64" alt="Cartoon of Graham at the festival, throwing a peace sign" decoding="async"></span><p class="hi-name">Hi, I'm <span>Graham</span></p></div>
+      <div class="love-hi"><span class="love-avatar"><img src="avatar.jpg" width="64" height="64" alt="Cartoon of Graham at the festival, throwing a peace sign" decoding="async"></span><div><p class="hi-name">Hi, I'm <span>Graham</span></p><p class="mbg-tag">I make things that people love.</p></div></div>
       <div class="love-note" id="loveNote">
         <p>I built this app with <b class="hl-love">love</b> for the <b class="hl-music">music</b>, the <b class="hl-fest">festival</b>, the <b class="hl-people">people</b>, and the <b class="hl-vibe">vibe</b>.</p>
         <p>All I want is to bring a <b class="hl-smile">smile</b> to everyone who walks through those gates.</p>
@@ -131,35 +134,65 @@ if("serviceWorker" in navigator){
         <p class="love-sig">With love, Graham</p>
       </div>
     </div>
-    <div class="tip-amts" role="group" aria-label="Tip amount" hidden><button type="button" data-amt="5" aria-pressed="false">$5</button><button type="button" data-amt="10" aria-pressed="true">$10</button><button type="button" data-amt="20" aria-pressed="false">$20</button><button type="button" data-amt="any" aria-pressed="false">Any</button></div>
-    <div class="donate-row" data-where="love_button"></div>
-    <p class="love-small" id="loveSmall">Any amount helps, even the price of a festival water.</p>
-    <p class="love-or" id="noteAsk" hidden>Or <b class="hl-smile">send me a note</b>. Tell me what you like about this app.</p>
-    <a class="btn alt love-mail" id="noteBtn" href="#" hidden><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H8l-4 4V5Z"/><path d="M8 9h8M8 12h5"/></svg>Send me a note</a>
-    <p class="love-ps partner-note" hidden>P.S. Insomniac team, if you're reading this: I'd love to build with you. <a class="partner-link" href="#" target="_blank" rel="noopener" aria-label="Let's talk: Graham's contact links (opens new tab)">Let's talk</a></p>
-    <button class="btn alt love-x" id="loveX" type="button">Maybe later</button>
-  </div>
-  <div class="love-burst" aria-hidden="true"></div>
-</div>
-<button class="ins" id="insBtn" type="button" hidden><span class="ins-pill"><svg class="ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1c1 6 5 10 11 11-6 1-10 5-11 11-1-6-5-10-11-11 6-1 10-5 11-11Z"/></svg>Are you Insomniac?</span></button>
-<div class="intro" id="insDlg" role="dialog" aria-modal="true" aria-labelledby="insH" hidden>
-  <div class="intro-card love-card ins-card" tabindex="-1">
-    <h2 id="insH" class="love-h">Hey, <span>Insomniac</span></h2>
-    <div class="love-letter">
-      <div class="love-hi"><span class="love-avatar"><img src="avatar.jpg" width="64" height="64" alt="Cartoon of Graham at the festival, throwing a peace sign" decoding="async"></span><p class="hi-name">Hi, I'm <span>Graham</span></p></div>
-      <div class="love-note">
+    <p class="usedby" hidden></p>
+    <section class="mbg-opt" id="optTip" aria-labelledby="optTipH" hidden>
+      <h3 id="optTipH"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3s7 7.5 7 12a7 7 0 1 1-14 0c0-4.5 7-12 7-12Z"/></svg> Leave a tip</h3>
+      <div class="tip-amts" role="group" aria-label="Tip amount" hidden><button type="button" data-amt="5" aria-pressed="false">$5</button><button type="button" data-amt="10" aria-pressed="true">$10</button><button type="button" data-amt="20" aria-pressed="false">$20</button><button type="button" data-amt="any" aria-pressed="false">Any</button></div>
+      <div class="donate-row" data-where="made_by_sheet"></div>
+      <p class="love-small" id="loveSmall">Any amount helps, even the price of a festival water.</p>
+    </section>
+    <section class="mbg-opt" id="optBuild" aria-labelledby="optBuildH" hidden>
+      <h3 id="optBuildH"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9Z"/></svg> Like this app?</h3>
+      <p>I build apps for brands, events and businesses. Let's talk.</p>
+      <a class="btn intro-go mbg-go" id="buildGo" href="#"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg> Let's talk</a>
+    </section>
+    <section class="mbg-opt" id="optIns" aria-labelledby="optInsH" hidden>
+      <h3 id="optInsH"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18"/><path d="M5 20l7-12 7 12"/><path d="M12 8V3l4 1.5L12 6"/><path d="M10 20l2-5 2 5"/></svg> Insomniac team?</h3>
+      <p>I'd love to build this with you.</p>
+      <details class="mbg-more"><summary>Read my note to Insomniac</summary><div class="love-note">
         <p>I'm a fan, and I built this app out of <b class="hl-love">love</b> for what you create: the <b class="hl-music">music</b>, the <b class="hl-people">people</b>, and the whole <b class="hl-vibe">experience</b>.</p>
         <p>I'd love to <b class="hl-fest">work together</b> and create an even greater event experience for everyone who walks through the gates.</p>
         <p>If that sounds good, <b class="hl-smile">let's talk</b>.</p>
         <p class="love-sig">With love, Graham</p>
-      </div>
+      </div></details>
+      <a class="btn alt mbg-go partner-link" id="insGo" href="#"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg> Contact me</a>
+      <p class="love-small">A fan-made app, not affiliated with Insomniac or EDC.</p>
+    </section>
+    <div class="mbg-row">
+      <button class="btn alt share-app" type="button" data-share="made_by_sheet"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg> Share this app with your friends</button>
+      <p class="love-or" id="noteAsk" hidden>Or <b class="hl-smile">send me a note</b>. Tell me what you like about this app.</p>
+      <a class="btn alt love-mail" id="noteBtn" href="#" hidden><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg> Send me a note</a>
+      <button class="btn alt mbg-help" id="mbgHelp" type="button">How the app works</button>
     </div>
-    <a class="btn intro-go ins-go partner-link" id="insGo" href="#" target="_blank" rel="noopener" aria-label="Contact Graham (opens new tab)">Contact me</a>
-    <p class="love-small">A fan-made app, not affiliated with Insomniac or EDC.</p>
-    <button class="btn alt love-x" id="insX" type="button">Maybe later</button>
+    <div class="fest-vote" data-where="made_by_sheet"></div>
+    <div class="next-year" data-where="made_by_sheet"></div>
+    <div class="a2hs-box" hidden><span class="a2hs-ico" aria-hidden="true"><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2" width="11" height="20" rx="2.5"/><path d="M9.5 18h2"/><path d="M19 7v6M16 10h6"/></svg></span><p><b>Add it to your home screen:</b> it opens full screen like a real app and works offline, even with no signal at the festival. <span class="a2hs-warn">Do it before you pick. Picks in the browser don't carry over to the home-screen app.</span></p><button class="btn a2hs-how" type="button" data-a2hs="made_by_sheet">How</button></div>
+    <button class="btn alt love-x" id="loveX" type="button">Maybe later</button>
+  </div>
+  <div class="love-burst" aria-hidden="true"></div>
+</div>
+<!-- tip moment (Oct 28): shown once, the first time someone has 5+ Going picks or opens My Plan with picks -->
+<div class="intro" id="tipMoment" role="dialog" aria-modal="true" aria-labelledby="tmH" hidden>
+  <div class="intro-card tm-card" tabindex="-1" data-where="tip_moment">
+    <h2 id="tmH" class="tm-h"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8Z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8Z"/></svg> Your plan's ready</h2>
+    <p class="tm-p">If it helped, buy me a water <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3s7 7.5 7 12a7 7 0 1 1-14 0c0-4.5 7-12 7-12Z"/></svg></p>
+    <div class="tip-amts" role="group" aria-label="Tip amount" hidden><button type="button" data-amt="5" aria-pressed="false">$5</button><button type="button" data-amt="10" aria-pressed="true">$10</button><button type="button" data-amt="20" aria-pressed="false">$20</button><button type="button" data-amt="any" aria-pressed="false">Any</button></div>
+    <div class="donate-row" data-where="tip_moment"></div>
+    <button class="btn alt share-app" type="button" data-share="tip_moment"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg> Share this app with your friends</button>
+    <div class="fest-vote" data-where="tip_moment"></div>
+    <button class="btn alt love-x" id="tmX" type="button">Not now</button>
   </div>
 </div>
-<nav class="tabs" aria-label="Sections"><a href="#lineup" data-v="lineup" aria-current="page"><span><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="2" y="14" width="5" height="7" rx="2"/><rect x="17" y="14" width="5" height="7" rx="2"/></svg></span>Lineup</a><a href="#plan" data-v="plan"><span><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg></span>My Plan</a><a href="#travel" data-v="travel"><span><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M3 11h18M7 17v2M17 17v2"/><circle cx="7.5" cy="14" r=".8" fill="currentColor" stroke="none"/><circle cx="16.5" cy="14" r=".8" fill="currentColor" stroke="none"/></svg></span>Getting there</a><a href="#map" data-v="map"><span><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3 3 5v16l6-2 6 2 6-2V3l-6 2-6-2Z"/><path d="M9 3v16M15 5v16"/></svg></span>Map</a><button id="introHelp" class="intro-help" aria-label="How it works"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><circle cx="12" cy="7.5" r=".9" fill="currentColor" stroke="none"/></svg></button></nav>
+<!-- "Who should I see?" (Oct 28): three quick taps, then 5 to 8 suggestions for the day with Going buttons -->
+<div class="intro" id="quizDlg" role="dialog" aria-modal="true" aria-labelledby="quizH" hidden>
+  <div class="intro-card quiz-card" tabindex="-1">
+    <p class="quiz-step" id="quizStep" aria-live="polite"></p>
+    <h2 id="quizH" class="quiz-h"></h2>
+    <div class="quiz-body" id="quizBody"></div>
+    <div class="quiz-nav"><button class="btn alt" id="quizBack" type="button">Back</button><button class="btn intro-go" id="quizNext" type="button">Next</button></div>
+  </div>
+</div>
+<nav class="tabs" aria-label="Sections"><a href="#lineup" data-v="lineup" aria-current="page"><span><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="2" y="14" width="5" height="7" rx="2"/><rect x="17" y="14" width="5" height="7" rx="2"/></svg></span>Lineup</a><a href="#plan" data-v="plan"><span><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg></span>My Plan</a><a href="#travel" data-v="travel"><span><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M3 11h18M7 17v2M17 17v2"/><circle cx="7.5" cy="14" r=".8" fill="currentColor" stroke="none"/><circle cx="16.5" cy="14" r=".8" fill="currentColor" stroke="none"/></svg></span>Getting there</a><a href="#map" data-v="map"><span><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3 3 5v16l6-2 6 2 6-2V3l-6 2-6-2Z"/><path d="M9 3v16M15 5v16"/></svg></span>Map</a><button class="door door-menu" id="doorBtn" type="button" aria-label="Made by Graham"><img src="avatar.jpg" width="32" height="32" alt="" decoding="async"><span class="door-heart"><svg class="ic" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg></span></button></nav>
 <div class="wrap">
 <main id="main">
 <div class="view" id="v-lineup">
@@ -223,10 +256,12 @@ if("serviceWorker" in navigator){
   </div>
   </div>
   <div class="seg days" id="days" role="group" aria-label="Day"><button data-d="fri" aria-pressed="false">Friday<small>Nov 6</small></button><button data-d="sat" aria-pressed="true">Saturday<small>Nov 7</small></button><button data-d="sun" aria-pressed="false">Sunday<small>Nov 8</small></button></div>
+  <div class="mixrow">
   <div class="mix">
     <h2 id="mixh">Saturday's sound</h2>
     <div class="bar" id="bar" aria-hidden="true"></div>
-    <div class="legend" id="legend"></div>
+  </div>
+  <button class="stagesbtn" id="stagesBtn" type="button" aria-expanded="false" aria-controls="topMap"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3 3 5v16l6-2 6 2 6-2V3l-6 2-6-2Z"/><path d="M9 3v16M15 5v16"/></svg><span id="stagesTxt">Stages</span><span class="chev" aria-hidden="true">▾</span></button>
   </div>
   <div class="gmap gmap-top" id="topMap">
     <div class="maph-row"><h2 class="maph" id="topMapH">Tap a stage</h2><button class="maph-clear" id="topMapClear" type="button" hidden>Show all stages</button></div>
@@ -237,25 +272,29 @@ if("serviceWorker" in navigator){
 </header>
 
 <div class="ctrl" id="ctrl">
-<div class="seg times3" id="times" role="group" aria-label="Time of day"><button data-t="all" aria-pressed="true"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18h18M5 18a7 7 0 0 1 14 0"/><path d="M12 7v4M8 6l1.5 2M16 6l-1.5 2"/></svg> All day<small>1 PM to 12</small></button><button data-t="aft" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg> Afternoon<small>before 5 PM</small></button><button data-t="eve" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg> Evening<small>5 PM on</small></button><button data-t="party" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="11" r="7"/><path d="M5 11h14M12 4v14M7.5 6.5l9 9M16.5 6.5l-9 9"/><path d="M12 18v4"/></svg> After&shy;parties<small>late night</small></button></div>
+<div class="seg times3" id="times" role="group" aria-label="Time of day"><button data-t="all" aria-pressed="true"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18h18M5 18a7 7 0 0 1 14 0"/><path d="M12 7v4M8 6l1.5 2M16 6l-1.5 2"/></svg> All day<small>1 PM to 12 AM</small></button><button data-t="aft" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg> Afternoon<small>before 5 PM</small></button><button data-t="eve" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg> Evening<small>5 PM on</small></button><button data-t="party" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="11" r="7"/><path d="M5 11h14M12 4v14M7.5 6.5l9 9M16.5 6.5l-9 9"/><path d="M12 18v4"/></svg> After&shy;parties<small>late night</small></button></div>
 <div class="ctrlrow" id="ctrlrow">
-<button class="ftoggle" id="ftoggle" aria-expanded="false" aria-controls="actfilters"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2" fill="currentColor" stroke="none"/><circle cx="16" cy="12" r="2" fill="currentColor" stroke="none"/><circle cx="10" cy="18" r="2" fill="currentColor" stroke="none"/></svg> Filters <span class="fsum" id="fsum"></span><span class="chev" aria-hidden="true">▾</span></button>
-<button class="vtoggle" id="vtoggle" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="4" cy="6" r="1" fill="currentColor"/><circle cx="4" cy="12" r="1" fill="currentColor"/><circle cx="4" cy="18" r="1" fill="currentColor"/></svg> Compact</button>
+<button class="ftoggle" id="ftoggle" aria-expanded="false" aria-controls="actfilters"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2" fill="currentColor" stroke="none"/><circle cx="16" cy="12" r="2" fill="currentColor" stroke="none"/><circle cx="10" cy="18" r="2" fill="currentColor" stroke="none"/></svg> Filters <span class="fcount" id="fsum"></span></button>
+<label class="qbox"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l5 5"/></svg><input id="q" name="q" class="ph-no-capture" type="search" placeholder="Search all days" aria-label="Search artists on all three days" autocomplete="off" enterkeyhint="search"></label>
+<button class="vtoggle" id="vtoggle" type="button" role="switch" aria-checked="false"><span class="vt-l">Details</span><span class="vt-s" id="vtState">Off</span></button>
 </div>
+</div>
+<div class="fchips" id="fchips" hidden></div>
 <div id="actfilters" class="fpanel">
 <p class="rowlbl"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg> Stage</p>
 <div class="stg-row" id="stagerow" role="group" aria-label="Stage"></div>
 <p class="rowlbl"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2" fill="currentColor" stroke="none"/><circle cx="16" cy="12" r="2" fill="currentColor" stroke="none"/><circle cx="10" cy="18" r="2" fill="currentColor" stroke="none"/></svg> Genre &amp; picks</p>
 <div class="filters" id="filters">
   <select id="genreSel" class="dd" aria-label="Genre"></select>
-  <input id="q" name="q" class="ph-no-capture" type="search" placeholder="Search artists…" aria-label="Search artists" autocomplete="off">
 </div>
+<div class="legend" id="legend"></div>
 </div>
-</div>
-<p class="estnote" id="estnote">Times and stages marked ~ are best guesses until official set times drop (about Oct 30).</p>
+<p class="estnote" id="estnote">~ times and stages are best guesses until official set times drop.</p>
 <div class="count" id="count" role="status" aria-live="polite"></div>
 <div class="grid" id="grid"></div>
 <div class="tipbox tip-end" hidden><p class="tip-h"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg> Made with love. Leave a tip?</p><div class="donate-row" data-where="lineup_end"></div></div>
+<div class="fest-vote" data-where="lineup_end"></div>
+<div class="next-year" data-where="lineup_end"></div>
 <section class="dayinfo" aria-label="About this day">
   <div class="facts">
       <span class="fact">Gates <b>1 PM</b> · Ends <b>12 AM</b></span>
@@ -272,6 +311,9 @@ if("serviceWorker" in navigator){
 <div class="seg days" id="planDays" role="group" aria-label="Day"><button data-d="fri" aria-pressed="false">Friday<small>Nov 6</small></button><button data-d="sat" aria-pressed="true">Saturday<small>Nov 7</small></button><button data-d="sun" aria-pressed="false">Sunday<small>Nov 8</small></button></div>
 <div class="plan-bar"><p class="plan-sum" id="planSum" role="status" aria-live="polite"></p><label class="plan-maybe"><input type="checkbox" id="planMaybe" checked> Show Maybes</label></div>
 <ol class="plan-list" id="planList"></ol>
+<div class="plan-share"><button class="btn share-plan" id="sharePlan" type="button"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg> Share my plan</button><button class="btn alt share-app" type="button" data-share="my_plan"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg> Share this app with your friends</button></div>
+<div class="a2hs-box" id="planA2hs" hidden><span class="a2hs-ico" aria-hidden="true"><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2" width="11" height="20" rx="2.5"/><path d="M9.5 18h2"/><path d="M19 7v6M16 10h6"/></svg></span><p><b>Add it to your home screen:</b> it opens full screen like a real app and works offline, even with no signal at the festival. <span class="a2hs-warn">Do it before you pick. Picks in the browser don't carry over to the home-screen app.</span></p><button class="btn a2hs-how" type="button" data-a2hs="plan_footer">How</button></div>
+<div class="builtby-slot" data-where="my_plan"></div>
 </section></div>
 
 <div class="view" id="v-travel" hidden><section class="sec">
@@ -285,7 +327,7 @@ if("serviceWorker" in navigator){
 </div>
 <h2 class="hs">Shuttle lines &amp; pickup stops</h2>
 <div class="lines">
-<div class="line ours" style="--lc:#3f8cff"><div class="ln">Blue Line <em>Our line</em></div><div class="stop">Embassy Suites by Hilton Orlando International Drive ICON Park</div><div class="addr">8250 Jamaican Ct, Orlando, FL 32819</div><div class="btns"><a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=8250%20Jamaican%20Ct%2C%20Orlando%2C%20FL%2032819" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg> Directions to this stop</a></div><details><summary>Nearby hotels (2)</summary><ul><li>Avanti International Resort, 8738 International Dr (0.4 mi)</li><li>Hampton Inn Orlando Convention Center, 8900 Universal Blvd (0.4 mi)</li></ul></details></div>
+<div class="line" style="--lc:#3f8cff"><div class="ln">Blue Line</div><div class="stop">Embassy Suites by Hilton Orlando International Drive ICON Park</div><div class="addr">8250 Jamaican Ct, Orlando, FL 32819</div><div class="btns"><a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=8250%20Jamaican%20Ct%2C%20Orlando%2C%20FL%2032819" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg> Directions to this stop</a></div><details><summary>Nearby hotels (2)</summary><ul><li>Avanti International Resort, 8738 International Dr (0.4 mi)</li><li>Hampton Inn Orlando Convention Center, 8900 Universal Blvd (0.4 mi)</li></ul></details></div>
 <div class="line" style="--lc:#ff8a2a"><div class="ln">Orange Line</div><div class="stop">Fairfield Inn &amp; Suites Orlando Near Universal</div><div class="addr">5614 Vineland Rd, Orlando, FL 32819</div><div class="btns"><a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=5614%20Vineland%20Rd%2C%20Orlando%2C%20FL%2032819" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg> Directions to this stop</a></div><details><summary>Nearby hotels (3)</summary><ul><li>Holiday Inn Express &amp; Suites Nearest Universal, 5605 Major Blvd (0.2 mi)</li><li>Comfort Suites Near Universal, 5617 Major Blvd (0.3 mi)</li><li>Clarion Inn &amp; Suites Across From Universal, 5829 Grand National Dr (0.5 mi)</li></ul></details></div>
 <div class="line" style="--lc:#4fe08a"><div class="ln">Green Line</div><div class="stop">Four Points by Sheraton Orlando International Drive</div><div class="addr">5905 International Dr, Orlando, FL 32819</div><div class="btns"><a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=5905%20International%20Dr%2C%20Orlando%2C%20FL%2032819" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg> Directions to this stop</a></div><details><summary>Nearby hotels (5)</summary><ul><li>Home2 Suites Orlando Near Universal, 5910 American Way</li><li>Wyndham Garden Orlando Universal / I-Drive, 5855 American Way</li><li>Hilton Garden Inn Orlando I-Drive North, 5877 American Way</li><li>Homewood Suites Orlando Nearest Universal, 5893 American Way</li><li>Orlando International Drive North Hotel, 5859 American Way</li></ul></details></div>
 <div class="line" style="--lc:#ffd23f"><div class="ln">Yellow Line</div><div class="stop">Comfort Inn &amp; Suites Near Universal Orlando Resort</div><div class="addr">7495 Canada Ave, Orlando, FL 32819</div><div class="btns"><a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=7495%20Canada%20Ave%2C%20Orlando%2C%20FL%2032819" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg> Directions to this stop</a></div><details><summary>Nearby hotels (1)</summary><ul><li>CoCo Key Hotel and Water Resort, 7400 International Dr (0.5 mi)</li></ul></details></div>
@@ -300,7 +342,7 @@ if("serviceWorker" in navigator){
 <a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=287%20S%20Tampa%20Ave%2C%20Orlando%2C%20FL%2032805" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg> Google Maps to venue</a>
 </div>
 <p class="addr" style="margin-top:8px">Venue: 287 S Tampa Ave, Orlando, FL 32805</p>
-<div class="tip"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.4.3.5.8.5 1.1v1h6v-1c0-.3.1-.8.5-1.1A6 6 0 0 0 12 3Z"/></svg> Leaving at midnight means surge pricing and big crowds. Drop a meetup pin a few blocks from the gates before you go in, or ride the Blue Line back.</div>
+<div class="tip"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.4.3.5.8.5 1.1v1h6v-1c0-.3.1-.8.5-1.1A6 6 0 0 0 12 3Z"/></svg> Leaving at midnight means surge pricing and big crowds. Drop a meetup pin a few blocks from the gates before you go in, or ride your shuttle line back.</div>
 <h2 class="hs">Parking</h2>
 <div class="times">
 <div class="time"><b>Premier Lot 1: sold out</b>NE corner of W Church St &amp; Rio Grande Ave, entrance off W Central Blvd. Opens 10 AM.</div>
@@ -310,6 +352,7 @@ if("serviceWorker" in navigator){
 <a class="btn alt" href="https://orlando.edc.com/travel/shuttles/" target="_blank" rel="noopener">Official shuttle page</a>
 <a class="btn alt" href="https://orlando.edc.com/travel/parking/" target="_blank" rel="noopener">Official parking page</a>
 </div>
+<div class="builtby-slot" data-where="getting_there"></div>
 </section></div>
 
 <div class="view" id="v-map" hidden><section class="sec">

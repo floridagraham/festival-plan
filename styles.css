@@ -155,7 +155,7 @@ body{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 .sec p{margin:0 0 8px;max-width:65ch}
 .lines{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:10px}
 .line{background:var(--card);border-radius:12px;padding:14px;border-left:6px solid var(--lc);display:flex;flex-direction:column;gap:6px;min-width:0}
-.line.ours{box-shadow:0 0 0 2px var(--lc);background:#22206a}
+
 .line .ln{display:flex;align-items:center;gap:8px;font-family:var(--display);font-weight:700;font-size:16px}
 .line .ln em{font-style:normal;font-family:var(--body);font-size:11.5px;background:var(--lc);color:var(--night);padding:2px 8px;border-radius:5px}
 .line .stop{font-weight:700}
@@ -526,27 +526,7 @@ body.has-a2hs{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
 .toast{position:fixed;z-index:60;left:50%;transform:translateX(-50%);top:calc(64px + env(safe-area-inset-top,0px));margin:0;max-width:calc(100% - 32px);width:max-content;
   padding:10px 16px;border-radius:14px;background:rgba(29,17,69,.96);border:1.5px solid rgba(63,224,255,.55);color:var(--ink);font-weight:600;font-size:14px;box-shadow:0 12px 30px -12px rgba(0,0,0,.9)}
 
-/* floating "Show your love" heart, bottom right (Graham, Oct 27). Graham asked for the slow color shift and gentle float,
-   so like the stage logo it is an approved exception to the no-animated-indicators rule. Reduce Motion shows it still.
-   It sits above the add-to-home-screen bar when that bar is showing. */
-body.has-love{padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
-body.has-love.has-a2hs{padding-bottom:calc(150px + env(safe-area-inset-bottom,0px))}
-.love{position:fixed;z-index:39;right:max(10px, calc(env(safe-area-inset-right,0px) + 6px));bottom:calc(10px + env(safe-area-inset-bottom,0px));
-  display:flex;align-items:center;min-height:44px;padding:4px;border:0;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.love-pill{display:inline-flex;align-items:center;gap:5px;padding:6px 11px 6px 9px;border-radius:999px;font:800 12px var(--body);color:var(--night);
-  background:linear-gradient(100deg,#ff4fb4,#a874ff,#3fe0ff,#7dff9b,#ffb627,#ff7a59,#ff4fb4);background-size:600% 100%;
-  box-shadow:0 8px 20px -8px rgba(255,79,180,.85),0 0 0 1.5px rgba(246,241,255,.25) inset}
-.love:focus-visible{outline:none}
-.love:focus-visible .love-pill{outline:2px solid var(--cyan);outline-offset:2px}
-.love[hidden]{display:none!important}
-.love .ic{width:14px;height:14px}
-body.has-a2hs .love{bottom:calc(86px + env(safe-area-inset-bottom,0px))}
 .love-x{width:100%;margin-top:12px}
-@media (prefers-reduced-motion:no-preference){
-  .love-pill{animation:love-hue 14s ease-in-out infinite alternate,love-float 4.5s ease-in-out infinite}
-}
-@keyframes love-hue{to{background-position:100% 0}}
-@keyframes love-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
 
 /* the Show your love card (Oct 27, Graham: "really fun, makes you want to push it"): a big glowing heart in the
    day colors that pops in on a spring and throws little hearts, a gradient title, and big tip buttons that lift */
@@ -638,26 +618,219 @@ footer .partner b{color:var(--ink)}
 .tip-amts button:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
 .donate .tip-amt{font-weight:800}
 
-/* "Are you Insomniac?" pill (Oct 27): a quiet glass pill stacked just under the love heart, static (no float or color shift)
-   so the heart stays the eye-catcher. Shown only when config.js has partnerLink. */
-.ins{position:fixed;z-index:39;right:max(10px, calc(env(safe-area-inset-right,0px) + 6px));bottom:calc(10px + env(safe-area-inset-bottom,0px));
-  display:flex;align-items:center;min-height:44px;padding:4px;border:0;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.ins-pill{display:inline-flex;align-items:center;gap:5px;padding:5px 11px 5px 9px;border-radius:999px;font:800 12px var(--body);color:var(--ink);
-  background:rgba(29,17,69,.92);border:1.5px solid #8a78e6;box-shadow:0 8px 20px -10px rgba(63,224,255,.7)}
-.ins .ic{width:13px;height:13px;color:var(--cyan)}
-.ins:focus-visible{outline:none}
-.ins:focus-visible .ins-pill{outline:2px solid var(--cyan);outline-offset:2px}
-.ins[hidden]{display:none!important}
-body.has-a2hs .ins{bottom:calc(86px + env(safe-area-inset-bottom,0px))}
-/* Graham, Oct 27: the Insomniac pill sits under the heart, so the heart moves up one row */
-body.has-ins .love{bottom:calc(52px + env(safe-area-inset-bottom,0px))}
-body.has-ins.has-a2hs .love{bottom:calc(128px + env(safe-area-inset-bottom,0px))}
-body.has-ins{padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
-body.has-ins.has-a2hs{padding-bottom:calc(150px + env(safe-area-inset-bottom,0px))}
-body.has-ins.has-love{padding-bottom:calc(114px + env(safe-area-inset-bottom,0px))}
-body.has-ins.has-love.has-a2hs{padding-bottom:calc(192px + env(safe-area-inset-bottom,0px))}
-.ins-go{display:flex;width:100%;flex:none;background:var(--grad);font-size:15px;font-weight:800;box-shadow:0 10px 26px -12px rgba(255,79,180,.85)}
 /* "Send me a note" on the love card (Oct 27): a quiet outline button under the tip buttons, shown when contactEmail is set */
 .love-mail{display:flex;width:100%;flex:none;margin-top:10px;gap:7px}
 .love-mail .ic{width:17px;height:17px;color:var(--cyan)}
 .love-or{margin:16px 0 0;padding-top:12px;border-top:1px solid rgba(168,116,255,.35);font-size:14px;line-height:1.45;color:var(--ink);text-wrap:balance}
+
+/* ===== Oct 28 upgrade, part 1: acts on the first screen (Graham: people should see acts right away) ===== */
+/* a tighter header: smaller logo and title, the day's sound on one slim line next to the Stages button */
+.brandmark{width:64px}
+header.lineup-top{padding-block:14px 8px}
+header.lineup-top h1{font-size:25px;line-height:1.05;margin:0 0 3px}
+header.lineup-top .tagline{font-size:12px;line-height:1.35;margin:0}
+.lineup-top .seg.days{margin-top:10px}
+.lineup-top .seg.days button{min-height:46px;padding:4px 6px}
+.mixrow{display:flex;align-items:center;gap:10px;margin-top:8px}
+.lineup-top .mixrow .mix{flex:1;min-width:0;margin:0;display:flex;align-items:center;gap:8px}
+.lineup-top .mixrow .mix h2{flex:none;margin:0;font-size:10.5px;letter-spacing:.08em}
+.lineup-top .mixrow .bar{flex:1;min-width:40px;height:8px}
+.stagesbtn{flex:none;display:inline-flex;align-items:center;gap:6px;min-height:44px;max-width:56%;padding:6px 12px;border-radius:12px;background:var(--glass);border:1.5px solid var(--line);color:var(--ink);font:700 13px var(--body);cursor:pointer}
+.stagesbtn span:not(.chev){white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stagesbtn .chev{color:var(--soft)}
+.stagesbtn[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.stagesbtn[hidden]{display:none}
+.gmap-top{margin-top:8px}
+.gmap-top[hidden]{display:none}
+.lineup-top .picksrow{margin-top:8px}
+.picksrow .planbtn{min-height:52px}
+/* the tally is a filter: each count reads as a tappable chip */
+.picksrow .tally{background:none;border:0;padding:0;gap:4px}
+.picksrow .tally button{min-height:52px;border:1.5px solid var(--line-soft);background:var(--glass)}
+.picksrow .tally button:hover{border-color:#7d6cd9}
+.picksrow .tally button[aria-pressed="true"]{border-color:currentColor}
+/* the genre legend lives in the Filters panel now */
+.fpanel .legend{margin:10px 0 2px;font-size:12px;display:flex;flex-wrap:wrap;gap:4px 12px}
+.fpanel .legend i{width:8px;height:8px;border-radius:50%}
+
+/* sticky bar: time switch, then Filters + search + Details. The filter panel scrolls away with the page. */
+.ctrl{padding-block:6px}
+.ctrl .seg button{min-height:44px;padding:3px 2px;font-size:12.5px;line-height:1.15}
+.ctrl .seg button .ic{display:none}
+.ctrlrow{gap:6px}
+.ftoggle{flex:none;min-width:44px}
+.fcount{min-width:20px;height:20px;padding:0 6px;border-radius:999px;background:var(--grad);color:var(--night);font:800 11.5px/20px var(--body);text-align:center}
+.fcount:empty{display:none}
+.qbox{flex:1;min-width:0;display:flex;align-items:center;gap:6px;min-height:44px;padding:0 10px;border-radius:12px;background:var(--glass);border:1.5px solid var(--line);color:var(--soft);cursor:text}
+.qbox:focus-within{border-color:var(--cyan)}
+.qbox input#q{flex:1;min-width:0;width:100%;border:0;background:none;padding:0;min-height:40px;font:600 15px var(--body);color:var(--ink);outline:none;border-radius:0}
+.qbox input#q::placeholder{color:var(--soft);opacity:1}
+.vtoggle{flex:none;gap:6px;padding:6px 10px}
+.vt-s{min-width:30px;padding:2px 7px;border-radius:999px;font-size:11.5px;font-weight:800;text-align:center;background:var(--night2);border:1.5px solid var(--line);color:var(--soft)}
+.vtoggle[aria-checked="true"] .vt-s{background:var(--grad);border-color:transparent;color:var(--night)}
+#actfilters{margin-top:6px}
+.fpanel{max-height:none;overflow:visible}
+.fchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.fchips[hidden]{display:none}
+.fchip{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:6px 12px;border-radius:999px;background:var(--grad);color:var(--night);border:0;font:800 13px var(--body);cursor:pointer}
+.fchip .ic{width:14px;height:14px}
+.fchip.all{background:var(--glass);color:var(--ink);border:1.5px solid var(--line)}
+.estnote{margin:8px 0 0;font-size:12px}
+.count{margin:6px 0 8px;font-size:12.5px}
+
+/* compact cards: name, time and stage, genre + one-line vibe, picks, a listen button and expand */
+.card .actions{align-items:center}
+.card .lbtn{display:none}
+.card .actions .xbtn{margin-left:auto}
+.grid.compact .card{padding:10px 12px;gap:5px}
+.grid.compact .card:not(.open) .gv{display:flex;align-items:center;gap:7px;min-width:0}
+.grid.compact .card:not(.open) .tags{flex:none;display:flex}
+.grid.compact .card:not(.open) .tags .tag:not(:first-child){display:none}
+.grid.compact .card:not(.open) .vibe{display:block;flex:1;min-width:0;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.grid.compact .card .actions{flex-wrap:wrap;margin-top:3px}
+.grid.compact .card .lbtn{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;background:var(--glass);border:1.5px solid var(--line);color:var(--ink);cursor:pointer}
+.grid.compact .card .lbtn .ic{width:16px;height:16px}
+.grid.compact .card .lbtn[aria-expanded="true"]{background:var(--grad);color:var(--night);border-color:transparent}
+.grid.compact .card.open .lbtn{display:none}
+.grid.compact .card.listen:not(.open) .links{display:flex}
+.gv{display:grid;gap:8px}
+.cclash{display:flex;align-items:center;gap:6px;width:fit-content;margin:0;padding:3px 10px;border-radius:999px;border:1.5px solid var(--red);color:var(--red);font-size:12.5px;font-weight:800}
+.cclash .ic{width:13px;height:13px}
+@keyframes card-flash{from{box-shadow:0 0 0 3px var(--cyan)}to{box-shadow:0 0 0 3px transparent}}
+.card.flash{animation:card-flash 1.6s ease-out}
+/* search found the act on another day */
+.jumps{grid-column:1/-1;display:grid;gap:8px}
+.jump{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 10px;min-height:52px;padding:10px 14px;border-radius:14px;background:var(--glass);border:1.5px solid var(--cyan);color:var(--ink);font:600 14px var(--body);text-align:left;cursor:pointer}
+.jump b{font-family:var(--display);font-weight:700}
+.jump-go{color:var(--cyan);font-weight:800;font-size:13px}
+.empty.jump-h{padding:6px 0 2px;grid-column:1/-1}
+.linkish{background:none;border:0;padding:0 2px;min-height:44px;color:var(--cyan);font:700 14px var(--body);text-decoration:underline;cursor:pointer}
+.ctrl{margin-top:4px}
+.grid.compact{gap:7px}
+.grid.compact .card{padding:9px 12px;gap:4px}
+.grid.compact .card .actions{margin-top:2px}
+/* add to home screen: the benefit first, then the warning (Oct 28) */
+.a2hs-warn{display:block;margin-top:4px;color:var(--amber);font-weight:700}
+.a2hs-box{display:flex;align-items:center;gap:12px;margin-top:18px;padding:12px 14px;border-radius:16px;background:var(--glass);border:1.5px solid var(--line);max-width:640px}
+.a2hs-box[hidden]{display:none}
+.a2hs-box p{margin:0;flex:1;min-width:0;font-size:13.5px;line-height:1.45}
+.a2hs-box .a2hs-ico{flex:none;color:var(--cyan)}
+.a2hs-box .a2hs-how{flex:none;min-width:64px}
+
+/* ===== Oct 28 upgrade, part 2: one "Made by Graham" door instead of the floating pills ===== */
+.door{border:0;background:none;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent;color:var(--ink)}
+.door-menu:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+/* Graham's avatar in the top menu opens the sheet */
+.door-menu{position:relative;flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center}
+.door-menu img{width:34px;height:34px;border-radius:50%;object-fit:cover;border:1.5px solid var(--line)}
+.door-heart{position:absolute;right:1px;bottom:3px;width:17px;height:17px;border-radius:50%;background:var(--night);display:grid;place-items:center}
+.door-heart .ic{width:11px;height:11px;color:#ff6fc2}
+/* the sheet */
+.mbg-tag{margin:2px 0 0;font-size:13.5px;font-weight:700;color:var(--soft)}
+.mbg-card .love-letter{margin-bottom:12px}
+.mbg-opt{margin-top:10px;padding:14px;border-radius:16px;text-align:left;background:var(--glass);border:1.5px solid var(--line-soft)}
+.mbg-opt h3{display:flex;align-items:center;gap:8px;margin:0 0 6px;font:700 16px var(--display);color:var(--ink)}
+.mbg-opt h3 .ic{width:18px;height:18px;color:var(--cyan)}
+.mbg-opt>p{margin:0 0 10px;font-size:14px;line-height:1.45;color:var(--ink)}
+.mbg-opt .love-small{margin:10px 0 0;text-align:center}
+.mbg-go{display:flex;width:100%;flex:none;gap:7px;font-weight:800}
+.mbg-go .ic{width:17px;height:17px}
+.mbg-more{margin:0 0 10px;font-size:13.5px}
+.mbg-more summary{min-height:44px;display:flex;align-items:center;color:var(--cyan);font-weight:700;cursor:pointer}
+.mbg-more .love-note{display:grid;gap:6px;padding:4px 2px 0;color:var(--ink)}
+.mbg-more .love-note p{margin:0}
+.mbg-row{margin-top:12px;display:grid;gap:8px}
+.mbg-row .love-or{margin:6px 0 0}
+.mbg-row .love-mail{margin-top:0}
+.share-app{display:flex;width:100%;flex:none;gap:7px}
+.share-app .ic{width:17px;height:17px;color:var(--cyan)}
+.mbg-card .a2hs-box{margin-top:12px;text-align:left}
+.usedby{margin:2px 0 0;font-size:13px;font-weight:700;color:var(--soft)}
+
+/* ===== Oct 28 upgrade, part 3: ask after value ===== */
+/* Quick start leads with what the app is and the dates; the tip buttons sit small, under Let's go */
+.intro-card .intro-what{margin:0;font-size:22px;line-height:1.15;text-wrap:balance}
+.intro-what-p{margin:4px 0 10px;font-size:15px;color:var(--ink)}
+.intro-what-p b{color:var(--amber)}
+.intro-card .usedby{margin:-4px 0 10px}
+.tipbox.tip-small{margin-top:12px;padding:10px 12px;border-radius:14px}
+.tipbox.tip-small .tip-h{font-size:13.5px;margin:0 0 8px}
+.tipbox.tip-small .donate{min-height:44px;padding:8px 10px;font-size:14px}
+/* the one-time "Your plan's ready" card */
+.tm-card{text-align:center}
+.tm-h{display:flex;align-items:center;justify-content:center;gap:8px;margin:4px 0 4px!important;font-size:22px!important}
+.tm-h .ic{width:22px;height:22px;color:var(--amber)}
+.tm-p{margin:0 0 12px;font-size:15px;color:var(--ink);display:flex;align-items:center;justify-content:center;gap:6px}
+.tm-p .ic{width:17px;height:17px;color:var(--cyan)}
+.tm-card .share-app{margin-top:10px}
+/* "Built by Graham Lucht, app builder" */
+.builtby{margin:22px 0 0;padding:12px 14px;border-radius:14px;border:1.5px dashed var(--line);font-size:13.5px;line-height:1.5;color:var(--soft);max-width:640px}
+.builtby b{color:var(--ink)}
+.builtby-go{display:inline-flex;align-items:center;min-height:44px;color:var(--cyan);font-weight:800;text-decoration:none;margin:-10px 0}
+.builtby-go:hover{text-decoration:underline}
+
+/* ===== Oct 28 upgrade, part 4: sharing ===== */
+.plan-share{display:grid;grid-template-columns:1fr;gap:8px;margin-top:16px;max-width:640px}
+.share-plan{display:flex;gap:8px;min-height:52px;font-weight:800;background:var(--grad);color:var(--night)}
+.share-plan .ic{width:18px;height:18px}
+.plan-share .share-app{margin:0}
+.toast .ic{width:15px;height:15px;color:var(--lime);vertical-align:-2px}
+
+/* ===== Oct 28 upgrade, parts 5 to 8: used-by line, quiz, next-year list, festival vote ===== */
+/* "Not sure who to see?" sits after the third act */
+.quizcta{grid-column:1/-1}
+.quiz-open{display:flex;align-items:center;gap:10px;width:100%;min-height:52px;padding:10px 14px;border-radius:14px;cursor:pointer;text-align:left;
+  background:var(--glass);border:1.5px dashed var(--day-line,#a874ff);color:var(--ink);font:600 14px var(--body)}
+.quiz-open .ic{width:20px;height:20px;color:var(--amber);flex:none}
+.quiz-open b{font-family:var(--display);font-weight:700;margin-right:4px}
+.quiz-step{margin:0;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--soft)}
+.quiz-h{margin:2px 0 8px!important}
+.quiz-hint{margin:0 0 10px;font-size:13.5px;color:var(--soft)}
+.quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.quiz-opt{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;min-height:56px;padding:10px 12px;border-radius:14px;cursor:pointer;text-align:left;
+  background:var(--night2);border:1.5px solid var(--line);color:var(--ink);font:700 14px var(--body)}
+.quiz-opt small{font-weight:600;font-size:12px;color:var(--soft)}
+.quiz-opt[aria-pressed="true"]{background:var(--grad);border-color:transparent;color:var(--night)}
+.quiz-opt[aria-pressed="true"] small{color:var(--night)}
+.quiz-nav{display:flex;gap:8px;margin-top:14px}
+.quiz-nav .btn{flex:1;min-height:48px}
+.quiz-nav .btn[hidden]{display:none}
+.quiz-nav .btn:disabled{opacity:1;filter:saturate(.35);cursor:not-allowed}
+.quiz-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.quiz-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:14px;background:var(--glass);border:1.5px solid var(--line-soft);box-shadow:inset 4px 0 0 var(--sc)}
+.quiz-item>div{min-width:0;display:grid;gap:1px}
+.qi-name{font:700 15px var(--display)}
+.qi-meta{font-size:13px;font-weight:700;color:var(--amber)}
+.qi-vibe{font-size:12.5px;color:var(--soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qi-clash{font-size:12px;font-weight:800;color:var(--red)}
+.qi-go{flex:none;display:inline-flex;align-items:center;gap:5px;min-height:44px;padding:6px 12px;border-radius:12px;cursor:pointer;background:var(--night2);border:1.5px solid var(--line);color:var(--ink);font:800 13px var(--body)}
+.qi-go[aria-pressed="true"]{background:var(--lime);border-color:var(--lime);color:var(--night)}
+/* festival vote card */
+.fest-vote{margin-top:14px;padding:14px;border-radius:16px;background:var(--glass);border:1.5px solid var(--line-soft);text-align:left}
+.fest-vote:empty{display:none}
+.fv-h{display:flex;align-items:center;gap:8px;margin:0 0 4px;font:700 16px var(--display);color:var(--ink)}
+.fv-h .ic{width:18px;height:18px;color:var(--amber)}
+.fv-p{margin:0 0 10px;font-size:14px;color:var(--ink)}
+.fv-list{display:flex;flex-wrap:wrap;gap:6px}
+.fv-b{display:inline-flex;align-items:center;gap:5px;min-height:44px;padding:6px 12px;border-radius:999px;cursor:pointer;text-decoration:none;
+  background:var(--night2);border:1.5px solid var(--line);color:var(--ink);font:700 13px var(--body)}
+.fv-b[aria-pressed="true"]{background:var(--grad);border-color:transparent;color:var(--night)}
+.fv-b .ic{width:13px;height:13px}
+.fv-other{border-style:dashed}
+.fv-thanks{margin:12px 0 8px;font-weight:800;color:var(--lime)}
+/* next-year list */
+.next-year{margin-top:14px}
+.next-year:empty{display:none}
+.ny-h{margin:0 0 8px;font-size:14px;font-weight:700;color:var(--ink)}
+.ny-go{display:flex;gap:8px;width:100%;min-height:48px;font-weight:800;background:var(--glass);color:var(--ink);border:1.5px solid var(--cyan)}
+.ny-go .ic{width:18px;height:18px;color:var(--cyan)}
+#v-lineup>.fest-vote,#v-lineup>.next-year{max-width:640px}
+.next-year[hidden]{display:none}
+/* listening: the YouTube Music / Spotify buttons get their own row under the picks */
+.grid.compact .card.listen:not(.open) .links{order:9;flex-basis:100%;gap:8px}
+/* keep "Search all days" readable next to the Filters count */
+.ftoggle{padding:8px 10px}
+.qbox{padding:0 8px;gap:5px}
+.qbox input#q{font-size:14px}
+.vtoggle{padding:6px 8px;gap:5px}
+.vt-s{min-width:28px;padding:1px 6px;font-size:11px}

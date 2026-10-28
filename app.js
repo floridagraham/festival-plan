@@ -32,6 +32,17 @@ const CLOCK_ICO=ico_('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/>')
 const SYNC_ICO=ico_('<path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/>');
 const BUS_ICO=ico_('<rect x="3" y="5" width="18" height="12" rx="2"/><path d="M3 11h18M7 17v2M17 17v2"/><circle cx="7.5" cy="14" r=".8" fill="currentColor" stroke="none"/><circle cx="16.5" cy="14" r=".8" fill="currentColor" stroke="none"/>');
 const CAR_ICO=ico_('<path d="M4 16V11l2-5h12l2 5v5"/><path d="M4 16h16M7 16v2M17 16v2"/><circle cx="7.5" cy="14" r=".8" fill="currentColor" stroke="none"/><circle cx="16.5" cy="14" r=".8" fill="currentColor" stroke="none"/>');
+const PLAY_ICO=ico_('<path d="M8 5v14l11-7Z" fill="currentColor"/>');
+const CLASH_ICO=ico_('<path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4"/><circle cx="12" cy="17" r=".6" fill="currentColor" stroke="none"/>');
+// Graham's public contact address and the app's link, from config.js (never his personal Gmail)
+const CFG0=window.EDC_CONFIG||{};
+const contactEmail=String(CFG0.contactEmail||"").trim(), hasEmail=/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(contactEmail);
+const mailTo=(subj,body)=>`mailto:${contactEmail}?subject=${encodeURIComponent(subj)}${body?"&body="+encodeURIComponent(body):""}`;
+const APP_URL=CFG0.appUrl||"https://floridagraham.github.io/festival-plan/";
+const BUILD_SUBJ="I want an app like Your Festival Plan";
+// "Built by" line at the foot of My Plan, Getting there and the afterparties (Oct 28)
+const builtBy=where=>hasEmail?`<p class="builtby">Built by <b>Graham Lucht</b>, app builder. I make things that people love. <a class="builtby-go" data-where="${where}" href="${mailTo(BUILD_SUBJ)}">Got an idea? Let's talk <span aria-hidden="true">&rarr;</span></a></p>`:"";
+const escH=s=>String(s).replace(/[&<>"]/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[ch]);
 const SPARKLE_ICO=ico_('<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/>');
 const spUrl = t => "https://open.spotify.com/search/" + encodeURIComponent(t);
 const url = t => "https://music.youtube.com/search?q=" + encodeURIComponent(t);
@@ -62,7 +73,7 @@ let genre="all", gemsOnly=false, q="", pickF="all";
 const picks={};
 const slug=n=>n.toLowerCase().normalize("NFD").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 const filters=document.getElementById("filters"), qEl=document.getElementById("q");
-const mk=(id,label)=>{const b=document.createElement("button");b.className="chip";b.id="f-"+id;b.textContent=label;b.setAttribute("aria-pressed","false");filters.insertBefore(b,qEl);return b;};
+const mk=(id,label)=>{const b=document.createElement("button");b.className="chip";b.id="f-"+id;b.textContent=label;b.setAttribute("aria-pressed","false");filters.appendChild(b);return b;};
 const genreSel=document.getElementById("genreSel");
 genreSel.innerHTML=`<option value="all">All genres</option>`+order.filter(k=>k!=="tbc").map(k=>`<option value="${k}" style="color:${G[k].hex}">${G[k].label}</option>`).join("");
 const gemB=mk("gems","Discovery only");
@@ -99,6 +110,13 @@ function when(a){
   return {k:e.start<CUTOFF?"aft":"eve",real:false,st:e};
 }
 let stageF="all";
+const tMin=t=>{const [h,m]=t.split(":").map(Number);return h*60+m;};
+const slotEnd=w=>w.st.end?tMin(w.st.end):tMin(w.st.start)+60;
+function goingClashes(){
+  const g=A.filter(a=>picks[slug(a[0])]==="yes").map(a=>({id:slug(a[0]),name:a[0],w:when(a)})), out={};
+  g.forEach(x=>{out[x.id]=g.filter(y=>y!==x&&tMin(y.w.st.start)<slotEnd(x.w)&&tMin(x.w.st.start)<slotEnd(y.w)).map(y=>y.name);});
+  return out;
+}
 const fmt=t=>{let [h,m]=t.split(":").map(Number);const ap=h>=12&&h<24?"PM":"AM";h=h%12||12;return h+":"+String(m).padStart(2,"0")+" "+ap;};
 const STAGE_NAMES={kinetic:"kineticFIELD",circuit:"circuitGROUNDS",neon:"neonGARDEN",stereo:"stereoBLOOM",bacardi:"CASA BACARDÍ"};
 const STAGE_COL={kinetic:"#ff4fb4",circuit:"#a874ff",neon:"#6677ff",stereo:"#3fe0ff",bacardi:"#ffcc66"};
@@ -119,15 +137,22 @@ function render(){
   document.getElementById("ctrlrow").hidden=pm;document.getElementById("actfilters").hidden=pm;
   if(pm){document.getElementById("estnote").hidden=true;const t={yes:0,maybe:0,no:0}; A.forEach(a=>{const v=picks[slug(a[0])]; if(v) t[v]++;});document.getElementById("tally").innerHTML=tallyHTML(t);renderParties();return;}
   const real=hasReal();
-  document.getElementById("estnote").hidden=real;
+  // the "best guess" note rides on the count line now, to keep acts on the first screen
+  document.getElementById("estnote").hidden=true;
   updSum();
+  const qHit=a=>(a[0]+" "+a[2]).toLowerCase().includes(q);
   let list=A.map((a,i)=>[a,i+1,when(a)]).filter(([a,,w])=>
-    (tod==="all"||w.k===tod)&&(stageF==="all"||w.st.stage===stageF)&&(genre==="all"||a[1]===genre)&&(!gemsOnly||a[5].includes("gem"))&&(!q||(a[0]+" "+a[2]).toLowerCase().includes(q))
+    (tod==="all"||w.k===tod)&&(stageF==="all"||w.st.stage===stageF)&&(genre==="all"||a[1]===genre)&&(!gemsOnly||a[5].includes("gem"))&&(!q||qHit(a))
     &&(pickF==="all"||(pickF==="none"?!picks[slug(a[0])]:picks[slug(a[0])]===pickF)));
   if(tod!=="all"||stageF!=="all") list.sort((x,y)=>(x[2].st.start||"99").localeCompare(y[2].st.start||"99"));
   const t={yes:0,maybe:0,no:0}; A.forEach(a=>{const v=picks[slug(a[0])]; if(v) t[v]++;});
   document.getElementById("tally").innerHTML=tallyHTML(t);
-  count.textContent=`${DAYS[day].name}${stageF!=="all"?" · "+STAGE_NAMES[stageF]:""}: showing ${list.length} of ${A.length} acts`+(tod!=="all"||stageF!=="all"?", in time order":"");
+  count.textContent=`${DAYS[day].name}${stageF!=="all"?" · "+STAGE_NAMES[stageF]:""}: showing ${list.length} of ${A.length} acts`+(tod!=="all"||stageF!=="all"?", in time order":"")+(real?"":" · ~ = best-guess time");
+  const clash=goingClashes();
+  // acts on the other two days whose name matches the search: "David Guetta plays Friday, tap to jump"
+  const plain=t=>t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+  const elsewhere=q?Object.keys(DAYS).filter(d=>d!==day).flatMap(d=>DAYS[d].list.filter(a=>plain(a[0]).includes(plain(q))).map(a=>[d,a])).slice(0,6):[];
+  const jumps=elsewhere.length?`<div class="jumps">${elsewhere.map(([d,a])=>`<button type="button" class="jump" data-jd="${d}" data-ja="${slug(a[0])}"><span><b>${a[0]}</b> plays ${DAYS[d].name}</span><span class="jump-go">tap to jump</span></button>`).join("")}</div>`:"";
   grid.innerHTML=list.length?list.map(([a,n,w])=>{
     const g=G[a[1]], f=a[5];
     const sc=STAGE_COL[w.st.stage]||"#c9b8ff";
@@ -137,9 +162,12 @@ function render(){
     const links=a[4].map((t,i)=>{const who=a[4].length>1?(parts[i]||t):a[0];return `<a class="yt" data-act="${slug(a[0])}" data-who="${who}" href="${url(t)}" target="_blank" rel="noopener" aria-label="${who} on YouTube Music (opens new tab)">${ytIcon}</a><a class="sp" data-act="${slug(a[0])}" data-who="${who}" href="${spUrl(t)}" target="_blank" rel="noopener" aria-label="${who} on Spotify (opens new tab)">${spIcon}</a>`;}).join("");
     const id=slug(a[0]), v=picks[id]||"";
     const vote=`<div class="vote" role="group" aria-label="Rate ${a[0]}">${[["yes",CHECK_ICO,"Going"],["maybe",MAYBE_ICO,"Maybe"],["no",X_ICO,"Skip"]].map(([k,e,l])=>`<button data-id="${id}" data-v="${k}" data-label="${a[0]}" aria-pressed="${v===k}"><span class="vk-i" aria-hidden="true">${e}</span><span class="vk-l">${l}</span></button>`).join("")}</div>`;
-    const op=expanded.has(id);
-    return `<article class="card${v?" is-"+v:""}${op?" open":""}" style="--g:${g.hex}"><div class="top"><h3 class="name">${a[0]}</h3><span class="rank" aria-label="Billing rank ${n}">#${n}</span><button class="xbtn" data-x="${id}" aria-expanded="${op}" aria-label="More about ${a[0]}">▾</button></div>${when2}<div class="tags">${tags}</div><p class="vibe">${a[3]}</p><div class="actions">${vote}<div class="links">${links}</div></div></article>`;
-  }).join(""):'<div class="empty">No acts match. Clear the search or pick another filter.</div>';
+    const op=expanded.has(id), lo=listening.has(id), cl=clash[id];
+    const clashChip=cl&&cl.length?`<p class="cclash">${CLASH_ICO} Clashes with ${cl.join(", ")}</p>`:"";
+    return `<article class="card${v?" is-"+v:""}${op?" open":""}${lo?" listen":""}" style="--g:${g.hex}"><div class="top"><h3 class="name">${a[0]}</h3><span class="rank" aria-label="Billing rank ${n}">#${n}</span></div>${when2}<div class="gv"><div class="tags">${tags}</div><p class="vibe">${a[3]}</p></div>${clashChip}<div class="actions">${vote}<button class="lbtn" type="button" data-l="${id}" aria-expanded="${lo}" aria-label="Listen to ${a[0]}">${PLAY_ICO}</button><div class="links">${links}</div><button class="xbtn" data-x="${id}" aria-expanded="${op}" aria-label="More about ${a[0]}">▾</button></div></article>`;
+  }).filter(Boolean).map((h,i)=>i===2&&quizCta()?h+quizCta():h).join("")+jumps
+  :jumps?`<p class="empty jump-h">No "${escH(qEl.value.trim())}" on ${DAYS[day].name}.</p>`+jumps
+  :`<div class="empty">No acts match${q?` "${escH(qEl.value.trim())}" on any day`:""}. <button type="button" class="linkish" data-clear="all">Clear filters</button></div>`;
 }
 
 // Afterparties (researched Oct 25, 2026). Official = Insomniac-run.
@@ -162,6 +190,7 @@ function renderParties(){
   count.textContent=`${DAYS[day].name} night: ${list.length} afterparties. Outlined artists also play the festival. Tap a name to listen.`;
   let html=list.map(partyCard).join("");
   if(day==="fri") html+='<div class="thu">Thursday Nov 5 · Pre-parties</div>'+PARTIES.thu.map(partyCard).join("");
+  html+=builtBy("afterparties").replace('class="builtby"','class="builtby" style="grid-column:1/-1"');
   html+='<p class="pnote" style="grid-column:1/-1">Hotel EDC passes cover the Hotel EDC parties only; afterparty shuttles are sold separately on the <a href="https://orlando.edc.com/tickets/afterparties/" target="_blank" rel="noopener" style="color:var(--cyan)">official afterparties page</a>. Anthem is an independent party, not run by EDC.</p>';
   grid.innerHTML=html;
 }
@@ -176,7 +205,6 @@ let introSeen=false; try{introSeen=localStorage.getItem("edc-intro-seen")==="1"}
 if(!introSeen) openIntro();
 document.getElementById("introGo").onclick=closeIntro;
 introEl.addEventListener("keydown",e=>{if(e.key==="Escape") closeIntro();});
-document.getElementById("introHelp").onclick=()=>openIntro("help_button");
 if(window.edcTrackMsg){ const t=document.createElement("p"); t.className="toast"; t.setAttribute("role","status"); t.textContent=window.edcTrackMsg; document.body.appendChild(t); setTimeout(()=>t.remove(),5000); }
 
 // add to home screen: a step in Quick start and a small bar on every open in a phone browser (Oct 26).
@@ -199,6 +227,7 @@ function a2hsShort(){ return isIOS?"In Safari, tap <b>Share</b>, then <b>Add to 
 function hideA2hsBar(){ a2hsBar.hidden=true; document.body.classList.remove("has-a2hs"); }
 if(!isStandalone&&(isIOS||isAndroid)){
   document.getElementById("introA2hs").hidden=false;
+  document.querySelectorAll(".a2hs-box").forEach(b=>b.hidden=false);
   document.getElementById("introA2hsSteps").innerHTML=a2hsShort();
   document.getElementById("a2hsSteps").innerHTML=A2HS_STEPS.map(s=>"<li>"+s+"</li>").join("");
   let hidden=false; try{hidden=sessionStorage.getItem("edc-a2hs-hidden")==="1"}catch(e){}
@@ -210,22 +239,25 @@ window.addEventListener("appinstalled",()=>{ installPrompt=null; hideA2hsBar(); 
 let a2hsReturn=null;
 const a2hsSheet=sheet(a2hsDlg,{onDismiss:()=>closeA2hs()});
 function closeA2hs(){ a2hsSheet.close(); if(a2hsReturn&&a2hsReturn.focus) a2hsReturn.focus(); }
-document.getElementById("a2hsHow").onclick=async()=>{
+async function openA2hs(where){
   if(installPrompt){
     const p=installPrompt; installPrompt=null; p.prompt();
     try{ const r=await p.userChoice; track("edc_a2hs_prompt",{outcome:r.outcome}); if(r.outcome==="accepted") hideA2hsBar(); }catch(e){}
     return;
   }
   a2hsReturn=document.activeElement; a2hsSheet.open(); a2hsDlg.querySelector(".intro-card").focus();
-  track("edc_a2hs_steps_opened",{platform:isIOS?"ios":"android"});
-};
+  track("edc_a2hs_steps_opened",{platform:isIOS?"ios":"android",where});
+}
+document.getElementById("a2hsHow").onclick=()=>openA2hs("banner");
+// other "How" buttons (My Plan footer, Made by Graham sheet) open the same steps
+document.addEventListener("click",e=>{const b=e.target.closest("[data-a2hs]"); if(b) openA2hs(b.dataset.a2hs);});
 document.getElementById("a2hsGo").onclick=closeA2hs;
 a2hsDlg.addEventListener("keydown",e=>{if(e.key==="Escape") closeA2hs();});
 document.getElementById("a2hsX").onclick=()=>{ hideA2hsBar(); try{sessionStorage.setItem("edc-a2hs-hidden","1")}catch(e){} track("edc_a2hs_bar_hidden"); };
 
 // sticky bar: filter panel, filter summary, compact view
 const ftog=document.getElementById("ftoggle"), panel=document.getElementById("actfilters"), vtog=document.getElementById("vtoggle");
-const expanded=new Set();
+const expanded=new Set(), listening=new Set();
 let panelOpen=false;
 const panelH=spring(0,h=>{panel.style.height=h+"px";},{preset:SPRING.snappy});
 ftog.onclick=()=>{
@@ -238,12 +270,45 @@ ftog.onclick=()=>{
   else panelH.to(0,{preset:SPRING.smooth,done:()=>{panel.classList.remove("open");panel.style.height="";panel.style.overflow="";}});
   track("edc_filters_panel",{open:panelOpen});
 };
-function updSum(){const bits=[];if(stageF!=="all")bits.push(STAGE_NAMES[stageF]);if(genre!=="all")bits.push(G[genre].label);if(gemsOnly)bits.push("Discovery");if(pickF!=="all")bits.push({yes:"Going",maybe:"Maybe",no:"Skip",none:"Not rated"}[pickF]);if(q)bits.push('"'+q+'"');document.getElementById("fsum").textContent=bits.length?"· "+bits.join(", "):"";}
+// active filters as removable chips under the sticky bar; the Filters button shows how many
+const fchips=document.getElementById("fchips");
+function updSum(){
+  const c=[];
+  if(stageF!=="all") c.push(["stage",STAGE_NAMES[stageF]]);
+  if(genre!=="all") c.push(["genre",G[genre].label]);
+  if(gemsOnly) c.push(["gems","Discovery only"]);
+  if(pickF!=="all") c.push(["pick",{yes:"Going",maybe:"Maybe",no:"Skip",none:"Not rated"}[pickF]]);
+  if(q) c.push(["q",'"'+qEl.value.trim()+'"']);
+  document.getElementById("fsum").textContent=c.length?String(c.length):"";
+  ftog.setAttribute("aria-label",c.length?`Filters, ${c.length} active`:"Filters");
+  fchips.hidden=!c.length;
+  fchips.innerHTML=c.map(([k,l])=>`<button type="button" class="fchip" data-clear="${k}" aria-label="Remove filter ${escH(l)}">${escH(l)} ${X_ICO}</button>`).join("")+(c.length>1?'<button type="button" class="fchip all" data-clear="all">Clear all</button>':"");
+}
+function clearFilter(k){
+  if((k==="stage"||k==="all")&&stageF!=="all") setStage("all");
+  if((k==="genre"||k==="all")&&genre!=="all") setGenre("all");
+  if((k==="gems"||k==="all")&&gemsOnly) gemB.click();
+  if((k==="pick"||k==="all")&&pickF!=="all") pf[pickF].click();
+  if(k==="q"||k==="all"){ qEl.value=""; q=""; }
+  render(); track("edc_filter_chip_remove",{type:k});
+}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-clear]"); if(b&&(fchips.contains(b)||grid.contains(b))) clearFilter(b.dataset.clear);});
 let compact=window.matchMedia("(max-width:600px)").matches;
 try{const c=localStorage.getItem("edc-compact");if(c!==null)compact=c==="1";}catch(e){}
-function setCompact(c){compact=c;grid.classList.toggle("compact",c);vtog.setAttribute("aria-pressed",c);try{localStorage.setItem("edc-compact",c?"1":"0")}catch(e){}trackContext({compact:c});}
+function setCompact(c){compact=c;grid.classList.toggle("compact",c);vtog.setAttribute("aria-checked",String(!c));document.getElementById("vtState").textContent=c?"Off":"On";try{localStorage.setItem("edc-compact",c?"1":"0")}catch(e){}trackContext({compact:c});}
 setCompact(compact);
-vtog.onclick=()=>{setCompact(!compact);render();track("edc_view_toggle",{compact});};
+vtog.onclick=()=>{setCompact(!compact);render();track("edc_view_toggle",{compact,details:!compact});};
+// compact cards: the play button shows the YouTube Music / Spotify links; search jumps go to the other day
+grid.addEventListener("click",e=>{
+  const l=e.target.closest(".lbtn");
+  if(l){const id=l.dataset.l, card=l.closest(".card"), on=!listening.has(id); on?listening.add(id):listening.delete(id);
+    card.classList.toggle("listen",on); l.setAttribute("aria-expanded",String(on)); track("edc_listen_open",{...actProps(id),open:on}); return;}
+  const j=e.target.closest(".jump");
+  if(j){const from=day, act=j.dataset.ja; setDay(j.dataset.jd);
+    const c=[...grid.querySelectorAll(".card")].find(c=>slug(c.querySelector(".name").textContent)===act);
+    if(c){c.scrollIntoView({block:"center",behavior:reducedMotion()?"auto":"smooth"}); c.classList.add("flash"); setTimeout(()=>c.classList.remove("flash"),1600);}
+    track("edc_search_jump",{from_day:from,to_day:j.dataset.jd,act:j.querySelector("b").textContent}); return;}
+});
 grid.addEventListener("click",e=>{const x=e.target.closest(".xbtn");if(!x)return;const id=x.dataset.x;if(expanded.has(id))expanded.delete(id);else expanded.add(id);const card=x.closest(".card");
   const from=card.getBoundingClientRect().height; card.style.height="";
   card.classList.toggle("open"); const open=card.classList.contains("open"); x.setAttribute("aria-expanded",open);
@@ -284,8 +349,10 @@ function setDay(d){
 }
 document.querySelectorAll(".seg.days button").forEach(b=>b.onclick=()=>setDay(b.dataset.d));
 document.querySelectorAll("#times button").forEach(b=>b.onclick=()=>{tod=b.dataset.t;document.querySelectorAll("#times button").forEach(x=>x.setAttribute("aria-pressed",x===b));timePill();render();track("edc_filter",{type:"time",value:tod});});
+// open on today during the festival (dates from lineup.json), otherwise the last day this phone used
 let saved="sat"; try{saved=localStorage.getItem("edc-day")||"sat"}catch(e){}
-setDay(DAYS[saved]?saved:"sat");
+const todayKey=Object.keys(DAYS).find(d=>LINEUP.days[d].date===orlandoNow().ymd);
+setDay(todayKey||(DAYS[saved]?saved:"sat"));
 
 
 // grounds map (schematic of 2025 layout)
@@ -335,100 +402,130 @@ document.querySelectorAll(".gmap:not(.gmap-top)").forEach((box,i)=>{
   box.querySelectorAll(".stg").forEach(g=>{g.addEventListener("click",()=>pick(g.dataset.s));g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick(g.dataset.s);}});});
 });
 
-// "Insomniac team" notes (Graham, Oct 27: if Insomniac finds the app, invite them to work together); shown once partnerLink is set
-// contactEmail (Oct 27): a public address for notes; it also stands in for partnerLink as a mailto
-const contactEmail=String((window.EDC_CONFIG||{}).contactEmail||"").trim(), hasEmail=/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(contactEmail);
-const mailTo=(subj,body)=>`mailto:${contactEmail}?subject=${encodeURIComponent(subj)}${body?"&body="+encodeURIComponent(body):""}`;
+// "Made by Graham" (Oct 28): one quiet door, in the header or the top menu, opens one sheet with Graham's note,
+// the tip jar, "I build apps", the Insomniac note, sharing, the festival vote and the next-year list. It replaced
+// the floating "Show your love" and "Are you Insomniac?" pills, which covered content.
+// contactEmail is Graham's PUBLIC address (never his personal Gmail); partnerLink, when it is an https link,
+// takes over the Insomniac contact from the email.
+const HEART_ICO=ico_('<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/>');
+const tipLinks=(CFG0.donateLinks||[]).filter(t=>t&&t.url&&t.label);
+const mbgDlg=document.getElementById("mbgDlg");
+let mbgReturn=null;
+const mbgSheet=sheet(mbgDlg,{onDismiss:()=>closeMbg()});
+function closeMbg(){ mbgSheet.close(); if(mbgReturn&&mbgReturn.focus) mbgReturn.focus(); }
+// tip jar: one button per link in config.js in every .donate-row (Quick start, end of the lineup, footer, this sheet)
+if(tipLinks.length){
+  document.querySelectorAll(".tipbox").forEach(b=>b.hidden=false);
+  document.querySelectorAll(".donate-row").forEach(row=>{row.innerHTML=tipLinks.map(t=>`<a class="btn donate donate-link" data-where="${row.dataset.where}" data-service="${escH(t.label)}" href="${escH(t.url)}" target="_blank" rel="noopener" aria-label="Leave a tip with ${escH(t.label)} (opens new tab)">${HEART_ICO} ${escH(t.label)}</a>`).join("");row.hidden=false;});
+  document.getElementById("optTip").hidden=false;
+}
 if(hasEmail){
-  // "Send me a note" on the Show your love card (Graham, Oct 27): feedback by email
+  const buildGo=document.getElementById("buildGo");
+  buildGo.href=mailTo(BUILD_SUBJ); buildGo.setAttribute("aria-label","Let's talk: email Graham about an app");
+  buildGo.addEventListener("click",()=>track("edc_build_contact",{where:"made_by_sheet"}));
+  document.getElementById("optBuild").hidden=false;
+  // "Send me a note" (Oct 27): feedback by email
   const noteBtn=document.getElementById("noteBtn");
   noteBtn.href=mailTo("Your Festival Plan feedback","What I like about this app:\n\n"); noteBtn.setAttribute("aria-label","Send Graham a note by email"); noteBtn.hidden=false;
   document.getElementById("noteAsk").hidden=false;
   noteBtn.addEventListener("click",()=>track("edc_note_click"));
 }
-const cfgPartner=(window.EDC_CONFIG||{}).partnerLink;
-const partnerLink=cfgPartner&&/^https:\/\//.test(cfgPartner)?cfgPartner:hasEmail?mailTo("Working together on Your Festival Plan"):"";
+// Insomniac (Oct 27): the note in the sheet and the boxed line in the footer
+const cfgPartner=CFG0.partnerLink;
+const partnerLink=cfgPartner&&/^https:\/\//.test(cfgPartner)?cfgPartner:hasEmail?mailTo("Insomniac x Your Festival Plan"):"";
 if(partnerLink){
+  const byMail=partnerLink.startsWith("mailto:");
   document.querySelectorAll(".partner-link").forEach(a=>{
     a.href=partnerLink;
-    if(partnerLink.startsWith("mailto:")){ a.removeAttribute("target"); a.setAttribute("aria-label",a.id==="insGo"?"Contact Graham by email":a.textContent.trim()+": email Graham"); }
+    if(byMail){ a.removeAttribute("target"); a.setAttribute("aria-label",a.textContent.trim()+": email Graham"); }
+    else{ a.target="_blank"; a.rel="noopener"; a.setAttribute("aria-label",a.textContent.trim()+": Graham's contact links (opens new tab)"); }
+    a.addEventListener("click",()=>track("edc_ins_contact",{where:a.id==="insGo"?"made_by_sheet":"footer",by:byMail?"email":"link"}));
   });
   document.querySelectorAll(".partner-note").forEach(p=>p.hidden=false);
-  // "Are you Insomniac?" pill under the love heart (Graham, Oct 27): opens a short pitch with a Contact me button
-  const insBtn=document.getElementById("insBtn"), insDlg=document.getElementById("insDlg");
-  const insSheet=sheet(insDlg,{onDismiss:()=>closeIns()});
-  const closeIns=()=>{ insSheet.close(); insBtn.focus(); };
-  insBtn.hidden=false; document.body.classList.add("has-ins");
-  insBtn.onclick=()=>{ insSheet.open(); insDlg.querySelector(".intro-card").focus(); track("edc_ins_open"); };
-  if(partnerLink.startsWith("mailto:")) document.getElementById("insGo").addEventListener("click",()=>track("edc_ins_contact"));
-  document.getElementById("insX").onclick=closeIns;
-  insDlg.addEventListener("keydown",e=>{if(e.key==="Escape") closeIns();});
+  document.getElementById("optIns").hidden=false;
+  mbgDlg.querySelector(".mbg-more").addEventListener("toggle",e=>{ if(e.target.open) track("edc_ins_note_open"); });
 }
-// tip jar (footer and opening screen): one button per link in config.js, hidden when there are none
-const HEART_ICO=ico_('<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/>');
-const tipLinks=((window.EDC_CONFIG||{}).donateLinks||[]).filter(t=>t&&t.url&&t.label);
-if(tipLinks.length){
-  const esc=s=>String(s).replace(/[&<>"]/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[ch]);
-  document.querySelectorAll(".tipbox").forEach(b=>b.hidden=false);
-  document.querySelectorAll(".donate-row").forEach(row=>{row.innerHTML=tipLinks.map(t=>`<a class="btn donate donate-link" data-where="${row.dataset.where}" data-service="${esc(t.label)}" href="${esc(t.url)}" target="_blank" rel="noopener" aria-label="Leave a tip with ${esc(t.label)} (opens new tab)">${HEART_ICO} ${esc(t.label)}</a>`).join("");row.hidden=false;});
-  // floating "Show your love" heart, bottom right (Graham, Oct 27): opens a sheet with the same tip buttons
-  const loveBtn=document.getElementById("loveBtn"), loveDlg=document.getElementById("loveDlg");
-  const loveSheet=sheet(loveDlg,{onDismiss:()=>closeLove()});
-  const closeLove=()=>{ loveSheet.close(); loveBtn.focus(); };
-  loveBtn.hidden=false; document.body.classList.add("has-love");
-  // the card's fun: the big heart pops in on a spring and throws a burst of little hearts; tapping it throws more,
-  // and tapping a tip button turns the card into a thank-you
-  const loveArt=document.getElementById("loveArt"), loveBurstBox=loveDlg.querySelector(".love-burst");
-  const LOVE_COLS=["#ff4fb4","#a874ff","#3fe0ff","#7dff9b","#ffb627","#ff7a59"];
-  const LOVE_HEART='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg>';
-  function loveBurst(n){
-    if(reducedMotion()) return;
-    const a=loveArt.getBoundingClientRect();
-    for(let i=0;i<n;i++){
-      const h=document.createElement("span"), ang=Math.PI*(1.1+.8*Math.random()), dist=90+Math.random()*150;
-      h.className="love-fly"; h.innerHTML=LOVE_HEART;
-      h.style.cssText=`left:${a.left+a.width/2}px;top:${a.top+a.height/2}px;color:${LOVE_COLS[i%LOVE_COLS.length]};--x:${Math.cos(ang)*dist}px;--y:${Math.sin(ang)*dist-40}px;--r:${Math.random()*70-35}deg;--s:${.6+Math.random()*.7};animation-delay:${Math.random()*120}ms`;
-      h.addEventListener("animationend",()=>h.remove()); loveBurstBox.append(h);
-    }
+// the card's fun (Oct 27): the big heart pops in on a spring and throws a burst of little hearts; tapping it throws
+// more, and tapping a tip button turns the card into a thank-you
+const loveArt=document.getElementById("loveArt"), loveBurstBox=mbgDlg.querySelector(".love-burst");
+const LOVE_COLS=["#ff4fb4","#a874ff","#3fe0ff","#7dff9b","#ffb627","#ff7a59"];
+const LOVE_HEART='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg>';
+function loveBurst(n){
+  if(reducedMotion()) return;
+  const a=loveArt.getBoundingClientRect();
+  for(let i=0;i<n;i++){
+    const h=document.createElement("span"), ang=Math.PI*(1.1+.8*Math.random()), dist=90+Math.random()*150;
+    h.className="love-fly"; h.innerHTML=LOVE_HEART;
+    h.style.cssText=`left:${a.left+a.width/2}px;top:${a.top+a.height/2}px;color:${LOVE_COLS[i%LOVE_COLS.length]};--x:${Math.cos(ang)*dist}px;--y:${Math.sin(ang)*dist-40}px;--r:${Math.random()*70-35}deg;--s:${.6+Math.random()*.7};animation-delay:${Math.random()*120}ms`;
+    h.addEventListener("animationend",()=>h.remove()); loveBurstBox.append(h);
   }
-  function lovePop(){
-    if(reducedMotion()) return;
-    const p=spring(.55,s=>{loveArt.style.transform="scale("+s+")";},{preset:SPRING.bouncy,precision:.002});
-    p.to(1,{velocity:2,done:()=>{loveArt.style.transform="";}});
-  }
-  const loveH=document.getElementById("loveH"), loveP=document.getElementById("loveNote"), loveSmall=document.getElementById("loveSmall"), loveX=document.getElementById("loveX");
-  const LOVE_TEXT=[loveH.innerHTML,loveP.innerHTML,loveSmall.textContent,loveX.textContent];
-  // tip amounts on the love card (Graham, Oct 27): $5 / $10 / $20 fill in each service's amountUrl; "Any" uses the plain link
-  const loveAmts=loveDlg.querySelector(".tip-amts");
-  function setLoveAmount(v){
-    loveAmts.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.amt===v)));
-    loveDlg.querySelectorAll(".donate-link").forEach(a=>{
-      const t=tipLinks.find(x=>x.label===a.dataset.service), fixed=v!=="any"&&t&&t.amountUrl;
-      if(!t) return;
-      a.href=fixed?t.amountUrl.replace("{amount}",v):t.url; a.dataset.amount=v;
-      a.innerHTML=`${HEART_ICO} ${esc(t.label)}${fixed?` <span class="tip-amt">$${v}</span>`:""}`;
-      a.setAttribute("aria-label",`Leave a ${fixed?"$"+v+" ":""}tip with ${t.label} (opens new tab)`);
-    });
-  }
-  if(tipLinks.some(t=>t.amountUrl)){
-    loveAmts.hidden=false; setLoveAmount("10");
-    loveAmts.addEventListener("click",e=>{ const b=e.target.closest("button[data-amt]"); if(!b) return; setLoveAmount(b.dataset.amt); track("edc_tip_amount",{amount:b.dataset.amt}); });
-  }
-  loveArt.onclick=()=>{ lovePop(); loveBurst(12); track("edc_love_hearts"); };
-  loveDlg.addEventListener("click",e=>{
-    if(!e.target.closest(".donate-link")) return;
-    loveH.innerHTML="You're the <span>best</span>"; loveP.innerHTML="<p>Thank you. You just <b class=\"hl-smile\">made my day</b>, and you're part of why I built this.</p><p>Come find the good <b class=\"hl-vibe\">vibes</b> on the dance floor. See you there.</p><p class=\"love-sig\">With love, Graham</p>";
-    loveSmall.textContent="Your tip opened in a new tab."; loveX.textContent="Back to the app";
-    lovePop(); loveBurst(20);
+}
+function lovePop(){
+  if(reducedMotion()) return;
+  const p=spring(.55,s=>{loveArt.style.transform="scale("+s+")";},{preset:SPRING.bouncy,precision:.002});
+  p.to(1,{velocity:2,done:()=>{loveArt.style.transform="";}});
+}
+const loveH=document.getElementById("loveH"), loveP=document.getElementById("loveNote"), loveSmall=document.getElementById("loveSmall"), loveX=document.getElementById("loveX");
+const LOVE_TEXT=[loveH.innerHTML,loveP.innerHTML,loveSmall.textContent,loveX.textContent];
+// tip amounts (Oct 27): $5 / $10 / $20 fill in each service's amountUrl; "Any" uses the plain link.
+// Every .tip-amts group (this sheet, the tip moment card) drives the tip buttons in its own box.
+function setTipAmount(box,v){
+  box.querySelectorAll(".tip-amts button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.amt===v)));
+  box.querySelectorAll(".donate-link").forEach(a=>{
+    const t=tipLinks.find(x=>x.label===a.dataset.service), fixed=v!=="any"&&t&&t.amountUrl;
+    if(!t) return;
+    a.href=fixed?t.amountUrl.replace("{amount}",v):t.url; a.dataset.amount=v;
+    a.innerHTML=`${HEART_ICO} ${escH(t.label)}${fixed?` <span class="tip-amt">$${v}</span>`:""}`;
+    a.setAttribute("aria-label",`Leave a ${fixed?"$"+v+" ":""}tip with ${t.label} (opens new tab)`);
   });
-  loveBtn.onclick=()=>{
-    [loveH.innerHTML,loveP.innerHTML,loveSmall.textContent,loveX.textContent]=LOVE_TEXT;
-    loveSheet.open(); loveDlg.querySelector(".intro-card").focus(); track("edc_love_open");
-    setTimeout(()=>{ lovePop(); loveBurst(14); },300);
-  };
-  document.getElementById("loveX").onclick=closeLove;
-  loveDlg.addEventListener("keydown",e=>{if(e.key==="Escape") closeLove();});
 }
+function wireTipAmounts(box){
+  const amts=box.querySelector(".tip-amts"); if(!amts||!tipLinks.some(t=>t.amountUrl)) return;
+  amts.hidden=false; setTipAmount(box,"10");
+  amts.addEventListener("click",e=>{ const b=e.target.closest("button[data-amt]"); if(!b) return; setTipAmount(box,b.dataset.amt); track("edc_tip_amount",{amount:b.dataset.amt,where:box.dataset.where||"made_by_sheet"}); });
+}
+wireTipAmounts(document.getElementById("optTip"));
+loveArt.onclick=()=>{ lovePop(); loveBurst(12); track("edc_love_hearts"); };
+mbgDlg.addEventListener("click",e=>{
+  if(!e.target.closest(".donate-link")) return;
+  loveH.innerHTML="You're the <span>best</span>"; loveP.innerHTML="<p>Thank you. You just <b class=\"hl-smile\">made my day</b>, and you're part of why I built this.</p><p>Come find the good <b class=\"hl-vibe\">vibes</b> on the dance floor. See you there.</p><p class=\"love-sig\">With love, Graham</p>";
+  loveSmall.textContent="Your tip opened in a new tab."; loveX.textContent="Back to the app";
+  mbgDlg.firstElementChild.scrollTo({top:0,behavior:reducedMotion()?"auto":"smooth"});
+  lovePop(); loveBurst(20);
+});
+function openMbg(from){
+  [loveH.innerHTML,loveP.innerHTML,loveSmall.textContent,loveX.textContent]=LOVE_TEXT;
+  mbgReturn=document.activeElement; mbgSheet.open(); mbgDlg.querySelector(".intro-card").focus(); track("edc_made_by_open",{from});
+  setTimeout(()=>{ lovePop(); loveBurst(14); },300);
+}
+window.openMbg=openMbg;
+// the door is Graham's avatar in the top menu (Graham picked it over a pill in the header). It took the (i)
+// button's place, so "How the app works" (Quick start) opens from the sheet now.
+document.getElementById("doorBtn").onclick=()=>openMbg("menu");
+document.getElementById("mbgHelp").onclick=()=>{ closeMbg(); setTimeout(()=>openIntro("help_button"),250); };
+loveX.onclick=closeMbg;
+mbgDlg.addEventListener("keydown",e=>{if(e.key==="Escape") closeMbg();});
+document.querySelectorAll(".builtby-slot").forEach(el=>{el.innerHTML=builtBy(el.dataset.where);});
+document.addEventListener("click",e=>{const a=e.target.closest(".builtby-go"); if(a) track("edc_build_contact",{where:a.dataset.where});});
+
+// tip moment (Oct 28, ask after value): the first time someone has 5+ Going picks, or first opens My Plan with
+// picks, a small card says "Your plan's ready" with the tip buttons. Shown once per phone, never again.
+const tipMoment=document.getElementById("tipMoment"), tmCard=tipMoment.firstElementChild;
+const tmSheet=sheet(tipMoment,{onDismiss:()=>closeTipMoment("swipe")});
+const TM_KEY="edc-tip-moment";
+const tmDone=()=>{try{return !!localStorage.getItem(TM_KEY)}catch(e){return true}};
+wireTipAmounts(tmCard);
+function maybeTipMoment(trigger){
+  if(!tipLinks.length||tmDone()) return;
+  if(document.querySelector('.intro:not([hidden])')) return; // never on top of another sheet
+  try{localStorage.setItem(TM_KEY,"shown")}catch(e){}
+  tmSheet.open(); tmCard.focus();
+  track("edc_tip_moment_shown",{trigger,going:Object.entries(picks).filter(([k,v])=>v==="yes"&&!k.startsWith("p-")).length});
+}
+function closeTipMoment(how){ tmSheet.close(); track("edc_tip_moment_closed",{how}); }
+document.getElementById("tmX").onclick=()=>closeTipMoment("not_now");
+tipMoment.addEventListener("keydown",e=>{if(e.key==="Escape") closeTipMoment("escape");});
+tipMoment.addEventListener("click",e=>{ if(!e.target.closest(".donate-link")) return; try{localStorage.setItem(TM_KEY,"tipped")}catch(_){} setTimeout(()=>tmSheet.close(),500); });
 
 // map at the top of the lineup: tap a stage and its acts show right below, in time order.
 // It drives the same stage filter as the Filters panel, so both always agree. Tap the stage again for all.
@@ -438,13 +535,27 @@ function syncTopMap(){
   const h=document.getElementById("topMapH"), clr=document.getElementById("topMapClear");
   if(stageF==="all"){h.textContent="Tap a stage"; clr.hidden=true;}
   else{const n=A.filter(a=>when(a).st.stage===stageF).length; h.textContent=STAGE_NAMES[stageF]+" · "+n+" acts"; clr.hidden=false;}
+  const t=document.getElementById("stagesTxt"); if(t) t.textContent=stageF==="all"?"Stages":STAGE_NAMES[stageF];
 }
+// Oct 28: acts come first, so the map folds into a "Stages" button that opens it (Graham picked this over
+// putting the map under the list). Tapping a stage folds it away again and the list shows that stage.
 {
-  const box=document.getElementById("topMap");
+  const box=document.getElementById("topMap"), sBtn=document.getElementById("stagesBtn");
   box.querySelector(".svgwrap").innerHTML=mapSVG("top");
-  // if the first matching act is below the fold, ease it into view without losing the map
-  const showActs=()=>{const r=grid.getBoundingClientRect(); if(r.top>innerHeight*.8) window.scrollBy({top:r.top-innerHeight*.55,behavior:reducedMotion()?"auto":"smooth"});};
-  const pickTop=id=>{const k=stageF===id?"all":id; setStage(k); track("edc_map_stage_click",{stage:id,where:"lineup",selected:k!=="all",day}); if(k!=="all") showActs();};
+  let mapOpen=false;
+  const mapH=spring(0,h=>{box.style.height=h+"px";},{preset:SPRING.snappy});
+  const setMap=(open,how)=>{
+    if(open===mapOpen) return; mapOpen=open; sBtn.setAttribute("aria-expanded",String(open));
+    const from=box.hidden?0:box.getBoundingClientRect().height;
+    box.hidden=false; box.style.overflow="hidden"; box.style.height=""; const full=box.scrollHeight;
+    if(!mapH.moving) mapH.set(from);
+    if(open) mapH.to(full,{done:()=>{box.style.height="";box.style.overflow="";}});
+    else mapH.to(0,{preset:SPRING.smooth,done:()=>{box.hidden=true;box.style.height="";box.style.overflow="";}});
+    if(how) track("edc_stages_map",{open,how});
+  };
+  box.hidden=true;
+  sBtn.onclick=()=>setMap(!mapOpen,"button");
+  const pickTop=id=>{const k=stageF===id?"all":id; setStage(k); track("edc_map_stage_click",{stage:id,where:"lineup",selected:k!=="all",day}); if(k!=="all") setMap(false);};
   box.querySelectorAll(".stg").forEach(g=>{g.addEventListener("click",()=>pickTop(g.dataset.s));g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pickTop(g.dataset.s);}});});
   document.getElementById("topMapClear").onclick=()=>setStage("all");
   syncTopMap();
@@ -468,7 +579,7 @@ function renderPlan(){
     .sort((x,y)=>x.w.st.start.localeCompare(y.w.st.start));
   const end=x=>x.w.st.end?toMin(x.w.st.end):toMin(x.w.st.start)+60;
   const going=items.filter(x=>x.v==="yes");
-  going.forEach(x=>{x.clash=going.filter(y=>y!==x&&toMin(y.w.st.start)<end(x)&&toMin(x.w.st.start)<end(y)).map(y=>y.a[0]);});
+  const cm=goingClashes(); going.forEach(x=>{x.clash=cm[x.id]||[];});
   const now=orlandoNow(), today=now.ymd===DAY_YMD[day];
   let nextFound=false;
   items.forEach(x=>{if(!today) return; const s=toMin(x.w.st.start);
@@ -503,6 +614,213 @@ document.getElementById("planMaybe").onchange=e=>{renderPlan();track("edc_plan_m
 setInterval(()=>{if(!document.getElementById("v-plan").hidden) renderPlan();},60000);
 planReady=true; renderPlan();
 
+// "Used by N festival-goers" (Oct 28): Graham types the real count from PostHog into config.js (usedByCount).
+// It shows rounded down ("2,400+"), and stays hidden while empty.
+{
+  const n=parseInt(String(CFG0.usedByCount||"").replace(/[^0-9]/g,""),10);
+  if(n>0){
+    const r=n<100?n:n<1000?Math.floor(n/10)*10:Math.floor(n/100)*100;
+    document.querySelectorAll(".usedby").forEach(p=>{p.textContent=`Used by ${r.toLocaleString("en-US")}${r<n?"+":""} festival-goers`;p.hidden=false;});
+  }
+}
+
+// next-year list (Oct 28): a Google Form link from config.js (nextYearForm), or an email to contactEmail
+const NY_FORM=/^https:\/\//.test(CFG0.nextYearForm||"")?CFG0.nextYearForm:"";
+const nyHref=()=>NY_FORM||(hasEmail?mailTo("Next year list","Add me to the list for next year's app."):"");
+const NY_ICO=ico_('<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="m9 15 2 2 4-4"/>');
+const nyButton=where=>nyHref()?`<a class="btn ny-go" data-ny="${where}" href="${escH(nyHref())}"${NY_FORM?' target="_blank" rel="noopener"':""}>${NY_ICO} Get it first${NY_FORM?' <span class="sr">(opens new tab)</span>':""}</a>`:"";
+document.querySelectorAll(".next-year").forEach(el=>{
+  if(!nyHref()) return;
+  el.innerHTML=`<p class="ny-h">Want this for next year's festival? Get it first.</p>`+nyButton(el.dataset.where);
+});
+document.addEventListener("click",e=>{const a=e.target.closest("[data-ny]"); if(a) track("edc_next_year_click",{where:a.dataset.ny,via:NY_FORM?"form":"email"});});
+
+// "What's your next festival?" (Oct 28): tap to vote; each vote is one tracked event Graham can rank in PostHog.
+// One vote per festival per phone (localStorage). No live counts on screen, since that would need a database.
+const FESTS=(CFG0.nextFestivals||[]).filter(f=>f&&f.key&&f.name);
+const VOTES_KEY="edc-next-votes";
+const myVotes=()=>{try{return JSON.parse(localStorage.getItem(VOTES_KEY)||"[]")}catch(e){return []}};
+let voteThanks=null;
+function drawVotes(){
+  const mine=myVotes();
+  document.querySelectorAll(".fest-vote").forEach(el=>{
+    if(!FESTS.length){ el.hidden=true; return; }
+    el.innerHTML=`<h3 class="fv-h">${SPARKLE_ICO} What's your next festival?</h3><p class="fv-p">Vote and I'll build the app for it.</p>`+
+      `<div class="fv-list" role="group" aria-label="Vote for the next festival">`+FESTS.map(f=>{const on=mine.includes(f.key);
+        return `<button type="button" class="fv-b" data-fest="${escH(f.key)}" aria-pressed="${on}">${on?CHECK_ICO+" ":""}${escH(f.name)}</button>`;}).join("")+
+      (hasEmail?`<a class="fv-b fv-other" data-fest-other="${el.dataset.where}" href="${mailTo("Build next: ")}">Other</a>`:"")+`</div>`+
+      (voteThanks===el.dataset.where?`<p class="fv-thanks" role="status">Thanks! Want to know when it's ready?</p>`+nyButton(el.dataset.where+"_after_vote"):"");
+    // the thank-you carries its own "Get it first", so the next-year box right under it steps aside
+    const ny=el.nextElementSibling; if(ny&&ny.classList.contains("next-year")) ny.hidden=voteThanks===el.dataset.where;
+  });
+}
+drawVotes();
+document.addEventListener("click",e=>{
+  const o=e.target.closest("[data-fest-other]"); if(o){ track("edc_vote_next_festival",{festival:"other",where:o.dataset.festOther}); return; }
+  const b=e.target.closest("[data-fest]"); if(!b) return;
+  const key=b.dataset.fest, mine=myVotes(), where=b.closest(".fest-vote").dataset.where;
+  if(mine.includes(key)) return; // one vote per festival per phone
+  mine.push(key); try{localStorage.setItem(VOTES_KEY,JSON.stringify(mine))}catch(_){}
+  track("edc_vote_next_festival",{festival:key,where});
+  voteThanks=where; drawVotes();
+});
+
+// "Not sure who to see? 3 quick taps" (Oct 28): vibe, energy and arrival time, then 5 to 8 acts for the day,
+// avoiding clashes where it can. Nothing is picked until they tap Going.
+const QUIZ_ICO=ico_('<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 4.9.8c0 1.7-2.4 1.9-2.4 3.5"/><circle cx="12" cy="17" r=".6" fill="currentColor" stroke="none"/>');
+function quizCta(){
+  if(tod==="party"||q||stageF!=="all"||genre!=="all"||gemsOnly||pickF!=="all") return "";
+  return `<div class="quizcta"><button type="button" class="quiz-open" id="quizOpen">${SPARKLE_ICO}<span><b>Not sure who to see?</b> 3 quick taps</span></button></div>`;
+}
+const quizDlg=document.getElementById("quizDlg"), quizSheet=sheet(quizDlg,{onDismiss:()=>closeQuiz("swipe")});
+const qStep=document.getElementById("quizStep"), qH=document.getElementById("quizH"), qBody=document.getElementById("quizBody"), qBack=document.getElementById("quizBack"), qNext=document.getElementById("quizNext");
+const ARRIVE=[["13:00","Gates open","1 PM"],["15:00","Mid-afternoon","3 PM"],["17:00","Around sunset","5 PM"],["19:00","After dark","7 PM"]];
+let quiz={step:0,vibes:[],energy:"",arrive:"",picksMade:0,done:false,list:null};
+function quizChips(items,sel,multi){
+  return `<div class="quiz-opts" role="group">`+items.map(([k,l,sub])=>`<button type="button" class="quiz-opt" data-k="${k}" aria-pressed="${multi?sel.includes(k):sel===k}"><b>${l}</b>${sub?`<small>${sub}</small>`:""}</button>`).join("")+`</div>`;
+}
+function suggest(){
+  const going=A.filter(a=>picks[slug(a[0])]==="yes").map(a=>when(a));
+  const HYPE=/energy|bass|heavy|hard|rave|big room|party|banger|drop|riddim|dubstep|festival/i, CHILL=/melod|deep|chill|groove|soul|emotional|sunset|dreamy|warm|uplift|vocal/i;
+  const scored=A.map((a,i)=>{const w=when(a), g=a[1], v=a[3]+" "+a[2]; let sc=0;
+    if(quiz.vibes.length?quiz.vibes.includes(g):true) sc+=3;
+    if(quiz.energy==="hype"){ if(["bass","dnb","techno"].includes(g)) sc+=2; if(HYPE.test(v)) sc+=1.5; if(w.k==="eve") sc+=.5; }
+    if(quiz.energy==="chill"){ if(["melodic","house"].includes(g)) sc+=2; if(CHILL.test(v)) sc+=1.5; if(a[5].includes("sun")) sc+=1; }
+    sc+=2*(1-i/A.length); if(a[5].includes("gem")) sc+=.4;
+    return {a,w,sc};}).filter(x=>x.w.st.start>=quiz.arrive).sort((x,y)=>y.sc-x.sc);
+  const out=[], overlaps=(w,list)=>list.some(o=>tMin(o.st.start)<slotEnd(w)&&tMin(w.st.start)<slotEnd(o));
+  for(const x of scored){ if(out.length>=8) break; if(!overlaps(x.w,[...going,...out.map(o=>o.w)])) out.push(x); }
+  // too few without clashes: fill up to 5 with the best of the rest
+  for(const x of scored){ if(out.length>=5) break; if(!out.includes(x)) out.push({...x,clash:true}); }
+  return out.sort((x,y)=>x.w.st.start.localeCompare(y.w.st.start));
+}
+function drawQuiz(){
+  const st=quiz.step; qBack.hidden=st===0; qNext.hidden=false;
+  if(st<3) qStep.textContent=`${st+1} of 3`;
+  if(st===0){ qH.textContent="What's your vibe?"; qBody.innerHTML=`<p class="quiz-hint">Pick one or more.</p>`+quizChips(order.filter(k=>k!=="tbc").map(k=>[k,G[k].label]),quiz.vibes,true); qNext.textContent="Next"; qNext.disabled=false; }
+  if(st===1){ qH.textContent="How much energy?"; qBody.innerHTML=quizChips([["chill","Chill","melodic, groovy, sunset"],["hype","Hype","bass, big drops, all night"]],quiz.energy,false); qNext.textContent="Next"; qNext.disabled=!quiz.energy; }
+  if(st===2){ qH.textContent="When are you arriving?"; qBody.innerHTML=quizChips(ARRIVE.map(([k,l,sub])=>[k,l,sub]),quiz.arrive,false); qNext.textContent="Show my picks"; qNext.disabled=!quiz.arrive; }
+  if(st===3){
+    // worked out once per run, so a Going tap here doesn't turn the list into "overlaps"
+    const list=quiz.list||(quiz.list=suggest()); qStep.textContent=DAYS[day].name+" · "+list.length+" suggestions";
+    qH.textContent="Try these"; qNext.textContent="Done";
+    if(!quiz.done){ quiz.done=true; track("edc_quiz_finish",{vibes:quiz.vibes.join(",")||"any",energy:quiz.energy,arrive:quiz.arrive,suggested:list.length,day}); }
+    qBody.innerHTML=`<p class="quiz-hint">Nothing is picked until you tap Going.</p><ol class="quiz-list">`+list.map(x=>{const id=slug(x.a[0]), on=picks[id]==="yes";
+      return `<li class="quiz-item" style="--sc:${STAGE_COL[x.w.st.stage]||"#c9b8ff"}"><div><b class="qi-name">${x.a[0]}</b><span class="qi-meta">${(x.w.real?"":"~")+fmt(x.w.st.start)} · ${STAGE_NAMES[x.w.st.stage]||"Stage TBA"}</span><span class="qi-vibe">${x.a[2]}</span>${x.clash?'<span class="qi-clash">Overlaps another pick</span>':""}</div><button type="button" class="qi-go" data-qgo="${id}" aria-pressed="${on}" aria-label="Going to ${escH(x.a[0])}">${CHECK_ICO} Going</button></li>`;}).join("")+`</ol>`;
+  }
+}
+function openQuiz(){ quiz={step:0,vibes:[],energy:"",arrive:"",picksMade:0,done:false,list:null}; drawQuiz(); quizSheet.open(); quizDlg.querySelector(".intro-card").focus(); track("edc_quiz_start",{day}); }
+function closeQuiz(how){ quizSheet.close(); track("edc_quiz_closed",{how,step:quiz.step,picks:quiz.picksMade}); }
+grid.addEventListener("click",e=>{ if(e.target.closest("#quizOpen")) openQuiz(); });
+qBody.addEventListener("click",e=>{
+  const o=e.target.closest(".quiz-opt");
+  if(o){ const k=o.dataset.k;
+    if(quiz.step===0){ quiz.vibes=quiz.vibes.includes(k)?quiz.vibes.filter(x=>x!==k):[...quiz.vibes,k]; }
+    if(quiz.step===1) quiz.energy=k;
+    if(quiz.step===2) quiz.arrive=k;
+    drawQuiz(); return; }
+  const g=e.target.closest("[data-qgo]");
+  if(g){ const v=setPick(g.dataset.qgo,"yes",{source:"quiz"}); if(v==="yes"){quiz.picksMade++; track("edc_quiz_pick",{...actProps(g.dataset.qgo)});} drawQuiz(); }
+});
+qNext.onclick=()=>{ if(quiz.step<3){ quiz.step++; drawQuiz(); quizDlg.firstElementChild.scrollTo({top:0}); } else closeQuiz("done"); };
+qBack.onclick=()=>{ if(quiz.step>0){ quiz.step--; quiz.list=null; quiz.done=false; drawQuiz(); } };
+quizDlg.addEventListener("keydown",e=>{if(e.key==="Escape") closeQuiz("escape");});
+
+// sharing (Oct 28, no database): "Share this app" opens the phone's share sheet with a short message and the
+// link, or copies the link. "Share my plan" draws the day's Going acts as a tall neon picture on the phone
+// (nothing is uploaded) and shares or saves it.
+function toast(msg){
+  const t=document.createElement("p"); t.className="toast"; t.setAttribute("role","status"); t.innerHTML=msg;
+  document.body.appendChild(t); setTimeout(()=>t.remove(),2600);
+}
+const SHARE_TEXT="Planning EDC Orlando 2026? This free, fan-made app has every act, set-time clashes, shuttles and afterparties, and works offline.";
+async function shareApp(where){
+  track("edc_share_tap",{what:"app",where});
+  const data={title:"Your Festival Plan",text:SHARE_TEXT,url:APP_URL};
+  if(navigator.share){
+    try{ await navigator.share(data); track("edc_share_done",{what:"app",where,method:"share_sheet"}); }
+    catch(e){ if(e&&e.name==="AbortError") track("edc_share_cancel",{what:"app",where}); else copyLink(where); }
+    return;
+  }
+  copyLink(where);
+}
+async function copyLink(where){
+  try{ await navigator.clipboard.writeText(APP_URL); toast(CHECK_ICO+" Link copied"); track("edc_share_done",{what:"app",where,method:"copy"}); }
+  catch(e){ toast("Copy this link: "+escH(APP_URL)); track("edc_share_done",{what:"app",where,method:"shown"}); }
+}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-share]"); if(b) shareApp(b.dataset.share);});
+
+const DAY_GRAD={fri:["#ff4fb4","#ff7a59","#ffb627"],sat:["#ff4fb4","#a874ff","#3fe0ff"],sun:["#3fe0ff","#7dff9b","#ffcc66"]};
+function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();}
+function fit(c,text,max){ if(c.measureText(text).width<=max) return text; let t=text; while(t.length>1&&c.measureText(t+"…").width>max) t=t.slice(0,-1); return t+"…"; }
+async function drawPlanImage(){
+  const cm=goingClashes();
+  const acts=A.map(a=>({a,id:slug(a[0]),w:when(a)})).filter(x=>picks[x.id]==="yes").sort((x,y)=>x.w.st.start.localeCompare(y.w.st.start));
+  const parties=[...(PARTIES[day]||[]),...(day==="fri"?PARTIES.thu:[])].filter(p=>picks[p.id]==="yes");
+  if(!acts.length&&!parties.length) return null;
+  try{ await Promise.all(["800 80px Unbounded","700 48px Unbounded","700 40px Figtree","600 32px Figtree"].map(f=>document.fonts.load(f))); }catch(e){}
+  const W=1080, ROW=168, top=430, rowsH=acts.length*ROW+(parties.length?90+parties.length*120:0), H=Math.max(1350,top+rowsH+230);
+  const cv=document.createElement("canvas"); cv.width=W; cv.height=H; const c=cv.getContext("2d");
+  const g3=DAY_GRAD[day];
+  // night sky with soft glows
+  c.fillStyle="#120a2e"; c.fillRect(0,0,W,H);
+  [[160,-60,700,"rgba(168,116,255,.38)"],[1000,120,560,"rgba(255,79,180,.30)"],[540,H+80,820,"rgba(63,224,255,.20)"]].forEach(([x,y,r,col])=>{const gr=c.createRadialGradient(x,y,0,x,y,r);gr.addColorStop(0,col);gr.addColorStop(1,"rgba(18,10,46,0)");c.fillStyle=gr;c.fillRect(0,0,W,H);});
+  const lg=c.createLinearGradient(80,0,W-80,0); lg.addColorStop(0,g3[0]); lg.addColorStop(.55,g3[1]); lg.addColorStop(1,g3[2]);
+  // title
+  c.textBaseline="alphabetic"; c.font="800 84px Unbounded, Arial Black, sans-serif"; c.fillStyle="#f6f1ff"; c.fillText("Your",80,170);
+  const wY=c.measureText("Your ").width; c.fillStyle=lg; c.fillText("Festival",80+wY,170);
+  c.fillStyle="#f6f1ff"; c.fillText("Plan",80,268);
+  c.font="700 40px Figtree, sans-serif"; c.fillStyle=g3[2];
+  c.fillText((DAYS[day].name+" · "+DAYS[day].date.split(", ")[0].replace(/^\w+ /,"")).toUpperCase()+" · EDC ORLANDO 2026",80,345);
+  c.fillStyle=lg; rr(c,80,372,W-160,6,3); c.fill();
+  // rows
+  let y=top; const est=acts.some(x=>!x.w.real);
+  acts.forEach(x=>{
+    const st=x.w.st, sc=STAGE_COL[st.stage]||"#c9b8ff", cl=cm[x.id]||[];
+    c.fillStyle="rgba(36,22,90,.78)"; rr(c,80,y,W-160,ROW-22,30); c.fill();
+    c.strokeStyle=cl.length?"#ff7088":"rgba(138,120,230,.55)"; c.lineWidth=3; rr(c,80,y,W-160,ROW-22,30); c.stroke();
+    c.fillStyle=sc; rr(c,80,y,14,ROW-22,7); c.fill();
+    c.font="700 36px Figtree, sans-serif"; c.fillStyle="#ffb627"; c.fillText((x.w.real?"":"~")+fmt(st.start),120,y+56);
+    c.font="700 46px Unbounded, Arial Black, sans-serif"; c.fillStyle="#f6f1ff"; c.fillText(fit(c,x.a[0],W-160-330),120,y+116);
+    c.textAlign="right"; c.font="700 32px Figtree, sans-serif";
+    if(cl.length){ c.fillStyle="#ff7088"; c.fillText("Clashes with "+fit(c,cl[0],260),W-112,y+56); }
+    c.fillStyle="#f6f1ff"; const sn=STAGE_NAMES[st.stage]||"Stage TBA"; c.fillText(sn,W-112,y+114);
+    const sw=c.measureText(sn).width; c.textAlign="left"; c.fillStyle=sc; c.beginPath(); c.arc(W-112-sw-22,y+103,11,0,Math.PI*2); c.fill();
+    y+=ROW;
+  });
+  if(parties.length){
+    c.font="700 34px Figtree, sans-serif"; c.fillStyle="#c9b8ff"; c.fillText("AFTER THE FESTIVAL",80,y+50); y+=90;
+    parties.forEach(p=>{
+      c.fillStyle="rgba(36,22,90,.78)"; rr(c,80,y,W-160,98,26); c.fill(); c.fillStyle=p.col; rr(c,80,y,14,98,7); c.fill();
+      c.font="700 40px Unbounded, Arial Black, sans-serif"; c.fillStyle="#f6f1ff"; c.fillText(fit(c,p.venue.split(" · ")[0],560),120,y+64);
+      c.textAlign="right"; c.font="700 32px Figtree, sans-serif"; c.fillStyle="#ffb627"; c.fillText(p.time,W-112,y+62); c.textAlign="left";
+      y+=120;
+    });
+  }
+  // footer
+  c.font="600 30px Figtree, sans-serif"; c.fillStyle="#c9b8ff";
+  if(est) c.fillText("~ = estimated time until official set times drop",80,H-150);
+  c.font="700 30px Figtree, sans-serif"; c.fillStyle="#f6f1ff"; c.fillText("made with Your Festival Plan · floridagraham.github.io/festival-plan",80,H-90,W-160);
+  c.font="600 26px Figtree, sans-serif"; c.fillStyle="#c9b8ff"; c.fillText("Fan-made. Not affiliated with Insomniac or EDC.",80,H-50);
+  return cv;
+}
+window.drawPlanImage=drawPlanImage;
+document.getElementById("sharePlan").onclick=async()=>{
+  track("edc_share_tap",{what:"plan_image",where:"my_plan",day});
+  const cv=await drawPlanImage();
+  if(!cv){ toast("Tap <b>Going</b> on some acts first, then share your plan."); return; }
+  const blob=await new Promise(r=>cv.toBlob(r,"image/png"));
+  const file=new File([blob],"my-festival-plan-"+DAYS[day].name.toLowerCase()+".png",{type:"image/png"});
+  if(navigator.canShare&&navigator.canShare({files:[file]})){
+    try{ await navigator.share({files:[file],title:"My "+DAYS[day].name+" plan",text:"My "+DAYS[day].name+" plan, made with Your Festival Plan: "+APP_URL}); track("edc_share_done",{what:"plan_image",where:"my_plan",method:"share_sheet",day}); }
+    catch(e){ if(e&&e.name==="AbortError") track("edc_share_cancel",{what:"plan_image",where:"my_plan"}); }
+    return;
+  }
+  const u=URL.createObjectURL(blob), a=document.createElement("a"); a.href=u; a.download=file.name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(u),4000); toast(CHECK_ICO+" Plan picture saved");
+  track("edc_share_done",{what:"plan_image",where:"my_plan",method:"download",day});
+};
+
 // stage logo in the header: the sunrise intro plays once per open, then the lasers keep sweeping
 // (all CSS, see .rp-* in styles.css). Tapping it replays the intro.
 document.getElementById("brandmark").addEventListener("click",e=>{
@@ -512,7 +830,8 @@ document.getElementById("brandmark").addEventListener("click",e=>{
 
 // tabs
 const views=["lineup","plan","travel","map"];
-function show(v){if(!views.includes(v))v="lineup";views.forEach(x=>{document.getElementById("v-"+x).hidden=x!==v;});document.querySelectorAll(".tabs a").forEach(a=>{if(a.dataset.v===v)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});window.scrollTo(0,0);document.body.dataset.view=v;trackContext({view:v});track("edc_section_tab",{section:v});}
+function show(v){if(!views.includes(v))v="lineup";
+  if(v==="plan"&&Object.values(picks).some(x=>x==="yes"||x==="maybe")) setTimeout(()=>maybeTipMoment("my_plan"),900);views.forEach(x=>{document.getElementById("v-"+x).hidden=x!==v;});document.querySelectorAll(".tabs a").forEach(a=>{if(a.dataset.v===v)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});window.scrollTo(0,0);document.body.dataset.view=v;trackContext({view:v});track("edc_section_tab",{section:v});}
 document.querySelectorAll(".planbtn").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();show("plan");try{history.replaceState(null,"","#plan")}catch(_){} track("edc_plan_open",{from:"picks_row"});}));
 document.querySelectorAll(".tabs a").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();show(a.dataset.v);try{history.replaceState(null,"","#"+a.dataset.v)}catch(_){}}));
 window.show=show;
@@ -612,16 +931,22 @@ grid.addEventListener("click",e=>{
   const link=e.target.closest(".yt,.sp"); if(link){session.listens++;track("edc_listen_click",{...actProps(link.dataset.act),artist:link.dataset.who,platform:link.classList.contains("yt")?"youtube":"spotify"});}
   const pl=e.target.closest("[data-pk]"); if(pl){const pa=pl.dataset.artist;track("edc_party_click",{...partyProps(pl.dataset.pid),action:pl.dataset.pk,...(pa?{artist:pa,plays_festival:pl.classList.contains("main")}:{})});}
   const b=e.target.closest(".vote button"); if(!b) return;
-  const id=b.dataset.id, prev=picks[id]||"", v=prev===b.dataset.v?"":b.dataset.v;
+  setPick(b.dataset.id,b.dataset.v);
+  const nb=grid.querySelector('.vote button[data-id="'+CSS.escape(b.dataset.id)+'"][data-v="'+b.dataset.v+'"]');
+  if(nb){const pop=spring(.86,s=>{nb.style.transform="scale("+s+")";},{preset:SPRING.bouncy,precision:.002});pop.to(1,{velocity:1.5,done:()=>{nb.style.transform="";}});}
+});
+// one place a pick is made (cards and the "Who should I see?" quiz): tapping the same pick again clears it
+function setPick(id,want,extra={}){
+  const prev=picks[id]||"", v=prev===want?"":want;
   if(v) picks[id]=v; else delete picks[id];
   render(); saveLocal();
-  const nb=grid.querySelector('.vote button[data-id="'+CSS.escape(id)+'"][data-v="'+b.dataset.v+'"]');
-  if(nb){const pop=spring(.86,s=>{nb.style.transform="scale("+s+")";},{preset:SPRING.bouncy,precision:.002});pop.to(1,{velocity:1.5,done:()=>{nb.style.transform="";}});}
   session.votes++;
   const filtered=tod!=="all"||stageF!=="all"||genre!=="all"||gemsOnly||pickF!=="all"||!!q;
-  track("edc_vote",{...itemProps(id),kind:id.startsWith("p-")?"party":"act",vote:v||"cleared",from:prev||"none",time_filter:tod,filtered});
+  track("edc_vote",{...itemProps(id),kind:id.startsWith("p-")?"party":"act",vote:v||"cleared",from:prev||"none",time_filter:tod,filtered,...extra});
   if(sb&&code){pending[id]=v;savePending();syncStatus();flush();}
-});
+  if(v==="yes"&&Object.entries(picks).filter(([k,x])=>x==="yes"&&!k.startsWith("p-")).length>=5) setTimeout(()=>maybeTipMoment("five_going"),700);
+  return v;
+}
 window.addEventListener("online",()=>connect().catch(()=>{}));
 addEventListener("scroll",()=>{const h=document.documentElement.scrollHeight-innerHeight;if(h>0) session.maxScroll=Math.max(session.maxScroll,Math.round(scrollY/h*100));},{passive:true});
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState!=="hidden") return;
