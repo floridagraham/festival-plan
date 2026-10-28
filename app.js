@@ -341,7 +341,7 @@ function setDay(d){
   day=d; A=DAYS[d].list; document.body.dataset.day=d;
   document.querySelectorAll(".seg.days button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.d===d)); dayPill(); planPill();
   document.getElementById("nacts").textContent=A.length;
-  document.getElementById("mixh").textContent=DAYS[d].name+"'s sound";
+  document.getElementById("mixh").innerHTML=`<span>${DAYS[d].name}'s</span> <span>sound</span>`;
   syncTopMap();
   try{localStorage.setItem("edc-day",d)}catch(e){}
   drawMix(); render();

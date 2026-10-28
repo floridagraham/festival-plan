@@ -834,3 +834,8 @@ header.lineup-top .tagline{font-size:12px;line-height:1.35;margin:0}
 .qbox input#q{font-size:14px}
 .vtoggle{padding:6px 8px;gap:5px}
 .vt-s{min-width:28px;padding:1px 6px;font-size:11px}
+/* the day's sound (Graham, Oct 28): the label on two lines, and the color bar grown to fill that height */
+.lineup-top .mixrow .mix h2{line-height:1.15;font-size:11px}
+.lineup-top .mixrow .mix h2 span{display:block}
+.lineup-top .mixrow .bar{height:28px;border-radius:9px}
+.lineup-top .bar div+div{box-shadow:inset 2px 0 0 #160c3a}
