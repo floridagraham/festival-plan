@@ -1285,16 +1285,18 @@ function pkDraw(){
     if(!mine) pkAlt.dataset.n="0"; else pkAlt.dataset.n=String(mine);
   }
 }
+const pkDone=()=>{ try{ sessionStorage.removeItem("edc-pk-pending"); }catch(_){} };
 function pkOpen(mode,arg){
   pkMode=mode; pkData=mode==="open"?arg:null; if(mode==="show") pkIn.value=arg; else if(mode==="paste") pkIn.value="";
   pkDraw(); pkReturn=document.activeElement; pkSheet.open(); pkForm.focus();
   if(mode==="show") setTimeout(()=>{ pkIn.focus(); pkIn.select(); },350);
 }
-function pkClose(why){ pkSheet.close(); if(pkReturn&&pkReturn.focus) pkReturn.focus(); if(pkMode==="open"&&why) track("edc_picks_link_use",{action:"cancel",source:pkSource}); }
+function pkClose(why){ pkDone(); pkSheet.close(); if(pkReturn&&pkReturn.focus) pkReturn.focus(); if(pkMode==="open"&&why) track("edc_picks_link_use",{action:"cancel",source:pkSource}); }
 function pkCompare(){
   const name=(pkName.value.trim()||"Friend").slice(0,20), l=friendsGet().filter(f=>f.name.toLowerCase()!==name.toLowerCase());
   const f={id:Date.now().toString(36),name,picks:pkData.picks,at:Date.now()};
   l.push(f); while(l.length>6) l.shift(); friendsSet(l);
+  pkDone();
   track("edc_picks_link_use",{action:"compare",source:pkSource,picks:Object.keys(pkData.picks).length,friends:l.length});
   pkMode=""; pkSheet.close();
   setCompare(f.id); show("plan"); try{history.replaceState(null,"","#plan")}catch(_){}
@@ -1305,6 +1307,7 @@ function pkMine(btn){
   if(n&&!pkArmed){ btn.textContent="Tap again to replace your "+n+" pick"+(n>1?"s":""); pkArmed=setTimeout(()=>{ pkArmed=null; pkDraw(); },4000); return; }
   clearTimeout(pkArmed); pkArmed=null;
   usePicks(pkData.picks);
+  pkDone();
   track("edc_picks_link_use",{action:"mine",source:pkSource,picks:Object.keys(pkData.picks).length,replaced:n});
   pkMode=""; pkSheet.close();
   show("plan"); try{history.replaceState(null,"","#plan")}catch(_){}
@@ -1371,10 +1374,15 @@ document.getElementById("planChips").addEventListener("click",e=>{
 document.getElementById("planDays").addEventListener("click",()=>setTimeout(drawCmpBar,0));
 drawCmpBar(); renderPlan();
 // opening a picks link: clear it from the address bar first (so it never rides along on anything), then ask
+// The link is kept in sessionStorage until the sheet is answered, so the one-time reload after an update
+// (index.html) can't lose it.
 function pkFromHash(){
-  if(!/^#picks=/i.test(location.hash)) return;
-  const d=pkDecode(location.hash);
+  let src=/^#picks=/i.test(location.hash)?location.hash:"";
+  if(src){ try{ sessionStorage.setItem("edc-pk-pending",src); }catch(_){} }
+  else{ if(!pkDlg.hidden) return; try{ src=sessionStorage.getItem("edc-pk-pending")||""; }catch(_){} if(!src) return; }
+  const d=pkDecode(src);
   try{ history.replaceState(null,"",location.pathname+location.search); }catch(_){}
+  if(!d){ try{ sessionStorage.removeItem("edc-pk-pending"); }catch(_){} }
   if(!d){ toast("That picks link didn't work. Ask for a fresh one."); return; }
   pkSource="link"; track("edc_picks_link_open",{source:"link",picks:Object.keys(d.picks).length,unknown:d.unknown,first_visit:!introSeen});
   // on a first visit Quick start is up: show the picks after it closes
