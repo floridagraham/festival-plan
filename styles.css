@@ -963,3 +963,33 @@ header.lineup-top .tagline{font-size:12px;line-height:1.35;margin:0}
 /* chips look 36px tall; the invisible margin makes each one a 44px tap target */
 .pc-chip{position:relative}
 .pc-chip::after{content:"";position:absolute;inset:-4px -2px}
+/* picks links and comparing with a friend (Oct 28) */
+.plan-link{display:grid;gap:6px;margin-top:8px;max-width:640px}
+.plan-link-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.plan-link-btns .btn{margin:0;gap:6px;justify-content:center}
+.plan-link .love-small{margin:0;text-align:center}
+.pk-row{display:grid;grid-template-columns:1fr auto;gap:8px}
+.pk-row .btn{margin:0}
+#pkForm .link-lbl{margin-top:10px}
+.intro-bring{margin-top:8px}
+.a2hs-copy{display:grid;gap:8px;margin:10px 0 4px;padding:12px;border-radius:14px;background:var(--glass);border:1.5px solid var(--line-soft)}
+.a2hs-copy[hidden]{display:none}
+.a2hs-copy p{margin:0;font-size:14px;line-height:1.45;color:var(--ink)}
+.a2hs-copy .btn{margin:0;gap:6px}
+.cmp-bar{display:grid;gap:6px;margin:4px 0 8px;max-width:640px}
+.cmp-bar[hidden]{display:none}
+.cmp-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.cmp-l{font:800 11.5px var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--soft);margin-right:2px}
+.cmp-rm{min-height:44px;padding:0 6px;background:none;border:0;color:var(--cyan);font:800 13px var(--body);cursor:pointer}
+.cmp-sum{margin:0;font-size:14px;line-height:1.45;color:var(--ink)}
+.cmp-sum .pc-f{position:static;display:inline-grid;vertical-align:-3px}
+.pc-f{flex:none;display:grid;place-items:center;width:20px;height:20px;margin:-2px -4px -2px 2px;border-radius:50%;font:800 11px/1 var(--body);font-style:normal;color:var(--night);background:var(--ink);box-shadow:0 0 0 2px var(--night)}
+.pc-f.is-maybe{color:var(--ink);background:var(--night);box-shadow:0 0 0 1.5px var(--ink)}
+.pc-only{display:flex;flex-wrap:wrap;gap:5px}
+.pc-chip.is-friend{color:var(--ink);background:var(--night2);border-color:var(--sc)}
+.pc-chip.is-friend b{color:var(--sc)}
+.pc-chip.is-friend.is-fmaybe{border-style:dashed}
+.rb-bar.is-friend{background:transparent;border:2px solid var(--sc)}
+.cmp-sum .pc-f{margin:0 2px}
+.rb-lbl .pc-f{margin:0}
+#pkForm .btns .btn{flex:1 1 100%}

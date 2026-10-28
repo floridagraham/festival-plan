@@ -86,6 +86,7 @@ if("serviceWorker" in navigator){
     <div class="intro-row"><span class="intro-ico" aria-hidden="true"><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><p>Tap <b class="pk-yes">Going</b>, <b class="pk-maybe">Maybe</b> or <b class="pk-no">Skip</b> on any act.</p></div>
     <div class="intro-row"><span class="intro-ico" aria-hidden="true"><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg></span><p>Your picks and <b class="pk-plan">My Plan</b> save on this phone, even with no signal.</p></div>
     <div class="intro-row" id="introA2hs" hidden><span class="intro-ico" aria-hidden="true"><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2" width="11" height="20" rx="2.5"/><path d="M9.5 18h2"/><path d="M19 7v6M16 10h6"/></svg></span><p><b>Add it to your home screen:</b> it opens full screen like a real app and works offline, even with no signal at the festival. <span id="introA2hsSteps"></span> <span class="a2hs-warn">Do it before you pick. Picks in the browser don't carry over to the home-screen app.</span></p></div>
+    <div class="intro-row" id="introBring" hidden><span class="intro-ico" aria-hidden="true"><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg></span><div><p><b>Picked acts in the browser first?</b> Bring them over.</p><button class="btn alt intro-bring" id="introBringBtn" type="button">Bring my picks here</button></div></div>
     <button class="btn intro-go" id="introGo">Let's go</button>
     <div class="tipbox tip-small" hidden><p class="tip-h"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg> Love it? Leave a tip.</p><div class="donate-row" data-where="opening_screen"></div></div>
   </div>
@@ -100,6 +101,16 @@ if("serviceWorker" in navigator){
     <div class="btns"><button class="btn intro-go" id="linkGo" type="submit">Link this phone</button><button class="btn alt" id="linkOff" type="button" hidden>Unlink this phone</button><button class="btn alt" id="linkX" type="button">Cancel</button></div>
   </form>
 </div>
+<div class="intro" id="pkDlg" role="dialog" aria-modal="true" aria-labelledby="pkH" hidden>
+  <form class="intro-card ph-no-capture" id="pkForm" tabindex="-1" novalidate>
+    <h2 id="pkH">Picks from a link</h2>
+    <p class="link-p" id="pkP"></p>
+    <div class="pk-paste" id="pkPaste" hidden><label class="link-lbl" for="pkIn">Picks link</label><div class="pk-row"><input id="pkIn" class="link-in" type="url" inputmode="url" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Paste the link here"><button class="btn alt" id="pkPasteBtn" type="button">Paste</button></div></div>
+    <div id="pkWho" hidden><label class="link-lbl" for="pkName">Whose picks are these? <span class="note-opt">(optional)</span></label><input id="pkName" class="link-in" type="text" maxlength="20" autocomplete="off" placeholder="Friend"></div>
+    <p class="link-err" id="pkErr" role="alert"></p>
+    <div class="btns"><button class="btn intro-go" id="pkGo" type="submit">Open</button><button class="btn alt" id="pkAlt" type="button" hidden></button><button class="btn alt" id="pkX" type="button">Cancel</button></div>
+  </form>
+</div>
 <div class="a2hs" id="a2hs" role="region" aria-label="Add to home screen" hidden>
   <span class="a2hs-ico" aria-hidden="true"><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2" width="11" height="20" rx="2.5"/><path d="M9.5 18h2"/><path d="M19 7v6M16 10h6"/></svg></span>
   <p><b>Add it to your home screen</b><span>Works offline. Do it before you pick.</span></p>
@@ -111,6 +122,7 @@ if("serviceWorker" in navigator){
     <h2 id="a2hsH">Add to your home screen</h2>
     <ol class="a2hs-steps" id="a2hsSteps"></ol>
     <p class="a2hs-note">It opens full screen like a real app and works offline, even with no signal at the festival. <b>Do it before you pick.</b> Picks in the browser don't carry over to the home-screen app.</p>
+    <div class="a2hs-copy" id="a2hsCopyBox" hidden><p><b>Already picked?</b> Copy your picks first. Then, in the home-screen app, tap <b>Bring my picks here</b>.</p><button class="btn alt" id="a2hsCopy" type="button"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg> Copy my picks</button></div>
     <button class="btn intro-go" id="a2hsGo" type="button">Got it</button>
   </div>
 </div>
@@ -327,11 +339,13 @@ if("serviceWorker" in navigator){
 <h1 class="vh"><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg> My Plan</h1>
 <div class="seg days" id="planDays" role="group" aria-label="Day"><button data-d="fri" aria-pressed="false">Friday<small>Nov 6</small></button><button data-d="sat" aria-pressed="true">Saturday<small>Nov 7</small></button><button data-d="sun" aria-pressed="false">Sunday<small>Nov 8</small></button></div>
 <div class="plan-bar"><p class="plan-sum" id="planSum" role="status" aria-live="polite"></p><label class="plan-maybe"><input type="checkbox" id="planMaybe" checked> Show Maybes</label><button class="vtoggle" id="planDet" type="button" role="switch" aria-checked="false"><span class="vt-l">Details</span><span class="vt-s" id="planDetS">Off</span></button></div>
+<div class="cmp-bar" id="cmpBar" hidden></div>
 <div class="plan-chips" id="planChips"></div>
 <ol class="plan-list" id="planList"></ol>
 <p class="rb-title" id="planTLh" hidden>Your day at a glance</p>
 <div class="plan-tl" id="planTL" aria-hidden="true" hidden></div>
 <div class="plan-share"><button class="btn share-plan" id="sharePlan" type="button"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg> Share my plan</button><button class="btn alt share-app" type="button" data-share="my_plan"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg> Share this app with your friends</button></div>
+<div class="plan-link"><div class="plan-link-btns"><button class="btn alt" id="sendPicks" type="button"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg> Send my picks</button><button class="btn alt" id="openPicks" type="button"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg> Open a picks link</button></div><p class="love-small">Send your picks as a link. Friends can compare them with their plan, and it moves your picks into the home-screen app. Nothing is uploaded.</p></div>
 <div class="a2hs-box" id="planA2hs" hidden><span class="a2hs-ico" aria-hidden="true"><svg class="ic-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2" width="11" height="20" rx="2.5"/><path d="M9.5 18h2"/><path d="M19 7v6M16 10h6"/></svg></span><p><b>Add it to your home screen:</b> it opens full screen like a real app and works offline, even with no signal at the festival. <span class="a2hs-warn">Do it before you pick. Picks in the browser don't carry over to the home-screen app.</span></p><button class="btn a2hs-how" type="button" data-a2hs="plan_footer">How</button></div>
 <div class="builtby-slot" data-where="my_plan"></div>
 </section></div>

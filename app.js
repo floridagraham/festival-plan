@@ -692,7 +692,7 @@ function renderPlan(){
     ?DAYS[day].name+": "+nGo+" Going"+(showMaybe?", "+nMaybe+" Maybe":"")+(clashes?" · "+Math.ceil(clashes)+" clash"+(clashes>1?"es":""):"")+(est&&items.length?" · times are estimates":"")
     :"";
   if(!items.length&&!parties.length){
-    renderPlanChips(items,parties,end); renderPlanTimeline(items,end); document.getElementById("planList").hidden=false; document.getElementById("planChips").hidden=true;
+    renderPlanChips(items,parties,end); renderPlanTimeline(items,end); document.getElementById("planList").hidden=false; document.getElementById("planChips").hidden=!activeFriend();
     listEl.innerHTML='<li class="plan-empty"><b>Nothing planned for '+DAYS[day].name+' yet.</b> Tap <b>Going</b> or <b>Maybe</b> on acts in the Lineup and they line up here in time order.</li>';
     return;
   }
@@ -719,10 +719,14 @@ function renderPlan(){
 // short forms to save room (Graham asked): "20:51" -> "8:51p", "22:00" -> "10p"; a B2B shows its first act + "+1"
 const pmTime=t=>{const [h,m]=t.split(":").map(Number);return (h%12||12)+(m?":"+String(m).padStart(2,"0"):"")+(h<12?"a":"p");};
 const pmName=n=>n.replace(/\s+(b2b|B2B|x|&)\s+.*$/,m=>" +"+(m.split(/\s+(?:b2b|B2B|x|&)\s+/).length-1));
-const pcChip=(x,s,e)=>`<button type="button" class="pc-chip is-${x.v}${x.now?" is-now":""}${x.next?" is-next":""}" data-go="${x.id}" style="--sc:${STAGE_COL[x.w.st.stage]||"#c9b8ff"}" aria-label="${escH(x.a[0])}, ${fmt(x.w.st.start)}, ${STAGE_NAMES[x.w.st.stage]||"stage to be announced"}, ${x.v==="yes"?"Going":"Maybe"}${x.now?", playing now":""}"><b>${pmTime(x.w.st.start)}</b><span>${escH(pmName(x.a[0]))}</span></button>`;
+const pcChip=x=>{
+  // comparing with a friend (Oct 28): their initial rides on the chip when they picked the same act
+  const F=activeFriend(), fv=F&&F.picks[x.id], fin=fv==="yes"||fv==="maybe"?`<i class="pc-f is-${fv}" aria-hidden="true">${escH(F.name.charAt(0).toUpperCase())}</i>`:"";
+  return `<button type="button" class="pc-chip is-${x.v}${x.now?" is-now":""}${x.next?" is-next":""}" data-go="${x.id}" style="--sc:${STAGE_COL[x.w.st.stage]||"#c9b8ff"}" aria-label="${escH(x.a[0])}, ${fmt(x.w.st.start)}, ${STAGE_NAMES[x.w.st.stage]||"stage to be announced"}, ${x.v==="yes"?"Going":"Maybe"}${x.now?", playing now":""}${fin?", "+escH(F.name)+(fv==="yes"?" is going too":" might go too"):""}"><b>${pmTime(x.w.st.start)}</b><span>${escH(pmName(x.a[0]))}</span>${fin}</button>`;
+};
 function renderPlanChips(items,parties,end){
   const box=document.getElementById("planChips"); if(!box) return;
-  if(!items.length&&!parties.length){ box.innerHTML=""; return; }
+  if(!items.length&&!parties.length&&!activeFriend()){ box.innerHTML=""; return; }
   const s=x=>toMin(x.w.st.start), over=(a,b)=>s(a)<end(b)&&s(b)<end(a);
   // rows of Going acts that overlap each other (a clash shares a row)
   const rows=[];
@@ -736,7 +740,11 @@ function renderPlanChips(items,parties,end){
   const html=rows.map(r=>`<div class="pc-row${r.go.length>1?" is-clash":""}"><div class="pc-go">${r.go.length?r.go.map(x=>pcChip(x)).join(""):'<span class="pc-free">Free</span>'}${r.go.length>1?'<span class="pc-clash">Clash</span>':""}</div><div class="pc-alt">${r.alt.map(x=>pcChip(x)).join("")}</div></div>`).join("");
   const pchip=p=>`<span class="pc-chip party is-${picks[p.id]}" style="--sc:${p.col}"><span>${escH(p.venue.split(" · ")[0])}</span></span>`;
   const goP=parties.filter(p=>picks[p.id]==="yes"), mayP=parties.filter(p=>picks[p.id]!=="yes");
-  box.innerHTML=(items.length?`<div class="pc-head"><span>Going</span><span>Maybe instead</span></div>`+html:"")+
+  // the friend's Going and Maybe acts that are not in your plan (tap one to see it in the Lineup)
+  const F=activeFriend();
+  const only=F?A.map(a=>({a,id:slug(a[0]),w:when(a)})).filter(x=>(F.picks[x.id]==="yes"||F.picks[x.id]==="maybe")&&picks[x.id]!=="yes"&&picks[x.id]!=="maybe").sort((x,y)=>x.w.st.start.localeCompare(y.w.st.start)):[];
+  const onlyHtml=only.length?`<div class="pc-after">Only in ${escH(F.name)}'s plan</div><div class="pc-only">${only.map(x=>`<button type="button" class="pc-chip is-friend${F.picks[x.id]==="maybe"?" is-fmaybe":""}" data-lineup="${x.id}" style="--sc:${STAGE_COL[x.w.st.stage]||"#c9b8ff"}" aria-label="${escH(x.a[0])}, ${fmt(x.w.st.start)}, ${STAGE_NAMES[x.w.st.stage]||"stage to be announced"}, ${escH(F.name)} ${F.picks[x.id]==="yes"?"is going":"might go"}. Open in the Lineup"><b>${pmTime(x.w.st.start)}</b><span>${escH(pmName(x.a[0]))}</span></button>`).join("")}</div>`:"";
+  box.innerHTML=(items.length?`<div class="pc-head"><span>Going</span><span>Maybe instead</span></div>`+html:"")+onlyHtml+
     (parties.length?`<div class="pc-after">After the festival</div><div class="pc-row"><div class="pc-go">${goP.map(pchip).join("")||'<span class="pc-free">None yet</span>'}</div><div class="pc-alt">${mayP.map(pchip).join("")}</div></div>`:"");
 }
 // My Plan day ribbon (Oct 28, Graham: "time along the horizontal and these dots fill up the amount of time that
@@ -762,13 +770,14 @@ function renderPlanTimeline(items,end){
   const bar=x=>`<i class="rb-bar is-${x.v}${x.clash&&x.clash.length?" is-clash":""}${x.now?" is-now":""}" style="left:${P(s(x))};width:calc(${P(e(x))} - ${P(s(x))} - 2px);--sc:${STAGE_COL[x.w.st.stage]}"></i>`;
   const group=(label,xs)=>pack(xs).map((r,n)=>`<div class="rb-row"><span class="rb-lbl">${n?"":label}</span><div class="rb-track">${r.map(bar).join("")}</div></div>`).join("");
   const going=list.filter(x=>x.v==="yes"), maybe=list.filter(x=>x.v!=="yes");
+  const F=activeFriend(), fGo=F?A.map(a=>({a,id:slug(a[0]),v:"friend",w:when(a)})).filter(x=>F.picks[x.id]==="yes"&&x.w.st.stage):[];
   const marks=[]; for(let m=t0;m<=t1;m+=120) marks.push(`<span class="rb-hr${m===17*60?" is-five":""}" style="left:${P(m)}">${pmTime(String(Math.floor(m/60)%24).padStart(2,"0")+":00")}</span>`);
   if(!marks.some(x=>x.includes("is-five"))) marks.push(`<span class="rb-hr is-five" style="left:${P(17*60)}">5p</span>`);
   const now=orlandoNow(), nowM=now.min<360?now.min+1440:now.min, today=now.ymd===DAY_YMD[day]&&nowM>=t0&&nowM<=t1;
-  const used=new Set(list.map(x=>x.w.st.stage));
+  const used=new Set([...list,...fGo].map(x=>x.w.st.stage));
   box.innerHTML=`<div class="rb-row rb-head"><span class="rb-lbl"></span><div class="rb-track">${marks.join("")}</div></div>`+
     `<div class="rb-rows"><div class="rb-guides"><i style="left:${P(17*60)}"></i>${today?`<b style="left:${P(nowM)}">Now</b>`:""}</div>`+
-    (going.length?group("Going",going):"")+(maybe.length?group("Maybe",maybe):"")+`</div>`+
+    (going.length?group("Going",going):"")+(maybe.length?group("Maybe",maybe):"")+(fGo.length?group(`<span class="pc-f is-yes" title="${escH(F.name)}">${escH(F.name.charAt(0).toUpperCase())}</span><span class="sr">${escH(F.name)}</span>`,fGo):"")+`</div>`+
     `<div class="rb-key">${TL_ORDER.filter(k=>used.has(k)).map(k=>`<span style="--sc:${STAGE_COL[k]}"><i></i>${STAGE_NAMES[k]}</span>`).join("")}</div>`;
 }
 let planDetails=false; try{planDetails=localStorage.getItem("edc-plan-details")==="1";}catch(e){}
@@ -1193,3 +1202,183 @@ linkOff.onclick=()=>{
   lsSet("edc-group-code",null); savePending(); syncStatus(); closeLink();
   track("edc_unlink_phones");
 };
+
+// picks links (Oct 28, Graham: "build" the plan link; no database, nothing uploaded): "Send my picks" puts every
+// Going / Maybe / Skip pick, all three days and the afterparties, into a link after "#picks=" (the part of a
+// link that never leaves the phone): "1~going.slugs~maybe.slugs~skip.slugs". Opening one asks what to do:
+// compare it with your plan (saved on this phone as a friend's plan, edc-friends) or make it your picks (the
+// way to move picks from Safari into the home-screen app, which has its own storage on iPhone). The home-screen
+// app can't open links itself, so "Bring my picks here" (Quick start, in the app only) and "Open a picks link"
+// (My Plan) take a pasted link. Unknown slugs (a lineup change) are skipped and counted. Tracking sends counts only.
+const PK_RE=/(?:#|^|\s)picks=([a-z0-9~.\-%]+)/i;
+function pkAllIds(){ const ids=new Set(); Object.values(DAYS).forEach(d=>d.list.forEach(a=>ids.add(slug(a[0])))); Object.values(PARTIES).forEach(l=>(l||[]).forEach(p=>ids.add(p.id))); return ids; }
+function pkEncode(p){ const g={yes:[],maybe:[],no:[]}; Object.entries(p).forEach(([k,v])=>{ if(g[v]) g[v].push(k); }); return "1~"+g.yes.join(".")+"~"+g.maybe.join(".")+"~"+g.no.join("."); }
+function pkDecode(str){
+  const m=PK_RE.exec(String(str||"").trim()); if(!m) return null;
+  let raw=m[1]; try{ raw=decodeURIComponent(raw); }catch(e){}
+  const parts=raw.split("~"); if(parts[0]!=="1"||parts.length<2) return null;
+  const ok=pkAllIds(), out={}; let unknown=0;
+  ["yes","maybe","no"].forEach((v,i)=>(parts[i+1]||"").split(".").filter(Boolean).forEach(id=>{ id=id.toLowerCase(); if(ok.has(id)) out[id]=v; else unknown++; }));
+  return {picks:out,unknown};
+}
+const pkCount=p=>{ const c={yes:0,maybe:0,no:0}; Object.values(p).forEach(v=>{ if(c[v]!==undefined) c[v]++; }); return c; };
+const pkLink=()=>APP_URL+"#picks="+pkEncode(picks);
+const myPickCount=()=>Object.values(picks).filter(v=>VALID.includes(v)).length;
+// friends' plans, kept on this phone only
+function friendsGet(){ try{ const l=JSON.parse(localStorage.getItem("edc-friends")||"[]"); return Array.isArray(l)?l:[]; }catch(e){ return []; } }
+function friendsSet(l){ try{ localStorage.setItem("edc-friends",JSON.stringify(l)); }catch(e){} }
+function activeFriend(){ let id=null; try{ id=localStorage.getItem("edc-compare"); }catch(e){} return id?friendsGet().find(f=>f.id===id)||null:null; }
+function setCompare(id){ try{ id?localStorage.setItem("edc-compare",id):localStorage.removeItem("edc-compare"); }catch(e){} drawCmpBar(); renderPlan(); }
+// make a link's picks your own: replaces every pick (and queues the change on a linked phone)
+function usePicks(np){
+  new Set([...Object.keys(picks),...Object.keys(np)]).forEach(id=>{
+    const v=np[id]||""; if((picks[id]||"")===v) return;
+    if(v) picks[id]=v; else delete picks[id];
+    if(sb&&code) pending[id]=v;
+  });
+  saveLocal(); if(sb&&code){ savePending(); syncStatus(); flush(); }
+  render();
+}
+async function sendPicks(where){
+  const n=myPickCount();
+  if(!n){ toast("Tap <b>Going</b>, <b>Maybe</b> or <b>Skip</b> on some acts first."); return; }
+  const url=pkLink();
+  track("edc_picks_link_send",{where,picks:n,length:url.length});
+  if(where!=="a2hs"&&navigator.share){
+    try{ await navigator.share({title:"My festival picks",text:"My EDC Orlando picks. Open the link to compare them with yours:",url}); track("edc_picks_link_sent",{where,method:"share_sheet"}); }
+    catch(e){ if(e&&e.name==="AbortError") track("edc_picks_link_cancel",{where}); else copyPicks(url,where); }
+    return;
+  }
+  copyPicks(url,where);
+}
+async function copyPicks(url,where){
+  const msg=where==="a2hs"?CHECK_ICO+" Picks copied. Open the app from your home screen and tap <b>Bring my picks here</b>.":CHECK_ICO+" Picks link copied";
+  try{ await navigator.clipboard.writeText(url); toast(msg); track("edc_picks_link_sent",{where,method:"copy"}); }
+  catch(e){ pkOpen("show",url); track("edc_picks_link_sent",{where,method:"shown"}); }
+}
+// the sheet: "paste" (type or paste a link), "open" (what to do with a link's picks), "show" (a link to copy by hand)
+const pkDlg=document.getElementById("pkDlg"), pkForm=document.getElementById("pkForm");
+const pkH=document.getElementById("pkH"), pkP=document.getElementById("pkP"), pkPaste=document.getElementById("pkPaste"), pkIn=document.getElementById("pkIn");
+const pkWho=document.getElementById("pkWho"), pkName=document.getElementById("pkName"), pkErr=document.getElementById("pkErr");
+const pkGo=document.getElementById("pkGo"), pkAlt=document.getElementById("pkAlt");
+let pkMode="paste", pkData=null, pkSource="link", pkReturn=null, pkArmed=null;
+const pkSheet=sheet(pkDlg,{onDismiss:()=>pkClose("dismiss")});
+const pkMinePrimary=()=>!myPickCount();
+function pkDraw(){
+  pkErr.textContent=""; clearTimeout(pkArmed); pkArmed=null;
+  pkPaste.hidden=pkMode!=="paste"&&pkMode!=="show"; pkWho.hidden=pkMode!=="open"; pkAlt.hidden=pkMode!=="open";
+  document.getElementById("pkPasteBtn").hidden=pkMode==="show";
+  if(pkMode==="paste"){
+    pkH.textContent="Open a picks link"; pkP.textContent="Paste a picks link a friend sent you, or the one you copied in your browser."; pkGo.textContent="Open";
+  }else if(pkMode==="show"){
+    pkH.textContent="Your picks link"; pkP.textContent="Copying didn't work here. Press and hold the link to copy it."; pkGo.textContent="Done";
+  }else{
+    const c=pkCount(pkData.picks), parts=[c.yes+" Going",c.maybe+" Maybe",c.no+" Skip"].filter(x=>!/^0 /.test(x));
+    pkH.textContent="Picks from a link";
+    pkP.textContent=(parts.length?parts.join(", ").replace(/, ([^,]*)$/," and $1"):"No picks")+" across Friday to Sunday."+(pkData.unknown?" "+pkData.unknown+" act"+(pkData.unknown>1?"s are":" is")+" no longer on the lineup and "+(pkData.unknown>1?"were":"was")+" skipped.":"");
+    const mine=myPickCount();
+    // a phone with no picks yet is most likely moving picks over, so "Make these my picks" comes first there
+    pkGo.textContent=pkMinePrimary()?"Make these my picks":"Compare with my plan";
+    pkAlt.textContent=pkMinePrimary()?"Compare with my plan":"Make these my picks";
+    pkWho.hidden=pkMinePrimary();
+    pkName.value="";
+    if(!mine) pkAlt.dataset.n="0"; else pkAlt.dataset.n=String(mine);
+  }
+}
+function pkOpen(mode,arg){
+  pkMode=mode; pkData=mode==="open"?arg:null; if(mode==="show") pkIn.value=arg; else if(mode==="paste") pkIn.value="";
+  pkDraw(); pkReturn=document.activeElement; pkSheet.open(); pkForm.focus();
+  if(mode==="show") setTimeout(()=>{ pkIn.focus(); pkIn.select(); },350);
+}
+function pkClose(why){ pkSheet.close(); if(pkReturn&&pkReturn.focus) pkReturn.focus(); if(pkMode==="open"&&why) track("edc_picks_link_use",{action:"cancel",source:pkSource}); }
+function pkCompare(){
+  const name=(pkName.value.trim()||"Friend").slice(0,20), l=friendsGet().filter(f=>f.name.toLowerCase()!==name.toLowerCase());
+  const f={id:Date.now().toString(36),name,picks:pkData.picks,at:Date.now()};
+  l.push(f); while(l.length>6) l.shift(); friendsSet(l);
+  track("edc_picks_link_use",{action:"compare",source:pkSource,picks:Object.keys(pkData.picks).length,friends:l.length});
+  pkMode=""; pkSheet.close();
+  setCompare(f.id); show("plan"); try{history.replaceState(null,"","#plan")}catch(_){}
+  toast(CHECK_ICO+" Comparing with "+escH(name)+"'s plan");
+}
+function pkMine(btn){
+  const n=myPickCount();
+  if(n&&!pkArmed){ btn.textContent="Tap again to replace your "+n+" pick"+(n>1?"s":""); pkArmed=setTimeout(()=>{ pkArmed=null; pkDraw(); },4000); return; }
+  clearTimeout(pkArmed); pkArmed=null;
+  usePicks(pkData.picks);
+  track("edc_picks_link_use",{action:"mine",source:pkSource,picks:Object.keys(pkData.picks).length,replaced:n});
+  pkMode=""; pkSheet.close();
+  show("plan"); try{history.replaceState(null,"","#plan")}catch(_){}
+  toast(CHECK_ICO+" Your picks are here");
+}
+pkForm.addEventListener("submit",e=>{
+  e.preventDefault();
+  if(pkMode==="show"){ pkMode=""; pkClose(); return; }
+  if(pkMode==="paste"){
+    const d=pkDecode(pkIn.value);
+    if(!d){ pkErr.textContent="That doesn't look like a picks link. It has #picks= in it."; pkIn.focus(); return; }
+    pkSource="paste"; track("edc_picks_link_open",{source:"paste",picks:Object.keys(d.picks).length,unknown:d.unknown});
+    pkMode="open"; pkData=d; pkDraw(); pkForm.focus(); return;
+  }
+  pkMinePrimary()?pkMine(pkGo):pkCompare();
+});
+pkAlt.onclick=()=>pkMinePrimary()?pkCompare():pkMine(pkAlt);
+document.getElementById("pkX").onclick=()=>pkClose("cancel");
+pkDlg.addEventListener("keydown",e=>{ if(e.key==="Escape") pkClose("escape"); });
+pkIn.addEventListener("input",()=>{ if(pkErr.textContent) pkErr.textContent=""; });
+document.getElementById("pkPasteBtn").onclick=async()=>{
+  try{ const txt=await navigator.clipboard.readText(); pkIn.value=txt||""; if(txt) pkForm.requestSubmit(); }
+  catch(e){ pkIn.focus(); pkErr.textContent="Press and hold in the box, then tap Paste."; }
+};
+document.getElementById("sendPicks").onclick=()=>sendPicks("my_plan");
+document.getElementById("openPicks").onclick=()=>{ pkSource="paste"; pkOpen("paste"); track("edc_picks_paste_open",{where:"my_plan"}); };
+// Quick start in the home-screen app: bring picks over from the browser
+if(isStandalone){
+  document.getElementById("introBring").hidden=false;
+  document.getElementById("introBringBtn").onclick=()=>{ closeIntro(); setTimeout(()=>{ pkSource="paste"; pkOpen("paste"); },380); track("edc_picks_paste_open",{where:"quick_start"}); };
+}
+// the home-screen steps (browser only): copy picks first when there are any
+document.getElementById("a2hsCopy").onclick=()=>sendPicks("a2hs");
+new MutationObserver(()=>{ if(!a2hsDlg.hidden) document.getElementById("a2hsCopyBox").hidden=!myPickCount(); }).observe(a2hsDlg,{attributes:true,attributeFilter:["hidden"]});
+// compare bar on My Plan: one chip per saved friend's plan; tap to compare, tap again to stop
+let cmpArmed=null;
+function drawCmpBar(){
+  const bar=document.getElementById("cmpBar"), l=friendsGet(), F=activeFriend();
+  if(!l.length){ bar.hidden=true; bar.innerHTML=""; return; }
+  bar.hidden=false;
+  let both="";
+  if(F){ const n=A.filter(a=>picks[slug(a[0])]==="yes"&&F.picks[slug(a[0])]==="yes").length; both=`<p class="cmp-sum">${n?`You and ${escH(F.name)} are both going to <b>${n}</b> act${n>1?"s":""} on ${DAYS[day].name}.`:`No shared Going acts on ${DAYS[day].name} yet.`} <span class="pc-f is-yes" aria-hidden="true">${escH(F.name.charAt(0).toUpperCase())}</span> marks ${escH(F.name)}'s picks.</p>`; }
+  bar.innerHTML=`<div class="cmp-row"><span class="cmp-l">Compare with</span>${l.map(f=>`<button type="button" class="chip cmp-chip" data-cmp="${f.id}" aria-pressed="${F&&F.id===f.id}">${escH(f.name)}</button>`).join("")}${F?`<button type="button" class="cmp-rm" data-cmp-rm="${F.id}">Remove</button>`:""}</div>`+both;
+}
+document.getElementById("cmpBar").addEventListener("click",e=>{
+  const c=e.target.closest("[data-cmp]");
+  if(c){ const F=activeFriend(), on=!(F&&F.id===c.dataset.cmp); setCompare(on?c.dataset.cmp:null); track("edc_compare_toggle",{on}); return; }
+  const r=e.target.closest("[data-cmp-rm]");
+  if(r){
+    if(!cmpArmed){ r.textContent="Tap again to remove"; cmpArmed=setTimeout(()=>{ cmpArmed=null; drawCmpBar(); },4000); return; }
+    clearTimeout(cmpArmed); cmpArmed=null;
+    friendsSet(friendsGet().filter(f=>f.id!==r.dataset.cmpRm)); setCompare(null); track("edc_compare_remove");
+  }
+});
+// a friend's act you haven't picked: open it in the Lineup
+document.getElementById("planChips").addEventListener("click",e=>{
+  const c=e.target.closest("[data-lineup]"); if(!c) return;
+  show("lineup"); try{history.replaceState(null,"","#lineup")}catch(_){}
+  const card=[...grid.querySelectorAll(".card")].find(x=>slug(x.querySelector(".name").textContent)===c.dataset.lineup);
+  if(card){ card.scrollIntoView({block:"center",behavior:reducedMotion()?"auto":"smooth"}); card.classList.add("flash"); setTimeout(()=>card.classList.remove("flash"),1600); }
+  track("edc_compare_open_act");
+});
+// the day switch on My Plan redraws the bar's count
+document.getElementById("planDays").addEventListener("click",()=>setTimeout(drawCmpBar,0));
+drawCmpBar(); renderPlan();
+// opening a picks link: clear it from the address bar first (so it never rides along on anything), then ask
+function pkFromHash(){
+  if(!/^#picks=/i.test(location.hash)) return;
+  const d=pkDecode(location.hash);
+  try{ history.replaceState(null,"",location.pathname+location.search); }catch(_){}
+  if(!d){ toast("That picks link didn't work. Ask for a fresh one."); return; }
+  pkSource="link"; track("edc_picks_link_open",{source:"link",picks:Object.keys(d.picks).length,unknown:d.unknown,first_visit:!introSeen});
+  // on a first visit Quick start is up: show the picks after it closes
+  if(!introEl.hidden){ const mo=new MutationObserver(()=>{ if(introEl.hidden){ mo.disconnect(); setTimeout(()=>pkOpen("open",d),380); } }); mo.observe(introEl,{attributes:true,attributeFilter:["hidden"]}); return; }
+  pkOpen("open",d);
+}
+window.addEventListener("hashchange",pkFromHash); pkFromHash();
