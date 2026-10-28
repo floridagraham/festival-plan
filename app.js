@@ -367,11 +367,11 @@ const todayKey=Object.keys(DAYS).find(d=>LINEUP.days[d].date===orlandoNow().ymd)
 setDay(todayKey||(DAYS[saved]?saved:"sat"));
 
 
-// grounds map (schematic of 2025 layout)
+// grounds map (schematic of the official 2026 layout, redrawn Oct 28)
 const STG=MAP_DATA.stages;
 function mapSVG(uid){
   const st=STG.map(t=>`<g class="stg" data-s="${t.id}" tabindex="0" role="button" aria-label="${t.name}, ${t.d.split(/[.,]/)[0]}"><circle cx="${t.x}" cy="${t.y}" r="36" fill="transparent" pointer-events="all"/><circle class="ring" cx="${t.x}" cy="${t.y}" r="17" fill="${t.color}" fill-opacity=".25" stroke="${t.color}" stroke-width="2"/><circle cx="${t.x}" cy="${t.y}" r="9" fill="${t.color}"/><text x="${t.lx}" y="${t.ly}" text-anchor="${t.a||"middle"}" font-family="Unbounded, Arial Black, sans-serif" font-weight="700" font-size="13" fill="#f6f1ff" stroke="#120a2e" stroke-width="3" paint-order="stroke">${t.name}</text></g>`).join("");
-  const lbl=(x,y,t,o="")=>`<text x="${x}" y="${y}" font-family="Figtree, sans-serif" font-weight="700" font-size="11" fill="#c9b8ff" ${o}>${t}</text>`;
+  const lbl=(x,y,t,o="")=>`<text x="${x}" y="${y}" ${o} font-family="Figtree, sans-serif" font-weight="700" font-size="11" fill="#c9b8ff">${t}</text>`;
   const aid=(x,y)=>`<g aria-hidden="true"><circle cx="${x}" cy="${y}" r="11" fill="#ff3b5c" stroke="#fff" stroke-width="1.5"/><path d="M${x-5} ${y}h10M${x} ${y-5}v10" stroke="#fff" stroke-width="3" stroke-linecap="round"/></g>`;
   const ico=(x,y,p,t)=>`<g><circle cx="${x}" cy="${y}" r="11" fill="#120a2e" stroke="#c9b8ff" stroke-width="1.2"/><g transform="translate(${x-7},${y-7}) scale(.58)" fill="none" stroke="#f6f1ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${p}</g>${t?`<text x="${x}" y="${y+24}" text-anchor="middle" font-family="Figtree, sans-serif" font-weight="700" font-size="10" fill="#f6f1ff">${t}</text>`:""}</g>`;
   const P_CAR='<path d="M4 16V11l2-5h12l2 5v5"/><path d="M4 16h16M7 16v2M17 16v2"/><circle cx="7.5" cy="14" r=".8" fill="#f6f1ff" stroke="none"/><circle cx="16.5" cy="14" r=".8" fill="#f6f1ff" stroke="none"/>';
@@ -379,31 +379,63 @@ function mapSVG(uid){
   const P_SPARKLE='<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/>';
   const P_DROP='<path d="M12 3s7 7.5 7 12a7 7 0 1 1-14 0c0-4.5 7-12 7-12Z"/>';
   const P_REST='<circle cx="12" cy="6" r="3"/><path d="M7 21l2-9h6l2 9M9 12V9h6v3"/>';
-  const P_PLUS='<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>';
-  return `<svg viewBox="0 0 545 420" role="group" aria-label="Map of EDC Orlando grounds at Tinker Field. Stages are buttons.">
-  <defs><linearGradient id="gf${uid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a1d78"/><stop offset="1" stop-color="#1c3f73"/></linearGradient></defs>
-  <polygon points="15,50 290,50 290,130 525,130 525,197 480,197 480,325 300,325 300,400 260,390 190,375 120,345 60,315 20,285" fill="url(#gf${uid})" stroke="#ff4fb4" stroke-width="3" stroke-linejoin="round"/>
-  <rect x="290" y="13" width="70" height="37" rx="6" fill="#2a1d78" stroke="#ff4fb4" stroke-width="2"/>
-  ${lbl(298,36,"Box office")}
-  <rect x="165" y="65" width="95" height="115" rx="10" fill="#3a2a8a" stroke="#7d6cd9" stroke-width="1.5"/>
-  ${lbl(214,84,"Grandstand",'text-anchor="middle"')}
-  <path d="M300 192 L440 192" stroke="#ffb627" stroke-width="5" stroke-linecap="round" opacity=".7"/>
-  ${lbl(305,186,"Rainbow Road")}
-  <path d="M165 215 L235 320" stroke="#ff7a59" stroke-width="5" stroke-linecap="round" opacity=".6"/>
-  ${lbl(150,232,"Daisy Lane",'transform="rotate(56 150 232)"')}
-  ${lbl(298,150,"Rainbow Bazaar · Ferris wheel")}
-  ${lbl(88,205,"Pixel Forest",'text-anchor="middle"')}
-  ${lbl(265,205,"Kandi Casino",'text-anchor="middle"')}
-  ${lbl(292,298,"Daisy Fields",'text-anchor="middle"')}
-  ${lbl(150,40,"W Church St",'text-anchor="middle"')}
-  ${lbl(8,180,"S Tampa Ave",'transform="rotate(-90 8 180)" text-anchor="middle"')}
-  ${lbl(400,350,"W Anderson St")}
-  ${lbl(498,265,"S Nashville Ave",'transform="rotate(-90 498 265)" text-anchor="middle"')}
-  ${lbl(150,385,"State Road 408",'transform="rotate(24 150 385)" text-anchor="middle"')}
-  <path d="M445 70 L445 122" stroke="#ffb627" stroke-width="10" stroke-linecap="round"/><path d="M432 108 L445 124 L458 108" stroke="#ffb627" stroke-width="5" fill="none" stroke-linecap="round"/>
-  <text x="445" y="60" text-anchor="middle" font-family="Unbounded, Arial Black, sans-serif" font-weight="800" font-size="13" fill="#ffb627">ENTRANCE</text>
-  ${ico(272,345,P_CAR,"Lyft")}${ico(312,340,P_BUS,"Shuttle")}${ico(352,334,P_SPARKLE,"SkyDeck")}
-  ${ico(205,375,P_DROP,"")}${["374,31","140,150","190,195","237,145","447,217","354,316"].map(c=>{const [x,y]=c.split(",").map(Number);return ico(x,y,P_REST,"");}).join("")}${aid(60,175)}${aid(500,145)}${ico(140,90,P_DROP,"")}
+  const P_FOOD='<path d="M7 3v7a2 2 0 0 0 4 0V3M9 10v11"/><path d="M16 21V3c-2 1.5-3 4-3 7h3"/>';
+  // the drawing (Oct 28, Graham: "a little more graphic" without taking over from the music): tinted crowd
+  // areas behind each stage, the lake with Daisy Lane crossing it, walkways, the Ferris wheel, food spots,
+  // water stations with their tap counts, daisies in Daisy Fields and trees in Pixel Forest
+  const GROUND="20,40 265,40 265,108 527,108 527,172 489,172 489,236 448,236 448,330 278,330 272,378 200,368 115,355 47,318 20,290";
+  const zone=(id,shape)=>{const t=STG.find(x=>x.id===id); return shape.replace("/>",` fill="${t.color}" fill-opacity=".16" stroke="${t.color}" stroke-opacity=".45" stroke-width="1.5" stroke-dasharray="4 4"/>`);};
+  const walk=(dd,col,w=10)=>`<path d="${dd}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/><path d="${dd}" fill="none" stroke="#f6f1ff" stroke-width="1.2" stroke-dasharray="3 5" stroke-linecap="round" opacity=".55"/>`;
+  const tree=(x,y)=>`<circle cx="${x}" cy="${y}" r="6" fill="#3ec27a" opacity=".85"/><circle cx="${x-2}" cy="${y-2}" r="2.5" fill="#7dff9b" opacity=".7"/>`;
+  const daisy=(x,y)=>`<g transform="translate(${x} ${y})">${[0,60,120,180,240,300].map(r=>`<ellipse rx="1.8" ry="4" cy="-3.6" fill="#f6f1ff" transform="rotate(${r})"/>`).join("")}<circle r="2" fill="#ffd166"/></g>`;
+  const taps=(x,y,n)=>`<g>${ico(x,y,P_DROP,"")}<circle cx="${x+11}" cy="${y-10}" r="8.5" fill="#3fe0ff" stroke="#120a2e" stroke-width="1.2"/><text x="${x+11}" y="${y-6.8}" text-anchor="middle" font-family="Figtree, sans-serif" font-weight="800" font-size="9" fill="#120a2e">${n}</text></g>`;
+  const food=(x,y)=>`<g><circle cx="${x}" cy="${y}" r="10" fill="#ff7a59" stroke="#120a2e" stroke-width="1.2"/><g transform="translate(${x-6.5},${y-6.5}) scale(.54)" fill="none" stroke="#120a2e" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">${P_FOOD}</g></g>`;
+  const wheel=(x,y)=>`<g aria-hidden="true"><path d="M${x-8} ${y+19}L${x} ${y}L${x+8} ${y+19}" fill="none" stroke="#c9b8ff" stroke-width="2" stroke-linecap="round"/><circle cx="${x}" cy="${y}" r="12" fill="none" stroke="#ffb627" stroke-width="2"/>${[0,45,90,135].map(r=>`<path d="M${x-12} ${y}H${x+12}" stroke="#ffb627" stroke-width="1" opacity=".8" transform="rotate(${r} ${x} ${y})"/>`).join("")}${[0,60,120,180,240,300].map(r=>`<circle cx="${x+12*Math.cos(r*Math.PI/180)}" cy="${y+12*Math.sin(r*Math.PI/180)}" r="2.2" fill="#ff4fb4"/>`).join("")}<circle cx="${x}" cy="${y}" r="2" fill="#ffb627"/></g>`;
+  return `<svg viewBox="0 0 545 420" role="group" aria-label="Map of EDC Orlando grounds at Tinker Field, 2026 layout. Stages are buttons.">
+  <defs><linearGradient id="gf${uid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a1d78"/><stop offset="1" stop-color="#1c3f73"/></linearGradient>
+  <linearGradient id="rr${uid}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff4fb4"/><stop offset=".35" stop-color="#ffb627"/><stop offset=".7" stop-color="#7dff9b"/><stop offset="1" stop-color="#3fe0ff"/></linearGradient>
+  <radialGradient id="lk${uid}" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#5fd0ff"/><stop offset="1" stop-color="#2a6fd6"/></radialGradient>
+  <clipPath id="cp${uid}"><polygon points="${GROUND}"/></clipPath></defs>
+  <polygon points="${GROUND}" fill="url(#gf${uid})" stroke="#ff4fb4" stroke-width="3" stroke-linejoin="round"/>
+  <g clip-path="url(#cp${uid})">
+  ${zone("circuit",'<ellipse cx="78" cy="92" rx="56" ry="48"/>')}
+  ${zone("stereo",'<ellipse cx="84" cy="258" rx="42" ry="32"/>')}
+  ${zone("kinetic",'<rect x="296" y="176" width="190" height="132" rx="26"/>')}
+  ${zone("neon",'<ellipse cx="486" cy="140" rx="40" ry="30"/>')}
+  ${zone("bacardi",'<circle cx="207" cy="354" r="24"/>')}
+  <path d="M138 262 C150 244 182 240 206 250 C226 258 224 286 214 302 C202 318 168 322 150 312 C134 302 128 278 138 262 Z" fill="url(#lk${uid})" opacity=".85"/>
+  <path d="M150 270 q8 -5 16 0 M176 290 q8 -5 16 0 M158 300 q7 -4 14 0" stroke="#bff0ff" stroke-width="1.2" fill="none" opacity=".7"/>
+  </g>
+  <rect x="185" y="46" width="58" height="92" rx="10" fill="#3a2a8a" stroke="#7d6cd9" stroke-width="1.5"/>
+  ${lbl(214,64,"Grandstand",'text-anchor="middle" font-size="9.5"')}
+  ${walk("M285 166 L452 166","#3fe0ff")}
+  ${walk("M165 236 L276 211","url(#rr"+uid+")")}
+  ${walk("M162 230 L222 312","#ff7a59",8)}
+  ${walk("M214 318 L290 294 L318 280","#7dff9b")}
+  ${walk("M60 312 L150 346","#a874ff")}
+  ${tree(70,200)}${tree(84,210)}${tree(112,198)}${tree(126,208)}${tree(98,214)}${tree(124,232)}${tree(132,320)}
+  ${daisy(224,268)}${daisy(238,276)}${daisy(252,268)}${daisy(266,276)}${daisy(232,286)}
+  ${wheel(320,138)}
+  ${lbl(395,184,"Power Path")}
+  ${lbl(200,222,"Rainbow Road",'transform="rotate(-13 200 222)" text-anchor="middle"')}
+  ${lbl(172,252,"Daisy Lane",'transform="rotate(54 172 252)" fill="#f6f1ff"')}
+  ${lbl(254,302,"Kinetic Trail",'transform="rotate(-17 254 302)" text-anchor="middle"')}
+  ${lbl(92,322,"Pixel Path",'transform="rotate(21 92 322)" text-anchor="middle"')}
+  ${lbl(382,128,"Rainbow Bazaar",'text-anchor="middle"')}
+  ${lbl(98,188,"Pixel Forest",'text-anchor="middle"')}
+  ${lbl(214,156,"Kandi Casino",'text-anchor="middle"')}
+  ${lbl(248,252,"Daisy Fields",'text-anchor="middle"')}
+  ${lbl(140,30,"W Church St",'text-anchor="middle"')}
+  ${lbl(10,170,"S Tampa Ave",'transform="rotate(-90 10 170)" text-anchor="middle"')}
+  ${lbl(395,350,"W Anderson St")}
+  ${lbl(470,285,"S Nashville Ave",'transform="rotate(-90 470 285)" text-anchor="middle"')}
+  ${lbl(80,384,"State Road 408",'transform="rotate(25 80 384)" text-anchor="middle"')}
+  <path d="M442 66 L442 100" stroke="#ffb627" stroke-width="10" stroke-linecap="round"/><path d="M429 88 L442 104 L455 88" stroke="#ffb627" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <text x="442" y="56" text-anchor="middle" font-family="Unbounded, Arial Black, sans-serif" font-weight="800" font-size="13" fill="#ffb627">ENTRANCE</text>
+  ${ico(296,314,P_CAR,"Lyft")}${ico(334,314,P_BUS,"Shuttle")}${ico(378,314,P_SPARKLE,"SkyDeck")}
+  ${taps(50,232,40)}${taps(252,356,64)}${ico(156,82,P_DROP,"")}
+  ${food(156,109)}${food(298,120)}${food(302,196)}${food(452,198)}
+  ${["156,56","418,206","510,160","430,290"].map(c=>{const [x,y]=c.split(",").map(Number);return ico(x,y,P_REST,"");}).join("")}${aid(40,165)}${aid(466,120)}
   <g transform="translate(515 395)"><circle r="14" fill="#120a2e" stroke="#ff4fb4" stroke-width="2"/><text y="5" text-anchor="middle" font-family="Unbounded, sans-serif" font-weight="800" font-size="13" fill="#f6f1ff">N</text></g>
   ${st}</svg>`;
 }
