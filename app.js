@@ -38,7 +38,7 @@ const CLASH_ICO=ico_('<path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4"/><circle
 const CFG0=window.EDC_CONFIG||{};
 const contactEmail=String(CFG0.contactEmail||"").trim(), hasEmail=/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(contactEmail);
 const mailTo=(subj,body)=>`mailto:${contactEmail}?subject=${encodeURIComponent(subj)}${body?"&body="+encodeURIComponent(body):""}`;
-const APP_URL=CFG0.appUrl||"https://floridagraham.github.io/festival-plan/";
+const APP_URL=CFG0.appUrl||"https://festplan.glowbop.com/";
 const BUILD_SUBJ="I want an app like Your Festival Plan";
 // "Built by" line at the foot of My Plan, Getting there and the afterparties (Oct 28)
 const builtBy=where=>hasEmail?`<p class="builtby">Built by <b>Graham Lucht</b>, app builder. I make things that people love. <a class="builtby-go" data-where="${where}" href="${mailTo(BUILD_SUBJ)}">Got an idea? Let's talk <span aria-hidden="true">&rarr;</span></a></p>`:"";
@@ -989,7 +989,7 @@ async function drawPlanImage(){
   // footer
   c.font="600 30px Figtree, sans-serif"; c.fillStyle="#c9b8ff";
   if(est) c.fillText("~ = estimated time until official set times drop",80,H-150);
-  c.font="700 30px Figtree, sans-serif"; c.fillStyle="#f6f1ff"; c.fillText("made with Your Festival Plan · floridagraham.github.io/festival-plan",80,H-90,W-160);
+  c.font="700 30px Figtree, sans-serif"; c.fillStyle="#f6f1ff"; c.fillText("made with Your Festival Plan · festplan.glowbop.com",80,H-90,W-160);
   c.font="600 26px Figtree, sans-serif"; c.fillStyle="#c9b8ff"; c.fillText("Fan-made. Not affiliated with Insomniac or EDC.",80,H-50);
   return cv;
 }
@@ -1048,7 +1048,7 @@ function syncStatus(){
     :live?"Shared picks: changes show up live on both your phones."
     :"Offline: showing your last synced picks.";
   // Link phones is just for Graham and Rebecca: everyone else keeps picks on their own phone, so the button only
-  // shows once this phone is linked. A new phone of theirs links through floridagraham.github.io/festival-plan/#link.
+  // shows once this phone is linked. A new phone of theirs links through festplan.glowbop.com/#link.
   linkBtn.hidden=!(sb&&code); document.getElementById("linkTxt").textContent="Linked phones";
   trackContext({linked:!!code,pending_picks:n});
 }

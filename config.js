@@ -27,7 +27,7 @@ window.EDC_CONFIG = {
     note: "entry.273069883", name: "entry.784140844", email: "entry.1468975052"
   },
   // The app's public link, used when people share it.
-  appUrl: "https://floridagraham.github.io/festival-plan/",
+  appUrl: "https://festplan.glowbop.com/",
   // "Used by N festival-goers" in Quick start and the Made by Graham sheet. Put the real count from PostHog
   // here (a plain number, e.g. 2437; it shows rounded down as "2,400+"). Empty = hidden.
   usedByCount: "",
