@@ -504,6 +504,8 @@ window.openMbg=openMbg;
 document.getElementById("doorBtn").onclick=()=>openMbg("menu");
 document.getElementById("mbgHelp").onclick=()=>{ closeMbg(); setTimeout(()=>openIntro("help_button"),250); };
 loveX.onclick=closeMbg;
+// a close button pinned to the top of the sheet, so nobody has to scroll to the end to get back (Graham, Oct 28)
+document.getElementById("mbgClose").onclick=()=>{ closeMbg(); track("edc_made_by_close",{how:"top_x"}); };
 mbgDlg.addEventListener("keydown",e=>{if(e.key==="Escape") closeMbg();});
 document.querySelectorAll(".builtby-slot").forEach(el=>{el.innerHTML=builtBy(el.dataset.where);});
 document.addEventListener("click",e=>{const a=e.target.closest(".builtby-go"); if(a) track("edc_build_contact",{where:a.dataset.where});});

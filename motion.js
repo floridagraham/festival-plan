@@ -53,7 +53,9 @@ export function sheet(overlay,{onDismiss}={}){
   let open=false,height=0;
   const paint=y=>{card.style.transform=`translate3d(0,${y}px,0)`;overlay.style.setProperty("--bd",String(Math.max(0,Math.min(1,1-y/(height||1)))));};
   const s=spring(0,paint,{preset:SPRING.snappy});
-  const measure=()=>{height=card.getBoundingClientRect().height+24;};
+  // how far the card travels to be fully off screen: its height plus the gap under it (sheets float above
+  // the bottom edge on phones since Oct 28). Layout sizes, so a card mid-slide measures the same.
+  const measure=()=>{height=card.offsetHeight+Math.max(0,overlay.clientHeight-card.offsetTop-card.offsetHeight)+24;};
   // drag
   let drag=null;
   const interactive=el=>el.closest("button,a,input,select,textarea,label");

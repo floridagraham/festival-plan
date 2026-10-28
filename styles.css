@@ -839,3 +839,32 @@ header.lineup-top .tagline{font-size:12px;line-height:1.35;margin:0}
 .lineup-top .mixrow .mix h2 span{display:block}
 .lineup-top .mixrow .bar{height:28px;border-radius:9px}
 .lineup-top .bar div+div{box-shadow:inset 2px 0 0 #160c3a}
+/* Made by Graham sheet (Graham, Oct 28): a close button that stays pinned at the top while the sheet scrolls,
+   and the Insomniac box stands out with a glowing gradient edge */
+.mbg-top{position:sticky;top:0;z-index:3;display:flex;justify-content:flex-end;height:0;margin:0 -10px}
+.mbg-close{display:grid;place-items:center;width:44px;height:44px;margin-top:-2px;border-radius:50%;cursor:pointer;
+  background:rgba(18,10,46,.88);border:1.5px solid var(--line);color:var(--ink);backdrop-filter:blur(8px);box-shadow:0 6px 18px -8px rgba(0,0,0,.6)}
+.mbg-close .ic{width:18px;height:18px}
+.mbg-close:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.mbg-opt.mbg-ins{border:2px solid transparent;
+  background:linear-gradient(160deg,rgba(255,79,180,.18),rgba(63,224,255,.10)) padding-box,linear-gradient(#1d1145,#1d1145) padding-box,linear-gradient(120deg,#ff4fb4,#a874ff 50%,#3fe0ff) border-box;
+  box-shadow:0 10px 30px -14px rgba(255,79,180,.75)}
+.mbg-ins h3{font-size:19px}
+.mbg-ins h3 .ic{width:20px;height:20px;color:#ff6fc2}
+.mbg-ins>p{font-weight:700}
+.mbg-ins .mbg-go{background:var(--grad);color:var(--night);border:0;box-shadow:0 8px 22px -10px rgba(255,79,180,.8)}
+/* pop-ups float on phones (Graham, Oct 28: full-screen sheets "take over"): a gap on both sides and below,
+   all corners rounded, and room at the top so the app stays in view behind. They still spring up and drag down. */
+@media (max-width:700px){
+  .intro{padding:calc(56px + env(safe-area-inset-top,0px)) max(10px, env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(10px, env(safe-area-inset-left,0px))}
+  .intro-card{border-radius:24px;border-bottom:1.5px solid var(--line);padding-bottom:20px;max-height:100%;
+    box-shadow:0 24px 60px -20px rgba(0,0,0,.7),0 0 0 1px rgba(246,241,255,.04)}
+}
+.intro-card .donate-row .donate{white-space:nowrap;padding-inline:10px;font-size:15.5px}
+/* top menu (Graham, Oct 28): "Getting there" is "Travel" here (the tab's own title still says Getting there),
+   which makes room for a share icon next to Graham's avatar */
+.menu-share{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;cursor:pointer;
+  background:var(--glass);border:1.5px solid var(--line);color:var(--ink)}
+.menu-share .ic{width:19px;height:19px;color:var(--cyan)}
+.menu-share:hover{filter:brightness(1.15)}
+.menu-share:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
