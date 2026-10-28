@@ -871,3 +871,10 @@ header.lineup-top .tagline{font-size:12px;line-height:1.35;margin:0}
 /* Map tab (Graham, Oct 28): our map first; the official-map and directions buttons sit at the bottom */
 .map-more{margin-top:20px;max-width:640px}
 .map-more p{margin:0 0 10px;color:var(--soft)}
+/* stage dots pulse on the maps (Graham, Oct 28: "so you can see where they are"). Like the stage logo and the
+   rolling name, an approved exception to the no-animated-indicators rule; Reduce Motion shows them still. */
+.gmap .stg .pulse{opacity:0;transform-box:fill-box;transform-origin:center;pointer-events:none}
+@media (prefers-reduced-motion:no-preference){
+  .gmap .stg .pulse{animation:stage-pulse 2.8s ease-out infinite}
+}
+@keyframes stage-pulse{0%{transform:scale(1);opacity:.75}75%,100%{transform:scale(2.1);opacity:0}}
