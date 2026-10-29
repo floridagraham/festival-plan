@@ -215,7 +215,8 @@ const introSheet=sheet(introEl,{onDismiss:()=>closeIntro()});
 function openIntro(source="first_open"){introReturn=document.activeElement;introSheet.open();introEl.querySelector(".intro-card").focus();track("edc_intro_shown",{source});}
 function closeIntro(){introSheet.close();if(introReturn&&introReturn.focus) introReturn.focus();try{localStorage.setItem("edc-intro-seen","1")}catch(e){}track("edc_intro_dismissed");}
 let introSeen=false; try{introSeen=localStorage.getItem("edc-intro-seen")==="1"}catch(e){}
-if(!introSeen) openIntro();
+// on a first visit, Quick start comes up after the opening sequence instead of hidden under it
+if(!introSeen){ if(document.documentElement.classList.contains("opening")) addEventListener("edc:opened",()=>openIntro(),{once:true}); else openIntro(); }
 document.getElementById("introGo").onclick=closeIntro;
 introEl.addEventListener("keydown",e=>{if(e.key==="Escape") closeIntro();});
 if(window.edcTrackMsg){ const t=document.createElement("p"); t.className="toast"; t.setAttribute("role","status"); t.textContent=window.edcTrackMsg; document.body.appendChild(t); setTimeout(()=>t.remove(),5000); }

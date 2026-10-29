@@ -1031,3 +1031,34 @@ header.lineup-top .tagline{font-size:12px;line-height:1.35;margin:0}
 #shareDlg .btns .btn{flex:1 1 100%}
 #shareDlg .btns .btn[hidden]{display:none}
 .sh-url{margin:-4px 0 14px;text-align:center;font-family:var(--display);font-weight:700;font-size:17px;color:var(--amber)}
+
+/* Opening sequence (Oct 28 evening): see the comment above #opener in index.html */
+html.opening,html.opening body{background:#0d0620}
+#opener{position:fixed;inset:0;z-index:200;display:grid;place-items:center;touch-action:none;animation:op-failsafe 3.2s step-end forwards}
+.op-bg{position:absolute;inset:0;background:radial-gradient(60% 45% at 15% 10%,rgba(255,61,171,.42),transparent 70%),radial-gradient(55% 45% at 90% 85%,rgba(46,124,255,.42),transparent 70%),#0d0620}
+#opener[hidden]{display:none}
+#opener.op-landing .op-bg{animation:op-out .44s ease-in forwards}
+.op-stage{position:relative}
+#opener.op-landing .op-made{animation:op-out .18s ease-in forwards}
+.op-stage{display:grid;justify-items:center;gap:6px;margin-top:-6vh}
+.op-logo{width:min(62vw,260px);height:auto;overflow:visible}
+.op-sun{transform:translateY(130px);animation:op-rise .55s cubic-bezier(.2,.8,.2,1) .05s forwards}
+.op-hz{transform-box:fill-box;transform-origin:center;transform:scaleX(0);animation:op-hz .35s ease-out forwards}
+.op-grid{opacity:0;animation:op-in .4s ease-out .1s forwards}
+.op-b{stroke-dasharray:240;stroke-dashoffset:240;animation:op-beam .2s ease-out forwards}
+.op-b1{animation-delay:.3s}.op-b2{animation-delay:.38s}.op-b3{animation-delay:.46s}
+.op-sig{display:grid;justify-items:center;gap:8px}
+.op-ava{position:relative;width:76px;height:76px;border-radius:50%;display:grid;place-items:center;opacity:0;transform:scale(.3);animation:op-pop .42s cubic-bezier(.3,1.6,.5,1) .5s forwards}
+.op-ava::before{content:"";position:absolute;inset:-5px;border-radius:50%;background:conic-gradient(#ff4fb4,#a874ff,#3fe0ff,#7dff9b,#ffb627,#ff7a59,#ff4fb4);animation:op-spin 1.1s linear infinite;box-shadow:0 0 28px rgba(255,255,255,.35)}
+.op-ava img{position:relative;width:76px;height:76px;border-radius:50%;object-fit:cover;border:3px solid #0d0620}
+.op-made{margin:0;font-family:var(--display);font-weight:700;font-size:17px;color:var(--ink);opacity:0;transform:translateY(8px);animation:op-up .3s ease-out .64s forwards}
+.op-made span{background:linear-gradient(90deg,#ff4fb4,#a874ff,#3fe0ff,#7dff9b,#ffb627,#ff7a59,#ff4fb4);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:name-roll 2s linear infinite}
+@keyframes op-rise{to{transform:translateY(0)}}
+@keyframes op-hz{to{transform:scaleX(1)}}
+@keyframes op-in{to{opacity:1}}
+@keyframes op-out{to{opacity:0}}
+@keyframes op-beam{to{stroke-dashoffset:0}}
+@keyframes op-pop{to{opacity:1;transform:scale(1)}}
+@keyframes op-up{to{opacity:1;transform:none}}
+@keyframes op-spin{to{transform:rotate(1turn)}}
+@keyframes op-failsafe{to{visibility:hidden;pointer-events:none}}

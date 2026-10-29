@@ -19,6 +19,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://festplan.glowbop.com/share-card.png">
 <meta name="theme-color" content="#120a2e">
+<script>try{if(!matchMedia("(prefers-reduced-motion: reduce)").matches&&!sessionStorage.getItem("edc-opened"))document.documentElement.classList.add("opening")}catch(e){}</script>
 <link rel="manifest" href="manifest.json">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -88,6 +89,83 @@ if("serviceWorker" in navigator){
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<!-- Opening sequence (Oct 28 evening, Graham: "the sunrise logo... but also like Graham made this"). About 1.5 s:
+     the sun rises over the grid and the Friday / Saturday / Sunday lasers fire, Graham's avatar pops in with its
+     rainbow ring and "made by Graham", then the logo flies into the header logo and the avatar into his picture in
+     the top menu while the app lights up behind them. Once per open (sessionStorage), a tap or key skips it,
+     Reduce Motion skips it, no sound, and the app keeps loading underneath the whole time. -->
+<div id="opener" aria-hidden="true" hidden>
+  <div class="op-bg"></div>
+  <div class="op-stage">
+    <svg class="op-logo" viewBox="0 0 512 512" focusable="false">
+      <defs>
+        <clipPath id="opSun"><circle cx="256" cy="300" r="118"/></clipPath>
+        <clipPath id="opSky"><rect x="0" y="0" width="512" height="300"/></clipPath>
+        <clipPath id="opGround"><rect x="0" y="304" width="512" height="208"/></clipPath>
+      </defs>
+      <g stroke-linecap="round" stroke-width="30">
+        <line class="op-b op-b1" x1="256" y1="300" x2="138" y2="118" stroke="#ff7a59"/>
+        <line class="op-b op-b2" x1="256" y1="300" x2="256" y2="78" stroke="#a874ff"/>
+        <line class="op-b op-b3" x1="256" y1="300" x2="374" y2="118" stroke="#3fe0ff"/>
+      </g>
+      <g clip-path="url(#opSky)"><g class="op-sun"><g clip-path="url(#opSun)">
+        <rect x="130" y="182" width="252" height="44" fill="#ffcc66"/>
+        <rect x="130" y="226" width="252" height="38" fill="#ff7a59"/>
+        <rect x="130" y="264" width="252" height="36" fill="#ff4fb4"/>
+        <rect x="130" y="238" width="252" height="7" fill="#0d0620"/>
+        <rect x="130" y="270" width="252" height="10" fill="#0d0620"/>
+        <rect x="130" y="290" width="252" height="10" fill="#0d0620"/>
+      </g></g></g>
+      <rect class="op-hz" x="96" y="298" width="320" height="10" rx="5" fill="#3fe0ff"/>
+      <g class="op-grid" clip-path="url(#opGround)" stroke="#3fe0ff" stroke-linecap="round">
+        <line x1="126" y1="338" x2="386" y2="338" stroke-width="6" opacity=".7"/>
+        <line x1="150" y1="378" x2="362" y2="378" stroke-width="5" opacity=".45"/>
+        <line x1="256" y1="304" x2="168" y2="400" stroke-width="5" opacity=".5"/>
+        <line x1="256" y1="304" x2="256" y2="404" stroke-width="5" opacity=".5"/>
+        <line x1="256" y1="304" x2="344" y2="400" stroke-width="5" opacity=".5"/>
+      </g>
+    </svg>
+    <div class="op-sig"><span class="op-ava"><img src="avatar.jpg" width="76" height="76" alt="" decoding="sync"></span><p class="op-made">made by <span>Graham</span></p></div>
+  </div>
+</div>
+<script>
+(function(){
+  var o=document.getElementById("opener"), root=document.documentElement;
+  if(!root.classList.contains("opening")) return; // decided in <head>: Reduce Motion, already played this open, or no storage
+  try{ sessionStorage.setItem("edc-opened","1"); }catch(e){}
+  o.hidden=false;
+  var done=false, timers=[];
+  function finish(){
+    if(done) return; done=true; timers.forEach(clearTimeout);
+    o.hidden=true; root.classList.remove("opening");
+    try{ dispatchEvent(new Event("edc:opened")); }catch(e){}
+  }
+  // fly one piece of the opener onto its spot in the app (it just shrinks away when that spot isn't on screen)
+  function fly(el,target,dur){
+    if(!el.animate) return;
+    var a=el.getBoundingClientRect(), b=target&&target.getBoundingClientRect();
+    if(!b||!b.width||b.bottom<0||b.top>innerHeight){ el.animate([{opacity:1},{opacity:0,transform:"scale(.6)"}],{duration:dur,fill:"forwards",easing:"ease-in"}); return; }
+    var dx=(b.left+b.width/2)-(a.left+a.width/2), dy=(b.top+b.height/2)-(a.top+a.height/2), k=b.width/a.width;
+    el.animate([{transform:"none",opacity:1},{transform:"translate("+dx+"px,"+dy+"px) scale("+k+")",opacity:1,offset:.85},{transform:"translate("+dx+"px,"+dy+"px) scale("+k+")",opacity:0}],{duration:dur,fill:"forwards",easing:"cubic-bezier(.55,0,.25,1)"});
+  }
+  function land(fast){
+    var dur=fast?260:440;
+    o.classList.add("op-landing");
+    fly(o.querySelector(".op-logo"),document.getElementById("brandmark"),dur);
+    var door=document.querySelector("#doorBtn img"); fly(o.querySelector(".op-ava"),door,dur);
+    timers.push(setTimeout(function(){
+      var bm=document.getElementById("brandmark");
+      if(bm){ bm.classList.remove("rp-run"); void bm.getBoundingClientRect(); bm.classList.add("rp-run"); } // the header logo lights up as the sun lands
+      if(door&&door.animate) door.animate([{transform:"scale(1)"},{transform:"scale(1.25)"},{transform:"scale(1)"}],{duration:380,easing:"ease-out"});
+    },dur-60));
+    timers.push(setTimeout(finish,dur+40));
+  }
+  timers.push(setTimeout(function(){ land(false); },1150));
+  function skip(){ if(done||o.classList.contains("op-landing")) return; timers.forEach(clearTimeout); timers=[]; land(true); }
+  o.addEventListener("pointerdown",skip); addEventListener("keydown",skip,{once:true});
+  setTimeout(finish,3000); // never stuck, whatever happens
+})();
+</script>
 <a class="skip" href="#main">Skip to the lineup</a>
 
 <div class="intro" id="intro" role="dialog" aria-modal="true" aria-label="Quick start" hidden>
