@@ -1062,3 +1062,28 @@ html.opening,html.opening body{background:#0d0620}
 @keyframes op-up{to{opacity:1;transform:none}}
 @keyframes op-spin{to{transform:rotate(1turn)}}
 @keyframes op-failsafe{to{visibility:hidden;pointer-events:none}}
+
+/* share sheet order (Oct 29, Graham: people look for the share button first): Send the link on top, a smaller QR under it */
+#shareDlg .sh-top{margin:0 0 12px}
+#shareDlg .sh-or{margin:0 0 8px;text-align:center}
+#shareDlg .qr-box{width:min(100%,210px);margin-bottom:8px}
+#shareDlg .sh-url{margin:0 0 12px;font-size:15px}
+
+/* Send the link (Oct 29, Graham: "make the button cooler"): a big day-gradient pill with the share icon, a glow,
+   and one shine across it when the sheet opens (it answers the tap that opened the sheet; never loops) */
+#shareDlg .sh-send{position:relative;overflow:hidden;min-height:58px;border-radius:999px;display:flex;align-items:center;justify-content:center;gap:10px;
+  font-family:var(--display);font-size:17px;font-weight:700;letter-spacing:.01em;background:var(--grad);color:var(--night);
+  box-shadow:0 12px 30px -10px var(--day-glow,rgba(255,79,180,.85)),inset 0 0 0 2px rgba(255,255,255,.22)}
+#shareDlg .sh-send .ic{width:21px;height:21px}
+#shareDlg .sh-send span,#shareDlg .sh-send .ic{position:relative}
+#shareDlg .sh-send::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.6) 50%,transparent 70%);transform:translateX(-120%);pointer-events:none}
+#shareDlg .sh-send:active{transform:scale(.97)}
+@media (prefers-reduced-motion:no-preference){#shareDlg:not([hidden]) .sh-send::after{animation:sh-sheen .9s ease-out .3s 1}}
+@keyframes sh-sheen{to{transform:translateX(120%)}}
+
+/* Graham in the share sheet's title row (Oct 29, Graham: "add me in there"), same rainbow ring as the opening */
+#shareDlg .sh-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 14px}
+#shareDlg .sh-head h2{margin:0}
+.sh-me{position:relative;flex:none;width:52px;height:52px;border-radius:50%;display:grid;place-items:center}
+.sh-me::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(#ff4fb4,#a874ff,#3fe0ff,#7dff9b,#ffb627,#ff7a59,#ff4fb4);box-shadow:0 0 18px rgba(255,255,255,.25)}
+.sh-me img{position:relative;width:46px;height:46px;border-radius:50%;object-fit:cover;border:2.5px solid #1f1452}

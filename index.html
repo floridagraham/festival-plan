@@ -204,11 +204,12 @@ if("serviceWorker" in navigator){
 </div>
 <div class="intro" id="shareDlg" role="dialog" aria-modal="true" aria-labelledby="shH" hidden>
   <div class="intro-card" tabindex="-1">
-    <h2 id="shH">Share this app</h2>
-    <p class="link-p">Friends point their phone camera at this to get the app.</p>
+    <div class="sh-head"><h2 id="shH">Share this app</h2><span class="sh-me" aria-hidden="true"><img src="avatar.jpg" width="48" height="48" alt="" decoding="async"></span></div>
+    <div class="btns sh-top"><button class="btn intro-go sh-send" id="shSend" type="button"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg><span>Send the link</span></button></div>
+    <p class="link-p sh-or">Or have friends scan this with their phone camera.</p>
     <div class="qr-box" id="shQr"></div>
     <p class="sh-url" id="shUrl"></p>
-    <div class="btns"><button class="btn intro-go" id="shSend" type="button">Send the link</button><button class="btn alt" id="shPicks" type="button" hidden>Show my picks as a QR code</button><button class="btn alt" id="shX" type="button">Done</button></div>
+    <div class="btns"><button class="btn alt" id="shPicks" type="button" hidden>Show my picks as a QR code</button><button class="btn alt" id="shX" type="button">Done</button></div>
   </div>
 </div>
 <div class="intro" id="qrDlg" role="dialog" aria-modal="true" aria-labelledby="qrH" hidden>
