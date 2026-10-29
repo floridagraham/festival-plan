@@ -1010,3 +1010,10 @@ header.lineup-top .tagline{font-size:12px;line-height:1.35;margin:0}
 .intro-card .intro-what-p{margin:6px 0 12px}
 .intro-card .intro-go{margin-top:6px}
 .intro-card .a2hs-first{color:var(--amber)}
+
+/* Quick start (Oct 28 evening, Graham): centered title; peace, love, unity and respect in the festival colors (same as the love note) */
+.intro-card .intro-what{text-align:center}
+.intro-lead .hl-peace{color:var(--cyan);font-weight:700}
+.intro-lead .hl-love{color:#ff6fc2;font-weight:700}
+.intro-lead .hl-unity{color:#c29bff;font-weight:700}
+.intro-lead .hl-respect{color:var(--lime);font-weight:700}
