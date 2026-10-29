@@ -1,8 +1,8 @@
 // Caches the app shell and data so it still opens with no signal on the festival grounds.
 // Bump CACHE when shipping changes so phones drop the old copy.
-const CACHE = "edc-shell-v55";
+const CACHE = "edc-shell-v56";
 const SHELL = [
-  "./", "index.html", "styles.css", "app.js", "motion.js", "config.js", "avatar.jpg", "vendor/supabase.js", "manifest.json",
+  "./", "index.html", "styles.css", "app.js", "motion.js", "qr.js", "config.js", "avatar.jpg", "vendor/supabase.js", "manifest.json",
   "icon-180.png", "icon-192.png", "icon-512.png", "logo.svg", "stage.svg", "favicon-32.png",
   "data/lineup.json", "data/set-times-estimated.json", "data/afterparties.json", "data/stages-and-map.json"
 ];

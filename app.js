@@ -1,4 +1,5 @@
 import {spring,SPRING,sheet,reducedMotion} from "./motion.js";
+import {qrSvg} from "./qr.js";
 // Data lives in /data as JSON so set times and lineup changes don't need a code change.
 const getJSON=p=>fetch(p).then(r=>{if(!r.ok)throw new Error(p+" "+r.status);return r.json();});
 let LINEUP,TIMES,PARTY_DATA,MAP_DATA;
@@ -1273,9 +1274,8 @@ function pkDraw(){
   }else if(pkMode==="show"){
     pkH.textContent="Your picks link"; pkP.textContent="Copying didn't work here. Press and hold the link to copy it."; pkGo.textContent="Done";
   }else{
-    const c=pkCount(pkData.picks), parts=[c.yes+" Going",c.maybe+" Maybe",c.no+" Skip"].filter(x=>!/^0 /.test(x));
     pkH.textContent="Picks from a link";
-    pkP.textContent=(parts.length?parts.join(", ").replace(/, ([^,]*)$/," and $1"):"No picks")+" across Friday to Sunday."+(pkData.unknown?" "+pkData.unknown+" act"+(pkData.unknown>1?"s are":" is")+" no longer on the lineup and "+(pkData.unknown>1?"were":"was")+" skipped.":"");
+    pkP.textContent=pkSummary(pkData.picks)+(pkData.unknown?" "+pkData.unknown+" act"+(pkData.unknown>1?"s are":" is")+" no longer on the lineup and "+(pkData.unknown>1?"were":"was")+" skipped.":"");
     const mine=myPickCount();
     // a phone with no picks yet is most likely moving picks over, so "Make these my picks" comes first there
     pkGo.textContent=pkMinePrimary()?"Make these my picks":"Compare with my plan";
@@ -1285,6 +1285,8 @@ function pkDraw(){
     if(!mine) pkAlt.dataset.n="0"; else pkAlt.dataset.n=String(mine);
   }
 }
+// "5 Going, 2 Maybe and 1 Skip across Friday to Sunday."
+function pkSummary(p){ const c=pkCount(p), parts=[c.yes+" Going",c.maybe+" Maybe",c.no+" Skip"].filter(x=>!/^0 /.test(x)); return (parts.length?parts.join(", ").replace(/, ([^,]*)$/," and $1"):"No picks")+" across Friday to Sunday."; }
 const pkDone=()=>{ try{ sessionStorage.removeItem("edc-pk-pending"); }catch(_){} };
 function pkOpen(mode,arg){
   pkMode=mode; pkData=mode==="open"?arg:null; if(mode==="show") pkIn.value=arg; else if(mode==="paste") pkIn.value="";
@@ -1333,6 +1335,26 @@ document.getElementById("pkPasteBtn").onclick=async()=>{
   catch(e){ pkIn.focus(); pkErr.textContent="Press and hold in the box, then tap Paste."; }
 };
 document.getElementById("sendPicks").onclick=()=>sendPicks("my_plan");
+// "Show my picks as a QR code" (Oct 28, Graham: friends scan it instead of texting a link): the same picks link,
+// drawn as a QR code on this phone (qr.js, works offline). The friend's camera opens it like any picks link.
+const qrDlg=document.getElementById("qrDlg"), qrSheet=sheet(qrDlg,{onDismiss:()=>closeQr()});
+let qrReturn=null;
+function openQr(){
+  const n=myPickCount();
+  if(!n){ toast("Tap <b>Going</b>, <b>Maybe</b> or <b>Skip</b> on some acts first."); return; }
+  const url=pkLink(), q=qrSvg(url,"QR code with your picks link");
+  if(!q){ toast("Too many picks for a QR code. Send them as a link instead."); return; }
+  document.getElementById("qrBox").innerHTML=q.svg;
+  document.getElementById("qrP").textContent=pkSummary(picks);
+  document.getElementById("qrTip").textContent=q.version>18?"Lots of picks make a busy code. Turn your brightness up and hold the phones a little closer.":"Not scanning? Turn your screen brightness up.";
+  qrReturn=document.activeElement; qrSheet.open(); qrDlg.querySelector(".intro-card").focus();
+  track("edc_picks_qr_show",{picks:n,length:url.length,version:q.version});
+}
+function closeQr(){ qrSheet.close(); if(qrReturn&&qrReturn.focus) qrReturn.focus(); }
+document.getElementById("qrPicks").onclick=openQr;
+document.getElementById("qrX").onclick=closeQr;
+document.getElementById("qrSend").onclick=()=>{ closeQr(); sendPicks("qr_sheet"); }; // no delay: the share sheet needs the tap
+qrDlg.addEventListener("keydown",e=>{ if(e.key==="Escape") closeQr(); });
 document.getElementById("openPicks").onclick=()=>{ pkSource="paste"; pkOpen("paste"); track("edc_picks_paste_open",{where:"my_plan"}); };
 // Quick start in the home-screen app: bring picks over from the browser
 if(isStandalone){
