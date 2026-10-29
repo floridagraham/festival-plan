@@ -138,5 +138,5 @@ export function qrSvg(text, label) {
   const n = q.size, b = 4; let d = "";
   q.modules.forEach((row, y) => { for (let x = 0; x < n; x++) { if (!row[x]) continue; let r = 1; while (x + r < n && row[x + r]) r++; d += `M${x + b},${y + b}h${r}v1h-${r}z`; x += r - 1; } });
   const w = n + 2 * b;
-  return { version: q.version, svg: `<svg viewBox="0 0 ${w} ${w}" shape-rendering="crispEdges" role="img" aria-label="${label || "QR code"}"><rect width="${w}" height="${w}" fill="#fff"/><path d="${d}" fill="#140a2e"/></svg>` };
+  return { version: q.version, svg: `<svg viewBox="0 0 ${w} ${w}" shape-rendering="crispEdges" role="img" aria-label="${String(label || "QR code").replace(/[&<>"']/g, c => "&#" + c.charCodeAt(0) + ";")}"><rect width="${w}" height="${w}" fill="#fff"/><path d="${d}" fill="#140a2e"/></svg>` };
 }

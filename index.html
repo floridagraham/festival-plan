@@ -65,9 +65,15 @@ if("serviceWorker" in navigator){
       if(location.hash==="#track"){localStorage.removeItem("edc-notrack");window.edcTrackMsg="This phone is counted in the usage stats again.";}
       optedOut=localStorage.getItem("edc-notrack")==="1"||!!localStorage.getItem("edc-group-code");
     }catch(e){}
-    if(window.edcTrackMsg) try{history.replaceState(null,"",location.pathname+location.search)}catch(e){}
-    const off=dev||testBrowser||optedOut;
+    // a friend's #picks= link moves to sessionStorage (app.js reads it there) before the page view below,
+    // so the plan never reaches analytics in the page URL
+    let pkMoved=false;
+    try{ if(/^#picks=/i.test(location.hash)){ sessionStorage.setItem("edc-pk-pending",location.hash); pkMoved=true; } }catch(e){}
+    if(window.edcTrackMsg||pkMoved) try{history.replaceState(null,"",location.pathname+location.search)}catch(e){}
+    let off=dev||testBrowser||optedOut;
     window.edcTracking=!off;
+    // a phone that links mid-visit stops counting right away, not just from the next page load
+    window.edcTrackingOff=function(){off=true;window.edcTracking=false;};
     window.edcEvents=[]; window.edcContext={app:"edc-orlando",standalone};
     if(!off) posthog.init('phc_myUuNqFeyhyrqPepkxKEWLnc8trVeurMsgwC9sWGA876',{api_host:'https://us.i.posthog.com',persistence:'localStorage',
       autocapture:false,capture_pageview:false,capture_pageleave:false,enable_heatmaps:true,disable_session_recording:true});
@@ -79,7 +85,7 @@ if("serviceWorker" in navigator){
       if(off){window.edcEvents.push([name,p]);return;}
       try{posthog.capture(name,p,beacon?{transport:"sendBeacon"}:undefined);}catch(e){}};
     track("edc_page_view",{standalone,online:navigator.onLine});
-    window.addEventListener("error",e=>track("edc_js_error",{message:String(e.message||"").slice(0,120),source:String(e.filename||"").split("/").pop(),line:e.lineno}));
+    window.addEventListener("error",e=>track("edc_js_error",{type:String((e.error&&e.error.name)||"Error").slice(0,40),source:String(e.filename||"").split("/").pop(),line:e.lineno}));
     window.addEventListener("appinstalled",()=>track("edc_app_installed"));
   })();
 </script>

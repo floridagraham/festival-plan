@@ -55,7 +55,9 @@ document.querySelectorAll('a[href^="https://www.google.com/maps/dir/"]').forEach
   const d=new URL(a.href).searchParams.get("destination"); if(!d) return;
   a.href=mapsHref(d); if(MAP_OS==="android") a.removeAttribute("target");
 });
-const escH=s=>String(s).replace(/[&<>"]/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[ch]);
+const escH=s=>String(s).replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[ch]);
+// links from data/config files only ever open https pages
+const httpsOnly=u=>/^https:\/\//i.test(String(u||""))?u:"#";
 const SPARKLE_ICO=ico_('<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/>');
 const spUrl = t => "https://open.spotify.com/search/" + encodeURIComponent(t);
 const url = t => "https://music.youtube.com/search?q=" + encodeURIComponent(t);
@@ -192,11 +194,11 @@ function partyCard(pt){
   const v=picks[pt.id]||"";
   const vote=`<div class="vote" role="group" aria-label="Rate ${pt.name}">${[["yes",CHECK_ICO,"Going"],["maybe",MAYBE_ICO,"Maybe"],["no",X_ICO,"Skip"]].map(([k,e,l])=>`<button data-id="${pt.id}" data-v="${k}" data-label="${pt.name}" aria-pressed="${v===k}">${e} ${l}</button>`).join("")}</div>`;
   const onMain=n=>A.some(a=>a[0].toLowerCase().includes(n.toLowerCase()));
-  const acts=pt.acts.map(n=>`<a data-pk="artist" data-pid="${pt.id}" data-artist="${n}" class="${onMain(n)?"main":""}" href="${url(n)}" target="_blank" rel="noopener" aria-label="${n} on YouTube Music (opens new tab)">${n}</a>`).join("")+(pt.more?'<a data-pk="more" data-pid="'+pt.id+'" href="'+pt.tix+'" target="_blank" rel="noopener">+ more</a>':"");
+  const acts=pt.acts.map(n=>`<a data-pk="artist" data-pid="${pt.id}" data-artist="${n}" class="${onMain(n)?"main":""}" href="${url(n)}" target="_blank" rel="noopener" aria-label="${n} on YouTube Music (opens new tab)">${n}</a>`).join("")+(pt.more?'<a data-pk="more" data-pid="'+pt.id+'" href="'+httpsOnly(pt.tix)+'" target="_blank" rel="noopener">+ more</a>':"");
   return `<article class="pcard${v?" is-"+v:""}" style="--pc:${pt.col}"><div class="pt"><div><h3>${pt.venue.split(" · ")[0]}</h3><div class="sub">${pt.name.replace(/ ft\..*$/,"").replace(pt.venue.split(" · ")[0]+" ","")}</div></div><span class="badge${pt.official?"":" unoff"}">${pt.official?"Official":"Not official"}</span></div>
   <div class="meta"><span>${CLOCK_ICO} <b>${pt.time}</b></span><span>${PIN_ICO} <b>${pt.venue}</b></span><span class="addr">${pt.addr}</span><span>${TICKET_ICO} ${pt.price} · ${pt.age}</span></div>
   <div class="lineup">${acts}</div>${vote}
-  <div class="btns"><a class="btn" data-pk="tickets" data-pid="${pt.id}" href="${pt.tix}" target="_blank" rel="noopener" aria-label="Tickets for ${pt.name} (opens new tab)">${TICKET_ICO} Tickets</a><a class="btn alt" data-pk="directions" data-pid="${pt.id}" href="${PGM(pt.addr)}"${MAP_OS==="android"?"":' target="_blank" rel="noopener"'} aria-label="Directions to ${pt.venue.split(" · ")[0]} (opens new tab)">${PIN_ICO} Directions</a></div></article>`;
+  <div class="btns"><a class="btn" data-pk="tickets" data-pid="${pt.id}" href="${httpsOnly(pt.tix)}" target="_blank" rel="noopener" aria-label="Tickets for ${pt.name} (opens new tab)">${TICKET_ICO} Tickets</a><a class="btn alt" data-pk="directions" data-pid="${pt.id}" href="${PGM(pt.addr)}"${MAP_OS==="android"?"":' target="_blank" rel="noopener"'} aria-label="Directions to ${pt.venue.split(" · ")[0]} (opens new tab)">${PIN_ICO} Directions</a></div></article>`;
 }
 function renderParties(){
   const list=PARTIES[day]||[];
@@ -461,7 +463,7 @@ document.querySelectorAll(".gmap:not(.gmap-top)").forEach((box,i)=>{
 // contactEmail is Graham's PUBLIC address (never his personal Gmail); partnerLink, when it is an https link,
 // takes over the Insomniac contact from the email.
 const HEART_ICO=ico_('<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/>');
-const tipLinks=(CFG0.donateLinks||[]).filter(t=>t&&t.url&&t.label);
+const tipLinks=(CFG0.donateLinks||[]).filter(t=>t&&t.url&&t.label&&httpsOnly(t.url)!=="#");
 const mbgDlg=document.getElementById("mbgDlg");
 let mbgReturn=null;
 const mbgSheet=sheet(mbgDlg,{onDismiss:()=>closeMbg()});
@@ -578,7 +580,7 @@ const LOVE_TEXT=[loveH.innerHTML,loveP.innerHTML,loveSmall.textContent,loveX.tex
 function setTipAmount(box,v){
   box.querySelectorAll(".tip-amts button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.amt===v)));
   box.querySelectorAll(".donate-link").forEach(a=>{
-    const t=tipLinks.find(x=>x.label===a.dataset.service), fixed=v!=="any"&&t&&t.amountUrl;
+    const t=tipLinks.find(x=>x.label===a.dataset.service), fixed=v!=="any"&&t&&httpsOnly(t.amountUrl)!=="#";
     if(!t) return;
     a.href=fixed?t.amountUrl.replace("{amount}",v):t.url; a.dataset.amount=v;
     a.innerHTML=`${HEART_ICO} ${escH(t.label)}${fixed?` <span class="tip-amt">$${v}</span>`:""}`;
@@ -1060,7 +1062,9 @@ function syncStatus(){
   linkBtn.hidden=!(sb&&code); document.getElementById("linkTxt").textContent="Linked phones";
   trackContext({linked:!!code,pending_picks:n});
 }
-function applyRow(r){if(VALID.includes(r.v)) picks[r.item_id]=r.v; else delete picks[r.item_id];}
+// only artists and parties that exist in the lineup are kept from the server
+let KNOWN_IDS=null;
+function applyRow(r){if(VALID.includes(r.v)&&(KNOWN_IDS||(KNOWN_IDS=pkAllIds())).has(r.item_id)) picks[r.item_id]=r.v; else delete picks[r.item_id];}
 async function ensureSession(){
   const {data}=await sb.auth.getSession();
   if(data.session) return;
@@ -1093,7 +1097,7 @@ async function flush(){
       batch.forEach(([k,v])=>{if(pending[k]===v) delete pending[k];});
       savePending();
     }
-  }catch(e){/* stays queued; retried on reconnect */track("edc_sync_error",{where:"save",code:String(e&&(e.code||e.message)||"error").slice(0,60),queued:Object.keys(pending).length});}
+  }catch(e){/* stays queued; retried on reconnect */track("edc_sync_error",{where:"save",code:String(e&&(e.code||e.name)||"error").slice(0,60),queued:Object.keys(pending).length});}
   finally{flushing=false;syncStatus();}
 }
 function subscribe(){
@@ -1192,6 +1196,7 @@ linkForm.onsubmit=async e=>{
     }
     subscribe(); closeLink();
     track("edc_link_phones",{relinked:!!prevCode});
+    if(window.edcTrackingOff) window.edcTrackingOff();
   }catch(err){
     code=prevCode; group=prevGroup;
     track("edc_link_failed",{reason:err&&err.code==="P0002"?"wrong_code":navigator.onLine===false?"offline":"other"});
