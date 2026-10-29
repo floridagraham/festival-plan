@@ -995,7 +995,6 @@ header.lineup-top .tagline{font-size:12px;line-height:1.35;margin:0}
 #pkForm .btns .btn{flex:1 1 100%}
 
 /* Show my picks as a QR code (Oct 28): white backing so any camera reads it; the SVG carries its own quiet zone */
-.plan-link-btns #qrPicks{grid-column:1/-1}
 .qr-box{width:min(100%,340px);margin:2px auto 14px;padding:4px;background:#fff;border-radius:16px;box-shadow:0 0 0 2px rgba(255,255,255,.14),0 10px 40px -10px var(--day-glow,rgba(167,123,255,.7))}
 .qr-box svg{display:block;width:100%;height:auto}
 #qrDlg .btns .btn{flex:1 1 100%}
@@ -1023,3 +1022,8 @@ header.lineup-top .tagline{font-size:12px;line-height:1.35;margin:0}
 .tm-inline[hidden]{display:none}
 .tm-inline .tm-h{font-family:var(--display);font-size:19px!important}
 .tm-inline .share-app{margin-top:10px}
+
+/* QR code button at the top of My Plan (Oct 28 evening, Graham: it was in a bad spot at the bottom) */
+.plan-qr{max-width:640px;margin:8px 0 2px}
+.plan-qr[hidden]{display:none}
+.plan-qr .btn{width:100%;margin:0;gap:8px;justify-content:center}

@@ -672,6 +672,7 @@ function renderPlan(){
   // render() runs once during load, before this section has been set up
   if(!planReady) return;
   if(document.body.dataset.view==="plan") maybeTipMoment("my_plan"); // picks can arrive after My Plan opens
+  document.getElementById("planQr").hidden=!Object.values(picks).some(v=>v==="yes"||v==="maybe"||v==="no"); // QR button only once there are picks
   const listEl=document.getElementById("planList"); if(!listEl) return;
   const showMaybe=document.getElementById("planMaybe").checked;
   const items=A.map(a=>({a,id:slug(a[0]),v:picks[slug(a[0])],w:when(a)}))

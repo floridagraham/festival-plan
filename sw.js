@@ -1,6 +1,6 @@
 // Caches the app shell and data so it still opens with no signal on the festival grounds.
 // Bump CACHE when shipping changes so phones drop the old copy.
-const CACHE = "edc-shell-v60";
+const CACHE = "edc-shell-v61";
 const SHELL = [
   "./", "index.html", "styles.css", "app.js", "motion.js", "qr.js", "config.js", "avatar.jpg", "vendor/supabase.js", "manifest.json",
   "icon-180.png", "icon-192.png", "icon-512.png", "logo.svg", "stage.svg", "favicon-32.png",
@@ -69,7 +69,11 @@ self.addEventListener("fetch", e => {
   const url = new URL(e.request.url);
   if (url.host === "fonts.googleapis.com" || url.host === "fonts.gstatic.com") { e.respondWith(fontFirst(e.request)); return; }
   if (url.origin !== self.location.origin) return; // PostHog and Supabase go straight to the network
-  if (url.pathname.includes("/data/") || e.request.mode === "navigate") e.respondWith(networkFirst(e.request));
+  // Oct 28: the page itself comes from the same saved copy as app.js and styles.css. When the page was fetched
+  // fresh but the code came from the cache, the first open after an update showed new buttons (the QR code)
+  // run by old code that didn't know them, so they did nothing. Now page and code always match; the new
+  // version takes over together (the reload in index.html, or the next open).
+  if (url.pathname.includes("/data/")) e.respondWith(networkFirst(e.request));
   else e.respondWith(staleWhileRevalidate(e.request));
 });
 
