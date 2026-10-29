@@ -999,3 +999,14 @@ header.lineup-top .tagline{font-size:12px;line-height:1.35;margin:0}
 .qr-box{width:min(100%,340px);margin:2px auto 14px;padding:4px;background:#fff;border-radius:16px;box-shadow:0 0 0 2px rgba(255,255,255,.14),0 10px 40px -10px var(--day-glow,rgba(167,123,255,.7))}
 .qr-box svg{display:block;width:100%;height:auto}
 #qrDlg .btns .btn{flex:1 1 100%}
+
+/* Quick start, trimmed (Oct 28): hidden rows really hide (.intro-row's flex was beating [hidden]), and every
+   row's text starts on the same line as the greeting: avatar and icon column share one 52px width. */
+.intro-row[hidden]{display:none}
+.intro-card .love-avatar{width:52px;height:52px}
+.intro-card .intro-ico{width:52px;display:flex;justify-content:center}
+.intro-card .intro-row{align-items:center;gap:12px;margin-bottom:12px}
+.intro-card .intro-hi{margin:6px 0 16px}
+.intro-card .intro-what-p{margin:6px 0 12px}
+.intro-card .intro-go{margin-top:6px}
+.intro-card .a2hs-first{color:var(--amber)}

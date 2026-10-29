@@ -236,7 +236,7 @@ const A2HS_STEPS=isIOS?[
   "Tap the <b>three dots</b> menu at the top right.",
   "Tap <b>Add to Home screen</b> or <b>Install app</b>, then <b>Install</b>."
 ];
-function a2hsShort(){ return isIOS?"In Safari, tap <b>Share</b>, then <b>Add to Home Screen</b>.":"In Chrome, tap the <b>three dots</b>, then <b>Add to Home screen</b>."; }
+function a2hsShort(){ return isIOS?"Tap <b>Share</b>, then <b>Add to Home Screen</b>.":"Tap the <b>three dots</b>, then <b>Add to Home screen</b>."; }
 function hideA2hsBar(){ a2hsBar.hidden=true; document.body.classList.remove("has-a2hs"); }
 if(!isStandalone&&(isIOS||isAndroid)){
   document.getElementById("introA2hs").hidden=false;
