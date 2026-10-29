@@ -757,7 +757,7 @@ header.lineup-top .tagline{font-size:12px;line-height:1.35;margin:0}
 .tipbox.tip-small .tip-h{font-size:13.5px;margin:0 0 8px}
 .tipbox.tip-small .donate{min-height:44px;padding:8px 10px;font-size:14px}
 /* the one-time "Your plan's ready" card */
-.tm-card{text-align:center}
+.tm-card,.tm-inline{text-align:center}
 .tm-h{display:flex;align-items:center;justify-content:center;gap:8px;margin:4px 0 4px!important;font-size:22px!important}
 .tm-h .ic{width:22px;height:22px;color:var(--amber)}
 .tm-p{margin:0 0 12px;font-size:15px;color:var(--ink);display:flex;align-items:center;justify-content:center;gap:6px}
@@ -1017,3 +1017,9 @@ header.lineup-top .tagline{font-size:12px;line-height:1.35;margin:0}
 .intro-lead .hl-love{color:#ff6fc2;font-weight:700}
 .intro-lead .hl-unity{color:#c29bff;font-weight:700}
 .intro-lead .hl-respect{color:var(--lime);font-weight:700}
+
+/* "Your plan's ready" as a card inside My Plan (Oct 28 evening), not a popup: same look as the tip boxes */
+.tm-inline{max-width:640px;margin:18px 0 0;padding:16px 14px 10px;border-radius:18px;border:1.5px solid rgba(255,79,180,.6);background:linear-gradient(135deg,rgba(255,79,180,.2),rgba(63,224,255,.1));box-shadow:0 0 30px -12px rgba(255,79,180,.8)}
+.tm-inline[hidden]{display:none}
+.tm-inline .tm-h{font-family:var(--display);font-size:19px!important}
+.tm-inline .share-app{margin-top:10px}

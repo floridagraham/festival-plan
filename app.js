@@ -609,24 +609,22 @@ mbgDlg.addEventListener("keydown",e=>{if(e.key==="Escape") closeMbg();});
 document.querySelectorAll(".builtby-slot").forEach(el=>{el.innerHTML=builtBy(el.dataset.where);});
 document.addEventListener("click",e=>{const a=e.target.closest(".builtby-go"); if(a) track("edc_build_contact",{where:a.dataset.where});});
 
-// tip moment (Oct 28, ask after value): the first time someone has 5+ Going picks, or first opens My Plan with
-// picks, a small card says "Your plan's ready" with the tip buttons. Shown once per phone, never again.
-const tipMoment=document.getElementById("tipMoment"), tmCard=tipMoment.firstElementChild;
-const tmSheet=sheet(tipMoment,{onDismiss:()=>closeTipMoment("swipe")});
+// tip moment (Oct 28, ask after value). Oct 28 evening, Graham: the popup that opened on the 5th Going pick
+// interrupted picking and felt pushy. Now it is a card inside My Plan, under your plan, and nothing pops up:
+// it shows when you open My Plan with picks, stays until "Not now" or a tip tap, and never shows on the Lineup.
+const tipMoment=document.getElementById("tipMoment"), tmCard=tipMoment;
 const TM_KEY="edc-tip-moment";
-const tmDone=()=>{try{return !!localStorage.getItem(TM_KEY)}catch(e){return true}};
+const tmGet=()=>{try{return localStorage.getItem(TM_KEY)||""}catch(e){return "done"}};
+const tmSet=v=>{try{localStorage.setItem(TM_KEY,v)}catch(e){}};
 wireTipAmounts(tmCard);
 function maybeTipMoment(trigger){
-  if(!tipLinks.length||tmDone()) return;
-  if(document.querySelector('.intro:not([hidden])')) return; // never on top of another sheet
-  try{localStorage.setItem(TM_KEY,"shown")}catch(e){}
-  tmSheet.open(); tmCard.focus();
-  track("edc_tip_moment_shown",{trigger,going:Object.entries(picks).filter(([k,v])=>v==="yes"&&!k.startsWith("p-")).length});
+  const st=tmGet(), has=Object.values(picks).some(x=>x==="yes"||x==="maybe");
+  tipMoment.hidden=!tipLinks.length||!has||(st&&st!=="shown");
+  if(!tipMoment.hidden&&!st){ tmSet("shown"); track("edc_tip_moment_shown",{trigger,going:Object.entries(picks).filter(([k,v])=>v==="yes"&&!k.startsWith("p-")).length}); }
 }
-function closeTipMoment(how){ tmSheet.close(); track("edc_tip_moment_closed",{how}); }
+function closeTipMoment(how){ tmSet("dismissed"); tipMoment.hidden=true; track("edc_tip_moment_closed",{how}); }
 document.getElementById("tmX").onclick=()=>closeTipMoment("not_now");
-tipMoment.addEventListener("keydown",e=>{if(e.key==="Escape") closeTipMoment("escape");});
-tipMoment.addEventListener("click",e=>{ if(!e.target.closest(".donate-link")) return; try{localStorage.setItem(TM_KEY,"tipped")}catch(_){} setTimeout(()=>tmSheet.close(),500); });
+tipMoment.addEventListener("click",e=>{ if(!e.target.closest(".donate-link")) return; tmSet("tipped"); setTimeout(()=>{ tipMoment.hidden=true; },500); });
 
 // map at the top of the lineup: tap a stage and its acts show right below, in time order.
 // It drives the same stage filter as the Filters panel, so both always agree. Tap the stage again for all.
@@ -673,6 +671,7 @@ function orlandoNow(){
 function renderPlan(){
   // render() runs once during load, before this section has been set up
   if(!planReady) return;
+  if(document.body.dataset.view==="plan") maybeTipMoment("my_plan"); // picks can arrive after My Plan opens
   const listEl=document.getElementById("planList"); if(!listEl) return;
   const showMaybe=document.getElementById("planMaybe").checked;
   const items=A.map(a=>({a,id:slug(a[0]),v:picks[slug(a[0])],w:when(a)}))
@@ -1021,7 +1020,7 @@ document.getElementById("brandmark").addEventListener("click",e=>{
 // tabs
 const views=["lineup","plan","travel","map"];
 function show(v){if(!views.includes(v))v="lineup";
-  if(v==="plan"&&Object.values(picks).some(x=>x==="yes"||x==="maybe")) setTimeout(()=>maybeTipMoment("my_plan"),900);views.forEach(x=>{document.getElementById("v-"+x).hidden=x!==v;});document.querySelectorAll(".tabs a").forEach(a=>{if(a.dataset.v===v)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});window.scrollTo(0,0);document.body.dataset.view=v;trackContext({view:v});track("edc_section_tab",{section:v});}
+  if(v==="plan") maybeTipMoment("my_plan");views.forEach(x=>{document.getElementById("v-"+x).hidden=x!==v;});document.querySelectorAll(".tabs a").forEach(a=>{if(a.dataset.v===v)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});window.scrollTo(0,0);document.body.dataset.view=v;trackContext({view:v});track("edc_section_tab",{section:v});}
 document.querySelectorAll(".planbtn").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();show("plan");try{history.replaceState(null,"","#plan")}catch(_){} track("edc_plan_open",{from:"picks_row"});}));
 document.querySelectorAll(".tabs a").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();show(a.dataset.v);try{history.replaceState(null,"","#"+a.dataset.v)}catch(_){}}));
 window.show=show;
@@ -1134,7 +1133,6 @@ function setPick(id,want,extra={}){
   const filtered=tod!=="all"||stageF!=="all"||genre!=="all"||gemsOnly||pickF!=="all"||!!q;
   track("edc_vote",{...itemProps(id),kind:id.startsWith("p-")?"party":"act",vote:v||"cleared",from:prev||"none",time_filter:tod,filtered,...extra});
   if(sb&&code){pending[id]=v;savePending();syncStatus();flush();}
-  if(v==="yes"&&Object.entries(picks).filter(([k,x])=>x==="yes"&&!k.startsWith("p-")).length>=5) setTimeout(()=>maybeTipMoment("five_going"),700);
   return v;
 }
 window.addEventListener("online",()=>connect().catch(()=>{}));
