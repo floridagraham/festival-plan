@@ -1011,7 +1011,7 @@ header.lineup-top .tagline{font-size:12px;line-height:1.35;margin:0}
 .intro-card .a2hs-first{color:var(--amber)}
 
 /* Quick start (Oct 28 evening, Graham): centered title; peace, love, unity and respect in the festival colors (same as the love note) */
-.intro-card .intro-what{text-align:center}
+.intro-card .intro-what,.intro-card .intro-what-p{text-align:center}
 .intro-lead .hl-peace{color:var(--cyan);font-weight:700}
 .intro-lead .hl-love{color:#ff6fc2;font-weight:700}
 .intro-lead .hl-unity{color:#c29bff;font-weight:700}
@@ -1021,7 +1021,6 @@ header.lineup-top .tagline{font-size:12px;line-height:1.35;margin:0}
 .tm-inline{max-width:640px;margin:18px 0 0;padding:16px 14px 10px;border-radius:18px;border:1.5px solid rgba(255,79,180,.6);background:linear-gradient(135deg,rgba(255,79,180,.2),rgba(63,224,255,.1));box-shadow:0 0 30px -12px rgba(255,79,180,.8)}
 .tm-inline[hidden]{display:none}
 .tm-inline .tm-h{font-family:var(--display);font-size:19px!important}
-.tm-inline .share-app{margin-top:10px}
 
 /* QR code button at the top of My Plan (Oct 28 evening, Graham: it was in a bad spot at the bottom) */
 .plan-qr{max-width:640px;margin:8px 0 2px}
