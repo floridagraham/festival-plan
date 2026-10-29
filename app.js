@@ -1354,6 +1354,25 @@ document.getElementById("qrPicks").onclick=openQr;
 document.getElementById("qrX").onclick=closeQr;
 document.getElementById("qrSend").onclick=()=>{ closeQr(); sendPicks("qr_sheet"); }; // no delay: the share sheet needs the tap
 qrDlg.addEventListener("keydown",e=>{ if(e.key==="Escape") closeQr(); });
+// the share arrow in the top menu (Oct 28 evening, Graham: "you can either share it or you can QR code it"):
+// a sheet with a QR code for the app, Send the link (the phone's share sheet, as before), and once there are
+// picks, Show my picks as a QR code
+const shareDlg=document.getElementById("shareDlg"), shareSheet=sheet(shareDlg,{onDismiss:()=>closeShare()});
+let shareReturn=null;
+function openShare(){
+  const box=document.getElementById("shQr");
+  if(!box.firstChild){ const q=qrSvg(APP_URL,"QR code for "+APP_URL.replace(/^https?:\/\//,"").replace(/\/$/,"")); if(q) box.innerHTML=q.svg; }
+  document.getElementById("shUrl").textContent=APP_URL.replace(/^https?:\/\//,"").replace(/\/$/,"");
+  const n=myPickCount(); document.getElementById("shPicks").hidden=!n;
+  shareReturn=document.activeElement; shareSheet.open(); shareDlg.querySelector(".intro-card").focus();
+  track("edc_share_menu_open",{where:"top_menu",picks:n});
+}
+function closeShare(){ shareSheet.close(); if(shareReturn&&shareReturn.focus) shareReturn.focus(); }
+document.getElementById("shareMenuBtn").onclick=openShare;
+document.getElementById("shX").onclick=closeShare;
+document.getElementById("shSend").onclick=()=>{ closeShare(); shareApp("top_menu"); }; // no delay: the share sheet needs the tap
+document.getElementById("shPicks").onclick=()=>{ closeShare(); setTimeout(openQr,320); track("edc_share_menu_picks_qr"); };
+shareDlg.addEventListener("keydown",e=>{ if(e.key==="Escape") closeShare(); });
 document.getElementById("openPicks").onclick=()=>{ pkSource="paste"; pkOpen("paste"); track("edc_picks_paste_open",{where:"my_plan"}); };
 // Quick start in the home-screen app: bring picks over from the browser
 if(isStandalone){

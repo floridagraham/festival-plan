@@ -1027,3 +1027,8 @@ header.lineup-top .tagline{font-size:12px;line-height:1.35;margin:0}
 .plan-qr{max-width:640px;margin:8px 0 2px}
 .plan-qr[hidden]{display:none}
 .plan-qr .btn{width:100%;margin:0;gap:8px;justify-content:center}
+
+/* share sheet from the top menu arrow (Oct 28 evening): QR code for the app, then Send the link */
+#shareDlg .btns .btn{flex:1 1 100%}
+#shareDlg .btns .btn[hidden]{display:none}
+.sh-url{margin:-4px 0 14px;text-align:center;font-family:var(--display);font-weight:700;font-size:17px;color:var(--amber)}
