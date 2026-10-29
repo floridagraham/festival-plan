@@ -263,7 +263,13 @@ async function openA2hs(where){
 }
 document.getElementById("a2hsHow").onclick=()=>openA2hs("banner");
 // other "How" buttons (My Plan footer, Made by Graham sheet) open the same steps
-document.addEventListener("click",e=>{const b=e.target.closest("[data-a2hs]"); if(b) openA2hs(b.dataset.a2hs);});
+// Oct 28 evening (Graham: How in the Made by Graham sheet "added it underneath"): a How inside another sheet
+// closes that sheet first, then opens the steps, so they never open hidden behind it
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-a2hs]"); if(!b) return;
+  if(b.closest("#mbgDlg")){ closeMbg(); setTimeout(()=>openA2hs(b.dataset.a2hs),300); }
+  else openA2hs(b.dataset.a2hs);
+});
 document.getElementById("a2hsGo").onclick=closeA2hs;
 a2hsDlg.addEventListener("keydown",e=>{if(e.key==="Escape") closeA2hs();});
 document.getElementById("a2hsX").onclick=()=>{ hideA2hsBar(); try{sessionStorage.setItem("edc-a2hs-hidden","1")}catch(e){} track("edc_a2hs_bar_hidden"); };
