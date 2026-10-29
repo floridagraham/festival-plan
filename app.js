@@ -576,19 +576,26 @@ function lovePop(){
 const loveH=document.getElementById("loveH"), loveP=document.getElementById("loveNote"), loveSmall=document.getElementById("loveSmall"), loveX=document.getElementById("loveX");
 const LOVE_TEXT=[loveH.innerHTML,loveP.innerHTML,loveSmall.textContent,loveX.textContent];
 // tip amounts (Oct 27): $5 / $10 / $20 fill in each service's amountUrl; "Any" uses the plain link.
+// amountLinks (Oct 29) gives one ready-made link per amount instead (Cash App's payment links, which carry the
+// amount and note; a plain $cashtag link with an amount on the end just opens the app).
 // Every .tip-amts group (this sheet, the tip moment card) drives the tip buttons in its own box.
+const tipAmountHref=(t,v)=>{
+  const own=t.amountLinks&&t.amountLinks[v];
+  if(own) return httpsOnly(own)!=="#"?own:"";
+  return httpsOnly(t.amountUrl)!=="#"?t.amountUrl.replace("{amount}",v):"";
+};
 function setTipAmount(box,v){
   box.querySelectorAll(".tip-amts button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.amt===v)));
   box.querySelectorAll(".donate-link").forEach(a=>{
-    const t=tipLinks.find(x=>x.label===a.dataset.service), fixed=v!=="any"&&t&&httpsOnly(t.amountUrl)!=="#";
+    const t=tipLinks.find(x=>x.label===a.dataset.service), href=v!=="any"&&t?tipAmountHref(t,v):"", fixed=!!href;
     if(!t) return;
-    a.href=fixed?t.amountUrl.replace("{amount}",v):t.url; a.dataset.amount=v;
+    a.href=fixed?href:t.url; a.dataset.amount=v;
     a.innerHTML=`${HEART_ICO} ${escH(t.label)}${fixed?` <span class="tip-amt">$${v}</span>`:""}`;
     a.setAttribute("aria-label",`Leave a ${fixed?"$"+v+" ":""}tip with ${t.label} (opens new tab)`);
   });
 }
 function wireTipAmounts(box){
-  const amts=box.querySelector(".tip-amts"); if(!amts||!tipLinks.some(t=>t.amountUrl)) return;
+  const amts=box.querySelector(".tip-amts"); if(!amts||!tipLinks.some(t=>t.amountUrl||t.amountLinks)) return;
   amts.hidden=false; setTipAmount(box,"10");
   amts.addEventListener("click",e=>{ const b=e.target.closest("button[data-amt]"); if(!b) return; setTipAmount(box,b.dataset.amt); track("edc_tip_amount",{amount:b.dataset.amt,where:box.dataset.where||"made_by_sheet"}); });
 }

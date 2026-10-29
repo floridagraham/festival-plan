@@ -7,8 +7,12 @@ window.EDC_CONFIG = {
   // Tip links, one button each (Venmo, Cash App, Ko-fi, PayPal.me...). Empty list = no tip buttons.
   donateLinks: [
     // amountUrl (optional): the same link with a dollar amount filled in; {amount} is replaced by 5, 10 or 20
+    // amountLinks (optional): one ready-made https link per amount, e.g. { "5": "...", "10": "...", "20": "..." };
+    // wins over amountUrl. An amount with no link here falls back to amountUrl, or to the plain url.
     { label: "Venmo", url: "https://venmo.com/u/federated", amountUrl: "https://venmo.com/federated?txn=pay&amount={amount}&note=Your%20Festival%20Plan" },
-    { label: "Cash App", url: "https://cash.app/$FloridaGraham", amountUrl: "https://cash.app/$FloridaGraham/{amount}" }
+    { label: "Cash App", url: "https://cash.app/$FloridaGraham", amountUrl: "https://cash.app/$FloridaGraham/{amount}",
+      // Cash App payment links Graham made in the app (amount + note "Your Festival Plan" filled in), Oct 29
+      amountLinks: { "5": "https://cash.app/pay/link/n372fwti", "10": "https://cash.app/pay/link/phdlvm37", "20": "https://cash.app/pay/link/7a2l0c2c" } }
   ],
   // Where Insomniac (or anyone) can reach Graham about working together, e.g. his Linktree.
   // Empty = the Insomniac contact uses contactEmail instead.
