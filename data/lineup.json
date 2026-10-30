@@ -1,5 +1,5 @@
 {
-  "source": "https://orlando.edc.com/lineup/ (By Day tab), pulled 2026-10-25",
+  "source": "https://orlando.edc.com/lineup/ (By Day tab), pulled 2026-10-30",
   "genreGroups": {
     "house": {
       "label": "House & Tech House",
@@ -101,18 +101,6 @@
           "vibe": "Viral tech house (\"Drugs From Amsterdam\"), pure peak-time energy.",
           "searchTerms": [
             "Mau P"
-          ],
-          "flags": []
-        },
-        {
-          "name": "Prospa B2B Josh Baker",
-          "slug": "prospa-b2b-josh-baker",
-          "genreGroup": "house",
-          "genre": "House / UK rave",
-          "vibe": "UK rave-inspired house trading tracks with Josh Baker's tech house.",
-          "searchTerms": [
-            "Prospa",
-            "Josh Baker"
           ],
           "flags": []
         },
@@ -298,12 +286,11 @@
           "slug": "brunello",
           "genreGroup": "house",
           "genre": "House",
-          "vibe": "Laid-back house grooves. Golden-hour set.",
+          "vibe": "Laid-back house grooves.",
           "searchTerms": [
             "Brunello"
           ],
           "flags": [
-            "sun",
             "gem"
           ]
         },
@@ -461,6 +448,121 @@
           "vibe": "Little public info. Pure discovery pick.",
           "searchTerms": [
             "Matthias DJ"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Chantel Jeffries",
+          "slug": "chantel-jeffries",
+          "genreGroup": "house",
+          "genre": "Dance / house",
+          "vibe": "Dance-pop and Euro-house DJ with a big crossover sound.",
+          "searchTerms": [
+            "Chantel Jeffries"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Night Tales",
+          "slug": "night-tales",
+          "genreGroup": "house",
+          "genre": "House",
+          "vibe": "Australian house duo, Kamaliza and Third Floor.",
+          "searchTerms": [
+            "Night Tales"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Obskûr",
+          "slug": "obsku-r",
+          "genreGroup": "house",
+          "genre": "House",
+          "vibe": "Dublin duo bringing groovy house. Golden-hour set.",
+          "searchTerms": [
+            "Obskür"
+          ],
+          "flags": [
+            "sun",
+            "gem"
+          ]
+        },
+        {
+          "name": "Crespo",
+          "slug": "crespo",
+          "genreGroup": "tbc",
+          "genre": "Open format",
+          "vibe": "High-energy open-format DJ mixing Miami bass, hip-hop and dance.",
+          "searchTerms": [
+            "DJ Crespo"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "2AR",
+          "slug": "2ar",
+          "genreGroup": "house",
+          "genre": "House / electronic",
+          "vibe": "US club and festival DJ who has played EDC Orlando before. Good discovery pick.",
+          "searchTerms": [
+            "2AR DJ"
+          ],
+          "flags": [
+            "gem",
+            "guess"
+          ]
+        },
+        {
+          "name": "Eve Lauren",
+          "slug": "eve-lauren",
+          "genreGroup": "melodic",
+          "genre": "Melodic techno / house",
+          "vibe": "Brooklyn DJ with a dark, hypnotic sound.",
+          "searchTerms": [
+            "Eve Lauren"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Kashovski",
+          "slug": "kashovski",
+          "genreGroup": "house",
+          "genre": "Afro house / tech house",
+          "vibe": "Paris-born producer with rhythmic, groove-led house.",
+          "searchTerms": [
+            "Kashovski"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Me n ü (Friday set)",
+          "slug": "me-n-u-friday-set",
+          "genreGroup": "house",
+          "genre": "House",
+          "vibe": "Newer house act. Good pick for discovering something fresh.",
+          "searchTerms": [
+            "Me n ü"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Seeing Double",
+          "slug": "seeing-double",
+          "genreGroup": "tbc",
+          "genre": "Genre not listed yet",
+          "vibe": "Twin DJ duo from Boca Raton, known for high energy. Discovery pick.",
+          "searchTerms": [
+            "Seeing Double DJ"
           ],
           "flags": [
             "gem"
@@ -643,16 +745,18 @@
           ]
         },
         {
-          "name": "Max Dean B2B Luke Dean",
-          "slug": "max-dean-b2b-luke-dean",
+          "name": "Luke Dean B2B George Smeddles",
+          "slug": "luke-dean-b2b-george-smeddles",
           "genreGroup": "house",
           "genre": "House",
-          "vibe": "UK brothers trading underground house cuts.",
+          "vibe": "Two UK house DJs trading underground cuts. Golden-hour set.",
           "searchTerms": [
-            "Max Dean",
-            "Luke Dean"
+            "Luke Dean",
+            "George Smeddles"
           ],
-          "flags": []
+          "flags": [
+            "sun"
+          ]
         },
         {
           "name": "Jkyl & Hyde",
@@ -679,13 +783,13 @@
           ]
         },
         {
-          "name": "me n ü",
+          "name": "Me n ü",
           "slug": "me-n-u",
           "genreGroup": "house",
           "genre": "House",
           "vibe": "Newer house act. Good pick for discovering something fresh.",
           "searchTerms": [
-            "me n ü"
+            "Me n ü"
           ],
           "flags": [
             "gem"
@@ -696,13 +800,11 @@
           "slug": "rossi",
           "genreGroup": "house",
           "genre": "House / minimal tech",
-          "vibe": "Groovy UK underground house. Golden-hour set.",
+          "vibe": "Groovy UK underground house.",
           "searchTerms": [
             "Rossi. DJ"
           ],
-          "flags": [
-            "sun"
-          ]
+          "flags": []
         },
         {
           "name": "Subsonic",
@@ -906,6 +1008,95 @@
           "vibe": "Very little public info. Pure discovery pick.",
           "searchTerms": [
             "MADVKTM"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Landis",
+          "slug": "landis",
+          "genreGroup": "house",
+          "genre": "Tech house / bass house",
+          "vibe": "Miami DJ with bottom-heavy tech house, back at EDC Orlando.",
+          "searchTerms": [
+            "Landis DJ"
+          ],
+          "flags": []
+        },
+        {
+          "name": "Rommii",
+          "slug": "rommii",
+          "genreGroup": "house",
+          "genre": "House / stutter house",
+          "vibe": "San Diego producer with emotional, stuttering house.",
+          "searchTerms": [
+            "Rommii"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Juos",
+          "slug": "juos",
+          "genreGroup": "house",
+          "genre": "Latin tech house",
+          "vibe": "LA producer putting Latin rhythms into tech house.",
+          "searchTerms": [
+            "Juos"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "CC Love",
+          "slug": "cc-love",
+          "genreGroup": "tbc",
+          "genre": "Latin / hip-hop",
+          "vibe": "LA DJ blending Latin music and hip-hop.",
+          "searchTerms": [
+            "CC Love DJ"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "RAJE (Saturday set)",
+          "slug": "raje-saturday-set",
+          "genreGroup": "tbc",
+          "genre": "Genre not listed yet",
+          "vibe": "Little public info. Pure discovery pick.",
+          "searchTerms": [
+            "RAJE DJ"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Allnightkev",
+          "slug": "allnightkev",
+          "genreGroup": "tbc",
+          "genre": "Genre not listed yet",
+          "vibe": "Little public info. Pure discovery pick.",
+          "searchTerms": [
+            "Allnightkev"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "JFUSE",
+          "slug": "jfuse",
+          "genreGroup": "tbc",
+          "genre": "Genre not listed yet",
+          "vibe": "Little public info. Pure discovery pick.",
+          "searchTerms": [
+            "JFUSE"
           ],
           "flags": [
             "gem"
@@ -1341,6 +1532,112 @@
           "vibe": "Little public info. Pure discovery pick.",
           "searchTerms": [
             "Ultrathem"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "William Kiss",
+          "slug": "william-kiss",
+          "genreGroup": "techno",
+          "genre": "House / techno",
+          "vibe": "Melbourne producer with driving house and hypnotic techno.",
+          "searchTerms": [
+            "William Kiss"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Marian (BR)",
+          "slug": "marian-br",
+          "genreGroup": "house",
+          "genre": "House / tech house",
+          "vibe": "Brazilian producer pushing groove-led house.",
+          "searchTerms": [
+            "Marian BR"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Joe Vanditti",
+          "slug": "joe-vanditti",
+          "genreGroup": "house",
+          "genre": "Minimal deep tech / tech house",
+          "vibe": "Naples DJ with a strong, driving groove.",
+          "searchTerms": [
+            "Joe Vanditti"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Kofla",
+          "slug": "kofla",
+          "genreGroup": "house",
+          "genre": "Tech house",
+          "vibe": "Colombian producer mixing Caribbean sounds with heavy tech house grooves.",
+          "searchTerms": [
+            "Kofla"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Bryan Softwell B2B Chini",
+          "slug": "bryan-softwell-b2b-chini",
+          "genreGroup": "house",
+          "genre": "House / Latin",
+          "vibe": "Underground house from Bryan Softwell, back to back with Chini.",
+          "searchTerms": [
+            "Bryan Softwell",
+            "Chini DJ"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "Andrea Quintero",
+          "slug": "andrea-quintero",
+          "genreGroup": "house",
+          "genre": "Tech house / Afro house",
+          "vibe": "Venezuelan-born Miami DJ on the rise.",
+          "searchTerms": [
+            "Andrea Quintero"
+          ],
+          "flags": [
+            "gem",
+            "guess"
+          ]
+        },
+        {
+          "name": "Alves (Sunday set)",
+          "slug": "alves-sunday-set",
+          "genreGroup": "house",
+          "genre": "Tech house",
+          "vibe": "Newer tech house name. Good discovery pick.",
+          "searchTerms": [
+            "Alves DJ"
+          ],
+          "flags": [
+            "gem"
+          ]
+        },
+        {
+          "name": "BROSA",
+          "slug": "brosa",
+          "genreGroup": "tbc",
+          "genre": "Genre not listed yet",
+          "vibe": "Little public info. Pure discovery pick.",
+          "searchTerms": [
+            "BROSA DJ"
           ],
           "flags": [
             "gem"
