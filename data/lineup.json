@@ -567,6 +567,19 @@
           "flags": [
             "gem"
           ]
+        },
+        {
+          "name": "AAT (Casa Bacardí set)",
+          "slug": "aat-casa-bacardi-set",
+          "genreGroup": "house",
+          "genre": "House",
+          "vibe": "Smaller-stage house act. Sample before you go.",
+          "searchTerms": [
+            "AAT"
+          ],
+          "flags": [
+            "gem"
+          ]
         }
       ]
     },
@@ -1101,6 +1114,19 @@
           "flags": [
             "gem"
           ]
+        },
+        {
+          "name": "Gabss (Casa Bacardí set)",
+          "slug": "gabss-casa-bacardi-set",
+          "genreGroup": "house",
+          "genre": "Tech house",
+          "vibe": "Newer tech house name. Good discovery pick.",
+          "searchTerms": [
+            "Gabss"
+          ],
+          "flags": [
+            "gem"
+          ]
         }
       ]
     },
@@ -1516,9 +1542,9 @@
           "slug": "discovery-project",
           "genreGroup": "house",
           "genre": "Emerging artist showcase",
-          "vibe": "Insomniac's slot for brand-new talent. Who knows who you'll find.",
+          "vibe": "This year's Discovery Project winner, Bella Grazia, picked by Meduza.",
           "searchTerms": [
-            "Insomniac Discovery Project"
+            "Bella Grazia"
           ],
           "flags": [
             "gem"
