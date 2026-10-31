@@ -12,7 +12,9 @@ window.EDC_CONFIG = {
     { label: "Venmo", url: "https://venmo.com/u/federated", amountUrl: "https://venmo.com/federated?txn=pay&amount={amount}&note=Your%20Festival%20Plan" },
     { label: "Cash App", url: "https://cash.app/$FloridaGraham", amountUrl: "https://cash.app/$FloridaGraham/{amount}",
       // Cash App payment links Graham made in the app (amount + note "Your Festival Plan" filled in), Oct 29
-      amountLinks: { "5": "https://cash.app/pay/link/n372fwti", "10": "https://cash.app/pay/link/phdlvm37", "20": "https://cash.app/pay/link/7a2l0c2c" } }
+      amountLinks: { "5": "https://cash.app/pay/link/n372fwti", "10": "https://cash.app/pay/link/phdlvm37", "20": "https://cash.app/pay/link/7a2l0c2c" } },
+    // Stripe payment link on Graham's Marketing Savvy FL account (Oct 31); __prefilled_amount is in cents
+    { label: "Card or Apple Pay", url: "https://buy.stripe.com/7sY6oG7nSbZmgIB9BIaAw00", amountUrl: "https://buy.stripe.com/7sY6oG7nSbZmgIB9BIaAw00?__prefilled_amount={amount}00" }
   ],
   // Where Insomniac (or anyone) can reach Graham about working together, e.g. his Linktree.
   // Empty = the Insomniac contact uses contactEmail instead.

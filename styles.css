@@ -100,7 +100,7 @@ h1 span{color:var(--pink)}
 .intro-row p{margin:0;font-size:14.5px;color:var(--soft);line-height:1.45}
 .intro-row b{color:var(--ink)}
 .intro-lead{margin:-4px 0 16px;font-size:15px;line-height:1.45;color:var(--ink)}
-/* tip boxes: one short line and two big buttons in the services' own colors, so they read at a glance */
+/* tip boxes: one short line and big buttons in the services' own colors, so they read at a glance */
 .tipbox{margin:14px 0;padding:14px;border-radius:18px;border:1.5px solid rgba(255,79,180,.6);background:linear-gradient(135deg,rgba(255,79,180,.2),rgba(63,224,255,.1));box-shadow:0 0 30px -12px rgba(255,79,180,.8)}
 .tipbox[hidden]{display:none}
 .tip-h{display:flex;align-items:center;gap:8px;margin:0 0 12px;font:700 16px/1.2 var(--display);color:var(--ink)}
@@ -117,6 +117,7 @@ footer a{color:var(--cyan)}
 .donate-row .donate{flex:1 1 120px;min-height:52px;border-radius:14px;font-size:16px;font-weight:800;background:var(--grad);color:var(--night);box-shadow:none}
 .donate-row .donate[data-service="Venmo"]{background:#0074de;color:#fff}
 .donate-row .donate[data-service="Cash App"]{background:#00d632;color:#06140b}
+.donate-row .donate[data-service="Card or Apple Pay"]{background:#635bff;color:#fff}
 footer .tipbox{max-width:420px;margin:0 0 16px}
 /* the lineup already ends with a tip box, so the footer one only shows on Getting there and Map */
 body[data-view="lineup"] footer .tipbox{display:none}
