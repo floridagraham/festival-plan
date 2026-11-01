@@ -1,5 +1,6 @@
 import {spring,SPRING,sheet,reducedMotion} from "./motion.js";
 import {qrSvg} from "./qr.js";
+import {startWeather,weatherOpen} from "./weather.js";
 // Data lives in /data as JSON so set times and lineup changes don't need a code change.
 const getJSON=p=>fetch(p).then(r=>{if(!r.ok)throw new Error(p+" "+r.status);return r.json();});
 let LINEUP,TIMES,PARTY_DATA,MAP_DATA;
@@ -1037,11 +1038,12 @@ document.getElementById("brandmark").addEventListener("click",e=>{
 // tabs
 const views=["lineup","plan","travel","map"];
 function show(v){if(!views.includes(v))v="lineup";
-  if(v==="plan") maybeTipMoment("my_plan");views.forEach(x=>{document.getElementById("v-"+x).hidden=x!==v;});document.querySelectorAll(".tabs a").forEach(a=>{if(a.dataset.v===v)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});window.scrollTo(0,0);document.body.dataset.view=v;trackContext({view:v});track("edc_section_tab",{section:v});}
+  if(v==="plan") maybeTipMoment("my_plan");if(v==="travel") weatherOpen();views.forEach(x=>{document.getElementById("v-"+x).hidden=x!==v;});document.querySelectorAll(".tabs a").forEach(a=>{if(a.dataset.v===v)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});window.scrollTo(0,0);document.body.dataset.view=v;trackContext({view:v});track("edc_section_tab",{section:v});}
 document.querySelectorAll(".planbtn").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();show("plan");try{history.replaceState(null,"","#plan")}catch(_){} track("edc_plan_open",{from:"picks_row"});}));
 document.querySelectorAll(".tabs a").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();show(a.dataset.v);try{history.replaceState(null,"","#"+a.dataset.v)}catch(_){}}));
 window.show=show;
 show((location.hash||"").slice(1));
+startWeather({track,day:()=>day});
 
 // shared picks via Supabase: each phone signs in anonymously and joins the group with the shared code.
 // localStorage keeps a copy of the picks plus a queue of changes not yet on the server, so picking
